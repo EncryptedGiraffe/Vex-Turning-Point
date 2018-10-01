@@ -21,7 +21,7 @@ namespace Motors
   //Drive Chassis left motor into Smart Port 2
   pros::Motor* driveLeft = new pros::Motor(2, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
   //Drive Chassis right motor into Smart Port 3
-  pros::Motor* driveRight = new pros::Motor(3, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+  pros::Motor* driveRight = new pros::Motor(3, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
   //Flywheel top motor into Smart Port 4
   pros::Motor* flywheelTop = new pros::Motor(4, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
   //Flywheel bottom motor into Smart Port 5
