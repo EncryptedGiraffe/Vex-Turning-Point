@@ -1,4 +1,5 @@
 #include "main.h"
+#include "controller.hpp"
 
 void on_center_button() {
 	static bool pressed = false;
@@ -18,7 +19,8 @@ void on_center_button() {
  */
 void initialize() {
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello PROS User!");
+	pros::lcd::set_text(1, "Hello, Tommy the Terminator!");
+	pros::lcd::set_text(2, "You have flashed the V5 Robot Brain!");
 
 	pros::lcd::register_btn1_cb(on_center_button);
 }
