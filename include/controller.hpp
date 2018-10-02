@@ -9,16 +9,23 @@
 #define MOTOR_GEARSET_36_MAXSPEED 600 //maximum speed for the 6:1 gear set
 
 //controllers
-extern pros::Controller* masterController;
-extern pros::Controller* partnerController;
+extern okapi::Controller* masterController;
+extern okapi::Controller* partnerController;
 
 //motors
 namespace Motors
 {
-  extern pros::Motor* driveLeft; //Drive Chassis left motor into Smart Port 2
-  extern pros::Motor* driveRight; //Drive Chassis right motor into Smart Port 3
-  extern pros::Motor* flywheelTop; //Flywheel top motor into Smart Port 4
-  extern pros::Motor* flywheelBottom; //Flywheel bottom motor into Smart Port 5
+  //port variables
+  extern const int driveLeftPort;
+  extern const int driveRightPort;
+  extern const int flywheelTopPort;
+  extern const int flywheelBottomPort;
+
+  //motors
+  extern pros::Motor* driveLeft;
+  extern pros::Motor* driveRight;
+  extern pros::Motor* flywheelTop;
+  extern pros::Motor* flywheelBottom;
 }
 
 //flywheel controller
@@ -29,9 +36,20 @@ namespace Flywheel
   //speed
   extern int speed;
 };
+
+//drive controller
+namespace Drive
+{
+  //DriveController
+  extern okapi::ChassisControllerIntegrated driveController;
+}
+
 ////////////////////Function declarations////////////////////
 
 //flywheel controller
 void FlywheelController();
+
+//drive controller
+void DriveController();
 
 #endif

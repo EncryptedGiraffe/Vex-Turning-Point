@@ -4,12 +4,18 @@
 ////////////////////Variable definitions////////////////////
 
 //controllers
-pros::Controller* masterController = new pros::Controller(pros::E_CONTROLLER_MASTER);
-pros::Controller* partnerController = new pros::Controller(pros::E_CONTROLLER_PARTNER);
+okapi::Controller* masterController = new okapi::Controller(okapi::ControllerId::master);
+okapi::Controller* partnerController = new okapi::Controller(okapi::ControllerId::partner);
 
 //motors
 namespace Motors
 {
+  //port variables
+  const int driveLeftPort = 2;
+  const int driveRightPort = 3;
+  const int flywheelTopPort = 4;
+  const int flywheelBottomPort = 5;
+
   /*
   Format:
   pros::Motor* ?name? = new pros::Motor(?smart port?, pros::E_MOTOR_GEARSET_18, ?reversed?, pros::E_MOTOR_ENCODER_DEGREES);
@@ -19,13 +25,13 @@ namespace Motors
   E_MOTOR_GEARSET_06, 6:1, 600 RPM, Blue Gear Set
   */
   //Drive Chassis left motor into Smart Port 2
-  pros::Motor* driveLeft = new pros::Motor(2, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+  pros::Motor* driveLeft = new pros::Motor(driveLeftPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
   //Drive Chassis right motor into Smart Port 3
-  pros::Motor* driveRight = new pros::Motor(3, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+  pros::Motor* driveRight = new pros::Motor(driveRightPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
   //Flywheel top motor into Smart Port 4
-  pros::Motor* flywheelTop = new pros::Motor(4, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+  pros::Motor* flywheelTop = new pros::Motor(flywheelTopPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
   //Flywheel bottom motor into Smart Port 5
-  pros::Motor* flywheelBottom = new pros::Motor(5, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+  pros::Motor* flywheelBottom = new pros::Motor(flywheelBottomPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
 }
 
 //flywheel controller
@@ -37,11 +43,16 @@ namespace Flywheel
   int speed = 0;
 }
 
+namespace Drive
+{
+  okapi::ChassisControllerIntegrated driveController = okapi::ChassisControllerFactory::create(Motors::driveLeftPort, Motors::driveRightPort, okapi::AbstractMotor::gearset::green);
+}
+
 ////////////////////Function definition////////////////////
 //flywheel controller
 void FlywheelController()
 {
-  //check if requested speed is greater than max maxSpeedif()
+  //check if requested speed is greater than max maxSpeed
   if(Flywheel::speed > Flywheel::maxSpeed)
   {
     //set the speed to max maxSpeed

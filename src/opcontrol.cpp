@@ -22,17 +22,20 @@ void opcontrol()
 		pros::delay(20);
 
 		//check for flywheel full speed mode
-		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_X))
+		if(masterController->getDigital(okapi::ControllerDigital::X))
 		{
 			//set the flywheel to full speed
 			Flywheel::speed = Flywheel::maxSpeed;
 		}
 		//check for flywheel stopping modes
-		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_B))
+		if(masterController->getDigital(okapi::ControllerDigital::B))
 		{
 				//set the flywheel to stopping
 				Flywheel::speed = 0;
 		}
+
+		//set drive speed
+		Drive::driveController.tank(masterController->getAnalog(okapi::ControllerAnalog::leftY), masterController->getAnalog(okapi::ControllerAnalog::rightY));
 
 		//run all controllers
 		FlywheelController();
