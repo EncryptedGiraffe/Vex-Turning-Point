@@ -20,12 +20,16 @@ namespace Motors
   extern const int driveRightPort;
   extern const int flywheelTopPort;
   extern const int flywheelBottomPort;
+  extern const int armTopPort;
+  extern const int armBottomPort;
 
   //motors
   extern pros::Motor* driveLeft;
   extern pros::Motor* driveRight;
   extern pros::Motor* flywheelTop;
   extern pros::Motor* flywheelBottom;
+  extern pros::Motor* armTop;
+  extern pros::Motor* armBottom;
 }
 
 //flywheel controller
@@ -44,6 +48,14 @@ namespace Drive
   extern okapi::ChassisControllerIntegrated driveController;
 }
 
+//arm controller
+namespace Arm
+{
+  //position of arm
+  extern int position;
+}
+
+
 ////////////////////Function declarations////////////////////
 
 //flywheel controller
@@ -51,5 +63,8 @@ void FlywheelController();
 
 //drive controller
 void DriveController();
+
+//arm controller
+void ArmController();
 
 #endif

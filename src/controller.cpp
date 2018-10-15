@@ -48,6 +48,12 @@ namespace Drive
   okapi::ChassisControllerIntegrated driveController = okapi::ChassisControllerFactory::create(Motors::driveLeftPort, Motors::driveRightPort, okapi::AbstractMotor::gearset::green);
 }
 
+namespace Arm
+{
+  //arm position
+  int position;
+}
+
 ////////////////////Function definition////////////////////
 //flywheel controller
 void FlywheelController()
