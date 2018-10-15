@@ -1,4 +1,5 @@
 #include "main.h"
+#include "controller.hpp"
 
 void on_center_button() {
 	static bool pressed = false;
@@ -16,9 +17,10 @@ void on_center_button() {
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
-void initialize() {
+void initialize()
+{
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello PROS User!");
+	pros::lcd::set_text(1, "Hello, Tommy the Terminator!");
 
 	pros::lcd::register_btn1_cb(on_center_button);
 }
