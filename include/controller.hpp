@@ -66,8 +66,8 @@ namespace Arm
   //position of arm
   extern int position;
 
-  //arm controller
-  void Controller();
+  //arm controller 0 = stay, 1 = up, -1 = down
+  void Simple(int mode);
 }
 
 namespace Flippin

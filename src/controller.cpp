@@ -32,13 +32,13 @@ namespace Motors
   //Drive Chassis right motor into Smart Port 3
   pros::Motor* driveRight = new pros::Motor(driveRightPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
   //Flywheel top motor into Smart Port 4
-  pros::Motor* flywheelTop = new pros::Motor(flywheelTopPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+  pros::Motor* flywheelTop = new pros::Motor(flywheelTopPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
   //Flywheel bottom motor into Smart Port 5
-  pros::Motor* flywheelBottom = new pros::Motor(flywheelBottomPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+  pros::Motor* flywheelBottom = new pros::Motor(flywheelBottomPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
   //arm top motor into Smart Port 6
-  pros::Motor* armTop = new pros::Motor(armTopPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+  pros::Motor* armTop = new pros::Motor(armTopPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
   //arm bottom motor into Smart Port 7
-  pros::Motor* armBottom = new pros::Motor(armBottomPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+  pros::Motor* armBottom = new pros::Motor(armBottomPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
   //flippin motor into Smart Port 8
   pros::Motor* flippin = new pros::Motor(flippinPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
 }
@@ -81,7 +81,28 @@ namespace Arm
   //arm position
   int position;
 
-  void Controller();
+  //arm controller 0 = stay, 1 = up, -1 = down
+  void Simple(int mode)
+  {
+    if(mode == 1)
+    {
+      //arm up
+      Motors::armTop->move(127);
+      Motors::armBottom->move(127);
+    }
+    else if(mode == -1)
+    {
+      //arm down
+      Motors::armTop->move(-127);
+      Motors::armBottom->move(-127);
+    }
+    else
+    {
+      //arm off
+      Motors::armTop->move(0);
+      Motors::armBottom->move(0);
+    }
+  }
 }
 
 namespace Flippin
@@ -92,11 +113,11 @@ namespace Flippin
   {
     if(flipped)
     {
-      Motors::flippin->move_absolute(0, 200);
+      Motors::flippin->move_absolute(0.00000, 200);
     }
     else
     {
-      Motors::flippin->move_absolute(180, 200);
+      Motors::flippin->move_absolute(180.000, 200);
     }
     //toggle flag
     flipped = !flipped;
