@@ -23,6 +23,7 @@ namespace Motors
   extern const int armTopPort;
   extern const int armBottomPort;
   extern const int flippinPort;
+  extern const int intakePort;
 
   //motors
   extern pros::Motor* driveLeft;
@@ -32,6 +33,7 @@ namespace Motors
   extern pros::Motor* armTop;
   extern pros::Motor* armBottom;
   extern pros::Motor* flippin;
+  extern pros::Motor* intake;
 }
 
 //flywheel controller
@@ -75,6 +77,12 @@ namespace Flippin
     extern bool flipped;
 
     extern void Flip();
+}
+
+namespace Intake
+{
+  //simple controller for the intake, 1 = forwards, 0 = stopped, -1 = backwards
+  extern void Simple(int mode);
 }
 
 #endif

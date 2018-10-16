@@ -18,6 +18,7 @@ namespace Motors
   const int armTopPort = 6;
   const int armBottomPort = 7;
   const int flippinPort = 8;
+  const int intakePort = 9;
 
   /*
   Format:
@@ -41,6 +42,8 @@ namespace Motors
   pros::Motor* armBottom = new pros::Motor(armBottomPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
   //flippin motor into Smart Port 8
   pros::Motor* flippin = new pros::Motor(flippinPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+  //intake motor into smart port 9
+  pros::Motor* intake = new pros::Motor(intakePort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
 }
 
 //flywheel controller
@@ -121,5 +124,28 @@ namespace Flippin
     }
     //toggle flag
     flipped = !flipped;
+  }
+}
+
+namespace Intake
+{
+  //1 = forwards, 0 = stopped, -1 = backwards
+  void Simple(int mode)
+  {
+    if(mode == 1)
+    {
+      //forwards
+      Motors::intake->move(127);
+    }
+    else if(mode == -1)
+    {
+      //backwards
+      Motors::intake->move(-127);
+    }
+    else
+    {
+      //stopped
+      Motors::intake->move(0);
+    }
   }
 }
