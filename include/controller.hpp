@@ -31,7 +31,7 @@ namespace Motors
   extern pros::Motor* flywheelBottom;
   extern pros::Motor* armTop;
   extern pros::Motor* armBottom;
-  extern pros::Motor* flippinMotor;
+  extern pros::Motor* flippin;
 }
 
 //flywheel controller
@@ -72,7 +72,9 @@ namespace Arm
 
 namespace Flippin
 {
-  
+    extern bool flipped;
+
+    extern void Flip();
 }
 
 #endif
