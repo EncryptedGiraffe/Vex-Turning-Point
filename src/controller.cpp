@@ -1,11 +1,12 @@
 #include "main.h"
 #include "controller.hpp"
 
-////////////////////Variable definitions////////////////////
+//variables
+int flippinCount = 0;
 
 //controllers
 pros::Controller* masterController = new pros::Controller(pros::E_CONTROLLER_MASTER);
-pros::Controller* partnerController = new pros::Controller(pros::E_CONTROLLER_PARTNER);
+pros::Controller* partnerControlle = new pros::Controller(pros::E_CONTROLLER_PARTNER);
 
 //motors
 namespace Motors
@@ -110,20 +111,15 @@ namespace Arm
 
 namespace Flippin
 {
-  bool flipped = false;
-
   void Flip()
   {
-    if(flipped)
-    {
-      Motors::flippin->move_absolute(0.00000, 200);
-    }
-    else
-    {
-      Motors::flippin->move_absolute(180.000, 200);
-    }
-    //toggle flag
-    flipped = !flipped;
+    //increase flippin count
+    flippinCount += 180;
+  }
+  void Controller()
+  {
+    //set the motor to the flippin count
+    Motors::flippin->move_absolute(flippinCount, 200);
   }
 }
 

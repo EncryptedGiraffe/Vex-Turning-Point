@@ -2,7 +2,7 @@
 #include "controller.hpp"
 
 //variables
-bool flippinNewPress = true;
+bool flippinNewPress;
 
 void opcontrol()
 {
@@ -23,18 +23,21 @@ void opcontrol()
 				//set the flywheel to stopping
 				Flywheel::speed = 0;
 		}
-		//do we want to flip?
-		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_Y) && flippinNewPress)
+		//do we want to flip the flipper
+		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_Y))
 		{
-			//flip
-			Flippin::Flip();
-			//toggle
-			flippinNewPress = false;
+			if(flippinNewPress)
+			{
+				//flip
+				Flippin::Flip();
+				//toggle
+				flippinNewPress = false;
+			}
 		}
 		else
 		{
-			//toggle
-			flippinNewPress = true;
+				//toggle
+				flippinNewPress = true;
 		}
 		//move the arm?
 		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_R1))
@@ -58,5 +61,6 @@ void opcontrol()
 
 		//run all controllers
 		Flywheel::Controller();
+		Flippin::Controller();
 	}
 }

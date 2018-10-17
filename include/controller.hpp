@@ -74,9 +74,8 @@ namespace Arm
 
 namespace Flippin
 {
-    extern bool flipped;
-
     extern void Flip();
+    extern void Controller();
 }
 
 namespace Intake
