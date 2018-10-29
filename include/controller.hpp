@@ -16,14 +16,14 @@ extern pros::Controller* partnerController;
 namespace Motors
 {
   //port variables
-  extern const int driveLeftPort;
-  extern const int driveRightPort;
-  extern const int flywheelTopPort;
-  extern const int flywheelBottomPort;
-  extern const int armTopPort;
-  extern const int armBottomPort;
-  extern const int flippinPort;
-  extern const int intakePort;
+  #define driveLeftPort 2
+  #define driveRightPort 3
+  #define flywheelTopPort 4
+  #define flywheelBottomPort 5
+  #define armTopPort 6
+  #define armBottomPort 7
+  #define flippinPort 8
+  #define intakePort 9
 
   //motors
   extern pros::Motor* driveLeft;
@@ -53,6 +53,7 @@ namespace Drive
 {
   //tank drive
   extern void Tank(int leftSpeed, int rightSpeed);
+  extern void Arcade(int speed, int rotate);
 }
 
 //arm controller
@@ -75,7 +76,6 @@ namespace Arm
 namespace Flippin
 {
     extern void Flip();
-    extern void Controller();
 }
 
 namespace Intake

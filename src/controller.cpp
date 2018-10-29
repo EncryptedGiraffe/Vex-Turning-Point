@@ -1,26 +1,13 @@
 #include "main.h"
 #include "controller.hpp"
 
-//variables
-int flippinCount = 0;
-
 //controllers
 pros::Controller* masterController = new pros::Controller(pros::E_CONTROLLER_MASTER);
-pros::Controller* partnerControlle = new pros::Controller(pros::E_CONTROLLER_PARTNER);
+pros::Controller* partnerController = new pros::Controller(pros::E_CONTROLLER_PARTNER);
 
 //motors
 namespace Motors
 {
-  //port variables
-  const int driveLeftPort = 2;
-  const int driveRightPort = 3;
-  const int flywheelTopPort = 4;
-  const int flywheelBottomPort = 5;
-  const int armTopPort = 6;
-  const int armBottomPort = 7;
-  const int flippinPort = 8;
-  const int intakePort = 9;
-
   /*
   Format:
   pros::Motor* ?name? = new pros::Motor(?smart port?, pros::E_MOTOR_GEARSET_18, ?reversed?, pros::E_MOTOR_ENCODER_DEGREES);
@@ -78,6 +65,11 @@ namespace Drive
     Motors::driveLeft->move(leftSpeed);
     Motors::driveRight->move(rightSpeed);
   }
+  void Arcade(int speed, int rotate)
+  {
+    Motors::driveLeft->move(speed);
+    Motors::driveRight->move(speed);
+  }
 }
 
 namespace Arm
@@ -113,13 +105,8 @@ namespace Flippin
 {
   void Flip()
   {
-    //increase flippin count
-    flippinCount += 180;
-  }
-  void Controller()
-  {
-    //set the motor to the flippin count
-    Motors::flippin->move_absolute(flippinCount, 200);
+    //flip by 180 degrees
+    Motors::flippin->move_absolute(180, 200);
   }
 }
 

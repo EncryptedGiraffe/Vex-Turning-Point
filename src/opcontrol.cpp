@@ -61,6 +61,5 @@ void opcontrol()
 
 		//run all controllers
 		Flywheel::Controller();
-		Flippin::Controller();
 	}
 }
