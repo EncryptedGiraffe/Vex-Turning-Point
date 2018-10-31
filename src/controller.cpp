@@ -37,23 +37,36 @@ namespace Motors
 //flywheel controller
 namespace Flywheel
 {
-  //max speed for the flywheel
-  const int maxSpeed = 200;
-  //speed
-  int speed = 0;
+  Speeds speed = Stopped;
 
-  //flywheel controller
-  void Controller()
+  //set the flywheel speed
+  void SetSpeed(Speeds newSpeed)
   {
-    //check if requested speed is greater than max maxSpeed
-    if(Flywheel::speed > Flywheel::maxSpeed)
+    switch(speed)
     {
-      //set the speed to max maxSpeed
-      Flywheel::speed = Flywheel::maxSpeed;
+      //set variables
+      speed = newSpeed;
+      case Stopped:
+        //check if the motors are stopped
+        if(Motors::flywheelTop->get_actual_velocity() > 50)
+        {
+          //lower the velocity by 2
+          Motors::flywheelTop->move_velocity(Motors::flywheelTop->get_actual_velocity() - 2);
+          Motors::flywheelBottom->move_velocity(Motors::flywheelTop->get_actual_velocity() - 2);
+        }
+        else
+        {
+          //set the velocity to 0
+          Motors::flywheelTop->move_velocity(0);
+          Motors::flywheelBottom->move_velocity(0);
+        }
+        break;
+      case Max:
+        //set motors to full power
+        Motors::flywheelTop->move_velocity(MOTOR_GEARSET_18_MAXSPEED);
+        Motors::flywheelBottom->move_velocity(MOTOR_GEARSET_18_MAXSPEED);
+        break;
     }
-    //set the flywheel motors to the requested speed
-    Motors::flywheelTop->move_velocity(Flywheel::speed);
-    Motors::flywheelBottom->move_velocity(Flywheel::speed);
   }
 }
 

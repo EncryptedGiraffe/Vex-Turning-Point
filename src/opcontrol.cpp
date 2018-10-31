@@ -15,13 +15,13 @@ void opcontrol()
 		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_X))
 		{
 			//set the flywheel to full speed
-			Flywheel::speed = Flywheel::maxSpeed;
+			Flywheel::speed = Flywheel::Max;
 		}
 		//check for flywheel stopping modes
 		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_B))
 		{
 				//set the flywheel to stopping
-				Flywheel::speed = 0;
+				Flywheel::speed = Flywheel::Stopped;
 		}
 		//do we want to flip the flipper
 		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_Y))
@@ -58,8 +58,5 @@ void opcontrol()
 
 		//set drive
 		Drive::Tank(masterController->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y),masterController->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y));
-
-		//run all controllers
-		Flywheel::Controller();
 	}
 }

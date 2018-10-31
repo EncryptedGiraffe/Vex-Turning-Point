@@ -39,13 +39,17 @@ namespace Motors
 //flywheel controller
 namespace Flywheel
 {
-  //max speed for the flywheel
-  extern const int maxSpeed;
-  //speed
-  extern int speed;
+  //flywheel speeds
+  enum Speeds
+  {
+    Stopped,
+    Max
+  };
 
-  //flywheel controller
-  void Controller();
+  extern Speeds speed;
+
+  //set flywheel speed
+  void SetSpeed(Speeds newSpeed);
 };
 
 //drive controller
