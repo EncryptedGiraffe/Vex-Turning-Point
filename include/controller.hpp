@@ -47,9 +47,9 @@ namespace Flywheel
   };
 
   extern Speeds speed;
-
-  //set flywheel speed
-  void SetSpeed(Speeds newSpeed);
+  
+  //manage flywheel speed
+  void Controller();
 };
 
 //drive controller

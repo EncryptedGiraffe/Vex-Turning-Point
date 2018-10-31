@@ -39,13 +39,10 @@ namespace Flywheel
 {
   Speeds speed = Stopped;
 
-  //set the flywheel speed
-  void SetSpeed(Speeds newSpeed)
+  void Controller()
   {
     switch(speed)
     {
-      //set variables
-      speed = newSpeed;
       case Stopped:
         //check if the motors are stopped
         if(Motors::flywheelTop->get_actual_velocity() > 50)
@@ -80,8 +77,8 @@ namespace Drive
   }
   void Arcade(int speed, int rotate)
   {
-    Motors::driveLeft->move(speed);
-    Motors::driveRight->move(speed);
+    Motors::driveLeft->move(speed - rotate);
+    Motors::driveRight->move(speed + rotate);
   }
 }
 
