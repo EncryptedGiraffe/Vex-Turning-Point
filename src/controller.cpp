@@ -1,6 +1,9 @@
 #include "main.h"
 #include "controller.hpp"
 
+//variables
+int flywheelSpeed = 0;
+
 //controllers
 pros::Controller* masterController = new pros::Controller(pros::E_CONTROLLER_MASTER);
 pros::Controller* partnerController = new pros::Controller(pros::E_CONTROLLER_PARTNER);
@@ -21,9 +24,9 @@ namespace Motors
   //Drive Chassis right motor into Smart Port 3
   pros::Motor* driveRight = new pros::Motor(driveRightPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
   //Flywheel top motor into Smart Port 4
-  pros::Motor* flywheelTop = new pros::Motor(flywheelTopPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+  pros::Motor* flywheelTop = new pros::Motor(flywheelTopPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
   //Flywheel bottom motor into Smart Port 5
-  pros::Motor* flywheelBottom = new pros::Motor(flywheelBottomPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+  pros::Motor* flywheelBottom = new pros::Motor(flywheelBottomPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
   //arm top motor into Smart Port 6
   pros::Motor* armTop = new pros::Motor(armTopPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
   //arm bottom motor into Smart Port 7
@@ -38,6 +41,7 @@ namespace Motors
 namespace Flywheel
 {
   Speeds speed = Stopped;
+  int variableSpeed = 0;
 
   void Controller()
   {
@@ -45,25 +49,41 @@ namespace Flywheel
     {
       case Stopped:
         //check if the motors are stopped
-        if(Motors::flywheelTop->get_actual_velocity() > 50)
+        if(flywheelSpeed > 20)
         {
-          //lower the velocity by 2
-          Motors::flywheelTop->move_velocity(Motors::flywheelTop->get_actual_velocity() - 2);
-          Motors::flywheelBottom->move_velocity(Motors::flywheelTop->get_actual_velocity() - 2);
+          //lower the velocity by 1
+          flywheelSpeed -= 1;
         }
         else
         {
           //set the velocity to 0
-          Motors::flywheelTop->move_velocity(0);
-          Motors::flywheelBottom->move_velocity(0);
+          flywheelSpeed = 0;
         }
         break;
       case Max:
         //set motors to full power
-        Motors::flywheelTop->move_velocity(MOTOR_GEARSET_18_MAXSPEED);
-        Motors::flywheelBottom->move_velocity(MOTOR_GEARSET_18_MAXSPEED);
+        flywheelSpeed = MOTOR_GEARSET_18_MAXSPEED;
+        break;
+      case Variable:
+        //upper bounds checking
+        if(variableSpeed > MOTOR_GEARSET_18_MAXSPEED)
+        {
+          //set to limit
+          variableSpeed = MOTOR_GEARSET_18_MAXSPEED;
+        }
+        //lower bounds checking
+        if(variableSpeed < 0)
+        {
+          //set to limit
+          variableSpeed = 0;
+        }
+        //set speed to variableSpeed
+        flywheelSpeed = variableSpeed;
         break;
     }
+    //set the motors
+    Motors::flywheelTop->move_velocity(flywheelSpeed);
+    Motors::flywheelBottom->move_velocity(flywheelSpeed);
   }
 }
 
@@ -77,6 +97,7 @@ namespace Drive
   }
   void Arcade(int speed, int rotate)
   {
+    //set the motors
     Motors::driveLeft->move(speed - rotate);
     Motors::driveRight->move(speed + rotate);
   }

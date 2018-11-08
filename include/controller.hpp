@@ -43,11 +43,13 @@ namespace Flywheel
   enum Speeds
   {
     Stopped,
+    Variable,
     Max
   };
 
   extern Speeds speed;
-  
+  extern int variableSpeed;
+
   //manage flywheel speed
   void Controller();
 };
