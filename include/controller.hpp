@@ -1,5 +1,6 @@
 #ifndef CONTROLLERS_HPP
 #define CONTROLLERS_HPP
+
 #include "main.h"
 ////////////////////Variable declarations////////////////////
 
@@ -15,23 +16,79 @@ extern pros::Controller* partnerController;
 //motors
 namespace Motors
 {
-  extern pros::Motor* driveLeft; //Drive Chassis left motor into Smart Port 2
-  extern pros::Motor* driveRight; //Drive Chassis right motor into Smart Port 3
-  extern pros::Motor* flywheelTop; //Flywheel top motor into Smart Port 4
-  extern pros::Motor* flywheelBottom; //Flywheel bottom motor into Smart Port 5
+  //port variables
+  #define driveLeftPort 2
+  #define driveRightPort 3
+  #define flywheelTopPort 4
+  #define flywheelBottomPort 5
+  #define armTopPort 6
+  #define armBottomPort 7
+  #define flippinPort 8
+  #define intakePort 9
+
+  //motors
+  extern pros::Motor* driveLeft;
+  extern pros::Motor* driveRight;
+  extern pros::Motor* flywheelTop;
+  extern pros::Motor* flywheelBottom;
+  extern pros::Motor* armTop;
+  extern pros::Motor* armBottom;
+  extern pros::Motor* flippin;
+  extern pros::Motor* intake;
 }
 
 //flywheel controller
 namespace Flywheel
 {
-  //max speed for the flywheel
-  extern const int maxSpeed;
-  //speed
-  extern int speed;
-};
-////////////////////Function declarations////////////////////
+  //flywheel speeds
+  enum Speeds
+  {
+    Stopped,
+    Variable,
+    Max
+  };
 
-//flywheel controller
-void FlywheelController();
+  extern Speeds speed;
+  extern int variableSpeed;
+
+  //manage flywheel speed
+  void Controller();
+};
+
+//drive controller
+namespace Drive
+{
+  //tank drive
+  extern void Tank(int leftSpeed, int rightSpeed);
+  extern void Arcade(int speed, int rotate);
+}
+
+//arm controller
+namespace Arm
+{
+  //positions for arm
+  enum Positions
+  {
+    Down = 0,
+    Middle = 50,
+    Up = 100
+  };
+  //position of arm
+  extern int position;
+
+  //arm controller 0 = stay, 1 = up, -1 = down
+  void Simple(int mode);
+}
+
+namespace Flippin
+{
+    extern void Flip();
+}
+
+namespace Intake
+{
+  //simple controller for the intake, 1 = forwards, 0 = stopped, -1 = backwards
+  extern void Simple(int mode);
+}
 
 #endif

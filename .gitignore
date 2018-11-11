@@ -24,6 +24,7 @@ ExportedObj/
 *.pdb
 *.opendb
 *.o
+compile_commands.json
 
 
 # Unity3D generated meta files

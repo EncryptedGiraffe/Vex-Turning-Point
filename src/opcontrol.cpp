@@ -1,19 +1,10 @@
-#include "main.h"
 #include "controller.hpp"
 
-/**
- * Runs the operator control code. This function will be started in its own task
- * with the default priority and stack size whenever the robot is enabled via
- * the Field Management System or the VEX Competition Switch in the operator
- * control mode.
- *
- * If no competition control is connected, this function will run immediately
- * following initialize().
- *
- * If the robot is disabled or communications is lost, the
- * operator control task will be stopped. Re-enabling the robot will restart the
- * task, not resume it from where it left off.
- */
+//variables
+bool flippinNewPress = true;
+bool flywheelIncreaseNewPress = true;
+bool flywheelDecreaseNewPress = true;
+
 void opcontrol()
 {
 	while (true)
@@ -25,16 +16,89 @@ void opcontrol()
 		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_X))
 		{
 			//set the flywheel to full speed
-			Flywheel::speed = Flywheel::maxSpeed;
+			Flywheel::speed = Flywheel::Max;
 		}
-		//check for flywheel stopping modes
+		//check for flywheel stopping mode
 		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_B))
 		{
-				//set the flywheel to stopping
-				Flywheel::speed = 0;
+			//set the flywheel to stopping
+			Flywheel::speed = Flywheel::Stopped;
+		}
+		//check for flywheel variable speed mode
+		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_Y))
+		{
+			//set the flywheel to variable mode
+			Flywheel::speed = Flywheel::Variable;
+		}
+		//do we want to increase flywheel speed
+		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_R1))
+		{
+			if(flywheelIncreaseNewPress)
+			{
+				//increase speed
+				Flywheel::variableSpeed += 10;
+				//set toggle
+				flywheelIncreaseNewPress = false;
+			}
+		}
+		else
+		{
+			//set toggle
+			flywheelIncreaseNewPress = true;
+		}
+		//do we want to decrease flywheel speed
+		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_R2))
+		{
+			if(flywheelDecreaseNewPress)
+			{
+				//decrease speed
+				Flywheel::variableSpeed -= 10;
+				//set toggle
+				flywheelDecreaseNewPress = false;
+			}
+		}
+		else
+		{
+			//set toggle
+			flywheelDecreaseNewPress = true;
+		}
+		//do we want to flip the flipper
+		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_Y))
+		{
+			if(flippinNewPress)
+			{
+				//flip
+				Flippin::Flip();
+				//toggle
+				flippinNewPress = false;
+			}
+		}
+		else
+		{
+				//toggle
+				flippinNewPress = true;
+		}
+		//move the arm?
+		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_R1))
+		{
+			//go up
+			Arm::Simple(1);
+		}
+		else if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_R2))
+		{
+			//go Down
+			Arm::Simple(-1);
+		}
+		else
+		{
+			//stay still
+			Arm::Simple(0);
 		}
 
-		//run all controllers
-		FlywheelController();
+		//set drive
+		Drive::Tank(masterController->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y),masterController->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y));
+
+		//run controllers
+		Flywheel::Controller();
 	}
 }
