@@ -63,7 +63,7 @@ void opcontrol()
 			flywheelDecreaseNewPress = true;
 		}
 		//do we want to flip the flipper
-		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_Y))
+		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_A))
 		{
 			if(flippinNewPress)
 			{
@@ -79,26 +79,38 @@ void opcontrol()
 				flippinNewPress = true;
 		}
 		//move the arm?
-		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_R1))
+		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_L1))
 		{
-			//go up
+			//increase position
+			Arm::position += 10;
+			pros::lcd::set_text(2, std::to_string(Arm::position));
+		}
+		else if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_L2))
+		{
+			//decrease position
+			Arm::position -= 10;
+			pros::lcd::set_text(2, std::to_string(Arm::position));
+		}
+		/*
+		//arm test code
+		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_L1))
+		{
 			Arm::Simple(1);
 		}
-		else if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_R2))
+		else if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_L2))
 		{
-			//go Down
 			Arm::Simple(-1);
 		}
 		else
 		{
-			//stay still
 			Arm::Simple(0);
 		}
-
+		*/
 		//set drive
 		Drive::Tank(masterController->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y),masterController->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y));
 
 		//run controllers
 		Flywheel::Controller();
+		Arm::Controller();
 	}
 }

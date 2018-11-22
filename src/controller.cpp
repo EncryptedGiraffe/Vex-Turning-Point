@@ -2,6 +2,7 @@
 
 //variables
 int flywheelSpeed = 0;
+int flippinPosition = 0;
 
 //controllers
 pros::Controller* masterController = new pros::Controller(pros::E_CONTROLLER_MASTER);
@@ -23,9 +24,9 @@ namespace Motors
   //Drive Chassis right motor into Smart Port 3
   pros::Motor* driveRight = new pros::Motor(driveRightPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
   //Flywheel top motor into Smart Port 4
-  pros::Motor* flywheelTop = new pros::Motor(flywheelTopPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+  pros::Motor* flywheelTop = new pros::Motor(flywheelTopPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
   //Flywheel bottom motor into Smart Port 5
-  pros::Motor* flywheelBottom = new pros::Motor(flywheelBottomPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+  pros::Motor* flywheelBottom = new pros::Motor(flywheelBottomPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
   //arm top motor into Smart Port 6
   pros::Motor* armTop = new pros::Motor(armTopPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
   //arm bottom motor into Smart Port 7
@@ -107,6 +108,22 @@ namespace Arm
   //arm position
   int position;
 
+  //arm controller
+  void Controller()
+  {
+    //make sure the position is within bounds
+    if(position > UpperBound)
+      //set position to upper bound
+      position = UpperBound;
+    if(position < LowerBound)
+      //set position to lower bound
+      position = LowerBound;
+
+    //set motors to the position
+    Motors::armTop->move_absolute(position, 200);
+    Motors::armBottom->move_absolute(position, 200);
+  }
+
   //arm controller 0 = stay, 1 = up, -1 = down
   void Simple(int mode)
   {
@@ -135,8 +152,10 @@ namespace Flippin
 {
   void Flip()
   {
-    //flip by 180 degrees
-    Motors::flippin->move_absolute(180, 200);
+    //increase the flippin position by 180
+    flippinPosition += 180;
+    //set to position
+    Motors::flippin->move_absolute(flippinPosition, 150);
   }
 }
 

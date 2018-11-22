@@ -66,18 +66,18 @@ namespace Drive
 //arm controller
 namespace Arm
 {
-  //positions for arm
-  enum Positions
-  {
-    Down = 0,
-    Middle = 50,
-    Up = 100
-  };
   //position of arm
   extern int position;
 
+  //arm bounds
+  const int LowerBound = 0;
+  const int UpperBound = 450;
+
   //arm controller 0 = stay, 1 = up, -1 = down
   void Simple(int mode);
+
+  //arm controller sets the arm to the position
+  void Controller();
 }
 
 namespace Flippin
