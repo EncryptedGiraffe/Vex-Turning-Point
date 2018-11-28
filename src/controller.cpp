@@ -5,8 +5,8 @@ int flywheelSpeed = 0;
 int flippinPosition = 0;
 
 //controllers
-pros::Controller* masterController = new pros::Controller(pros::E_CONTROLLER_MASTER);
-pros::Controller* partnerController = new pros::Controller(pros::E_CONTROLLER_PARTNER);
+okapi::Controller* masterController = new okapi::Controller(okapi::ControllerId::master);
+okapi::Controller* partnerController = new okapi::Controller(okapi::ControllerId::partner);
 
 //motors
 namespace Motors

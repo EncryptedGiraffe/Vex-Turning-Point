@@ -10,8 +10,8 @@
 #define MOTOR_GEARSET_36_MAXSPEED 600 //maximum speed for the 6:1 gear set
 
 //controllers
-extern pros::Controller* masterController;
-extern pros::Controller* partnerController;
+extern okapi::Controller* masterController;
+extern okapi::Controller* partnerController;
 
 //motors
 namespace Motors
