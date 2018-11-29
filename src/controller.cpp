@@ -19,21 +19,17 @@ namespace Motors
   E_MOTOR_GEARSET_18, 18:1, 200 RPM, Green gear set
   E_MOTOR_GEARSET_06, 6:1, 600 RPM, Blue Gear Set
   */
-  //Drive Chassis left motor into Smart Port 2
-  pros::Motor* driveLeft = new pros::Motor(driveLeftPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
-  //Drive Chassis right motor into Smart Port 3
-  pros::Motor* driveRight = new pros::Motor(driveRightPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
-  //Flywheel top motor into Smart Port 4
+  //Flywheel top motor
   pros::Motor* flywheelTop = new pros::Motor(flywheelTopPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
-  //Flywheel bottom motor into Smart Port 5
+  //Flywheel bottom motor
   pros::Motor* flywheelBottom = new pros::Motor(flywheelBottomPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
-  //arm top motor into Smart Port 6
+  //arm top motor
   pros::Motor* armTop = new pros::Motor(armTopPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
-  //arm bottom motor into Smart Port 7
+  //arm bottom motor
   pros::Motor* armBottom = new pros::Motor(armBottomPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
-  //flippin motor into Smart Port 8
+  //flippin motor
   pros::Motor* flippin = new pros::Motor(flippinPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
-  //intake motor into smart port 9
+  //intake motor
   pros::Motor* intake = new pros::Motor(intakePort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
 }
 
@@ -89,18 +85,7 @@ namespace Flywheel
 
 namespace Drive
 {
-  void Tank(int leftSpeed, int rightSpeed)
-  {
-    //set the Motors
-    Motors::driveLeft->move(leftSpeed);
-    Motors::driveRight->move(rightSpeed);
-  }
-  void Arcade(int speed, int rotate)
-  {
-    //set the motors
-    Motors::driveLeft->move(speed - rotate);
-    Motors::driveRight->move(speed + rotate);
-  }
+  okapi::ChassisControllerIntegrated controller = okapi::ChassisControllerFactory::create(driveLeftPort, driveRightPort, AbstractMotor::gearset::green, {4_in, 12.7_in});
 }
 
 namespace Arm
