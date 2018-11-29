@@ -36,8 +36,8 @@ namespace Motors
 //flywheel controller
 namespace Flywheel
 {
-  Speeds speed = Stopped;
-  int variableSpeed = 0;
+  Mode mode = Stopped;
+  int speed = 0;
 
   void Controller()
   {
@@ -62,19 +62,19 @@ namespace Flywheel
         break;
       case Variable:
         //upper bounds checking
-        if(variableSpeed > MOTOR_GEARSET_18_MAXSPEED)
+        if(speed > MOTOR_GEARSET_18_MAXSPEED)
         {
           //set to limit
-          variableSpeed = MOTOR_GEARSET_18_MAXSPEED;
+          speed = MOTOR_GEARSET_18_MAXSPEED;
         }
         //lower bounds checking
-        if(variableSpeed < 0)
+        if(speed < 0)
         {
           //set to limit
-          variableSpeed = 0;
+          speed = 0;
         }
         //set speed to variableSpeed
-        flywheelSpeed = variableSpeed;
+        flywheelSpeed = speed;
         break;
     }
     //set the motors

@@ -22,31 +22,31 @@ void opcontrol()
 		if(Btn_flywheelMax.isPressed())
 		{
 			//set the flywheel to full speed
-			Flywheel::speed = Flywheel::Max;
+			Flywheel::mode = Flywheel::Max;
 		}
 		//check for flywheel stopping mode
 		if(Btn_flywheelStop.isPressed())
 		{
 			//set the flywheel to stopping
-			Flywheel::speed = Flywheel::Stopped;
+			Flywheel::mode = Flywheel::Stopped;
 		}
 		//check for flywheel variable speed mode
 		if(Btn_flywheelVariable.isPressed())
 		{
 			//set the flywheel to variable mode
-			Flywheel::speed = Flywheel::Variable;
+			Flywheel::mode = Flywheel::Variable;
 		}
 		//do we want to increase flywheel speed
 		if(Btn_flywheelIncrease.changedToPressed())
 		{
 			//increase speed
-			Flywheel::variableSpeed += 10;
+			Flywheel::speed += 10;
 		}
 		//do we want to decrease flywheel speed
 		if(Btn_flywheelDecrease.changedToPressed())
 		{
 			//decrease speed
-			Flywheel::variableSpeed -= 10;
+			Flywheel::speed -= 10;
 		}
 		//do we want to flip the flipper
 		if(Btn_flip.changedToPressed())
@@ -65,7 +65,7 @@ void opcontrol()
 			//decrease position
 			Arm::position -= 10;
 		}
-		
+
 		//run controllers
 		Flywheel::Controller();
 		Arm::Controller();

@@ -40,15 +40,15 @@ namespace Motors
 namespace Flywheel
 {
   //flywheel speeds
-  enum Speeds
+  enum Mode
   {
     Stopped,
     Variable,
     Max
   };
 
-  extern Speeds speed;
-  extern int variableSpeed;
+  extern Mode mode;
+  extern int speed;
 
   //manage flywheel speed
   void Controller();
