@@ -10,25 +10,24 @@
 #define MOTOR_GEARSET_36_MAXSPEED 600 //maximum speed for the 6:1 gear set
 
 //controllers
-extern pros::Controller* masterController;
-extern pros::Controller* partnerController;
+extern okapi::Controller* masterController;
+extern okapi::Controller* partnerController;
+
+//port variables
+#define driveLeftPort 20
+#define driveRightPort 19
+#define flywheelTopPort 1
+#define flywheelBottomPort 2
+#define armTopPort 18
+#define armBottomPort 17
+#define flippinPort 16
+#define intakePort 15
+#define intakeLimit 'A'
 
 //motors
 namespace Motors
 {
-  //port variables
-  #define driveLeftPort 2
-  #define driveRightPort 3
-  #define flywheelTopPort 4
-  #define flywheelBottomPort 5
-  #define armTopPort 6
-  #define armBottomPort 7
-  #define flippinPort 8
-  #define intakePort 9
-
   //motors
-  extern pros::Motor* driveLeft;
-  extern pros::Motor* driveRight;
   extern pros::Motor* flywheelTop;
   extern pros::Motor* flywheelBottom;
   extern pros::Motor* armTop;
@@ -41,15 +40,15 @@ namespace Motors
 namespace Flywheel
 {
   //flywheel speeds
-  enum Speeds
+  enum Mode
   {
     Stopped,
     Variable,
     Max
   };
 
-  extern Speeds speed;
-  extern int variableSpeed;
+  extern Mode mode;
+  extern int speed;
 
   //manage flywheel speed
   void Controller();
@@ -59,8 +58,7 @@ namespace Flywheel
 namespace Drive
 {
   //tank drive
-  extern void Tank(int leftSpeed, int rightSpeed);
-  extern void Arcade(int speed, int rotate);
+  extern okapi::ChassisControllerIntegrated controller;
 }
 
 //arm controller

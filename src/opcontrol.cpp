@@ -1,9 +1,15 @@
 #include "controller.hpp"
 
-//variables
-bool flippinNewPress = true;
-bool flywheelIncreaseNewPress = true;
-bool flywheelDecreaseNewPress = true;
+
+//buttons
+okapi::ControllerButton Btn_flywheelMax(okapi::ControllerDigital::X);
+okapi::ControllerButton Btn_flywheelStop(okapi::ControllerDigital::B);
+okapi::ControllerButton Btn_flywheelVariable(okapi::ControllerDigital::Y);
+okapi::ControllerButton Btn_flywheelIncrease(okapi::ControllerDigital::R1);
+okapi::ControllerButton Btn_flywheelDecrease(okapi::ControllerDigital::R2);
+okapi::ControllerButton Btn_flip(okapi::ControllerDigital::A);
+okapi::ControllerButton Btn_armUp(okapi::ControllerDigital::L1);
+okapi::ControllerButton Btn_armDown(okapi::ControllerDigital::L2);
 
 void opcontrol()
 {
@@ -13,104 +19,58 @@ void opcontrol()
 		pros::delay(20);
 
 		//check for flywheel full speed mode
-		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_X))
+		if(Btn_flywheelMax.isPressed())
 		{
 			//set the flywheel to full speed
-			Flywheel::speed = Flywheel::Max;
+			Flywheel::mode = Flywheel::Max;
 		}
 		//check for flywheel stopping mode
-		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_B))
+		if(Btn_flywheelStop.isPressed())
 		{
 			//set the flywheel to stopping
-			Flywheel::speed = Flywheel::Stopped;
+			Flywheel::mode = Flywheel::Stopped;
 		}
 		//check for flywheel variable speed mode
-		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_Y))
+		if(Btn_flywheelVariable.isPressed())
 		{
 			//set the flywheel to variable mode
-			Flywheel::speed = Flywheel::Variable;
+			Flywheel::mode = Flywheel::Variable;
 		}
 		//do we want to increase flywheel speed
-		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_R1))
+		if(Btn_flywheelIncrease.changedToPressed())
 		{
-			if(flywheelIncreaseNewPress)
-			{
-				//increase speed
-				Flywheel::variableSpeed += 10;
-				//set toggle
-				flywheelIncreaseNewPress = false;
-			}
-		}
-		else
-		{
-			//set toggle
-			flywheelIncreaseNewPress = true;
+			//increase speed
+			Flywheel::speed += 10;
 		}
 		//do we want to decrease flywheel speed
-		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_R2))
+		if(Btn_flywheelDecrease.changedToPressed())
 		{
-			if(flywheelDecreaseNewPress)
-			{
-				//decrease speed
-				Flywheel::variableSpeed -= 10;
-				//set toggle
-				flywheelDecreaseNewPress = false;
-			}
-		}
-		else
-		{
-			//set toggle
-			flywheelDecreaseNewPress = true;
+			//decrease speed
+			Flywheel::speed -= 10;
 		}
 		//do we want to flip the flipper
-		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_A))
+		if(Btn_flip.changedToPressed())
 		{
-			if(flippinNewPress)
-			{
-				//flip
-				Flippin::Flip();
-				//toggle
-				flippinNewPress = false;
-			}
-		}
-		else
-		{
-				//toggle
-				flippinNewPress = true;
+			//flip
+			Flippin::Flip();
 		}
 		//move the arm?
-		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_L1))
+		if(Btn_armUp.isPressed())
 		{
 			//increase position
 			Arm::position += 10;
-			pros::lcd::set_text(2, std::to_string(Arm::position));
 		}
-		else if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_L2))
+		else if(Btn_armDown.isPressed())
 		{
 			//decrease position
 			Arm::position -= 10;
-			pros::lcd::set_text(2, std::to_string(Arm::position));
 		}
-		/*
-		//arm test code
-		if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_L1))
-		{
-			Arm::Simple(1);
-		}
-		else if(masterController->get_digital(pros::E_CONTROLLER_DIGITAL_L2))
-		{
-			Arm::Simple(-1);
-		}
-		else
-		{
-			Arm::Simple(0);
-		}
-		*/
-		//set drive
-		Drive::Tank(masterController->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y),masterController->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y));
 
 		//run controllers
 		Flywheel::Controller();
 		Arm::Controller();
+
+		//tank drive controller
+		Drive::controller.tank(masterController->getAnalog(okapi::ControllerAnalog::leftY), masterController->getAnalog(okapi::ControllerAnalog::rightY));
 	}
 }
