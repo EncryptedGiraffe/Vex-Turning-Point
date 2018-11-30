@@ -49,6 +49,11 @@ namespace Flywheel
   extern Mode mode;
   extern int speed;
 
+  //flywheel speeds for different tiles for the high and low ball-toggled flags
+  // first element is for tile 1 away from flags, last element full-court
+  const int highSpeeds[] = {0, 0, 0, 0, 0}; //the speeds for the high flag
+  const int lowSpeeds[] = {0, 0, 0, 0, 0}; //the speeds for the low flag
+
   //manage flywheel speed
   void Controller();
 };
