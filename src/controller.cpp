@@ -105,8 +105,8 @@ namespace Arm
       position = LowerBound;
 
     //set motors to the position
-    Motors::armTop->move_absolute(position, 200);
-    Motors::armBottom->move_absolute(position, 200);
+    Motors::armTop->move_absolute(position, 100);
+    Motors::armBottom->move_absolute(position, 100);
   }
 
   //arm controller 0 = stay, 1 = up, -1 = down
@@ -153,19 +153,19 @@ namespace Flippin
   {
     if(isFlippin)
     {
-      if(Time::gameTime - flippinTimeout == 0)
+      if(Time::gameTime - flippinTimeout == 20)
       {
         //raise arm
-        Arm::position = 100;
+        Arm::position = 50;
       }
-      if(Time::gameTime - flippinTimeout == 500)
+      if(Time::gameTime - flippinTimeout == 400)
       {
         //increase the flippin position by 180
         flippinPosition += 180;
         //set to position
         Motors::flippin->move_absolute(flippinPosition, 150);
       }
-      if(Time::gameTime - flippinTimeout == 660)
+      if(Time::gameTime - flippinTimeout == 700)
       {
         //drop the arm
         Arm::position = 0;
@@ -186,13 +186,11 @@ namespace Intake
   void Controller()
   {
     //check if the limit switch has been hit
-    /*
-    if(!intakeSwitch.isPressed())
+    if(intakeSwitch.isPressed())
     {
       //stop
       running = false;
     }
-    */
     if(running)
     {
       //run motor

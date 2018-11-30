@@ -68,7 +68,7 @@ namespace Arm
   extern int position;
 
   //arm bounds
-  const int LowerBound = 0;
+  const int LowerBound = -5;
   const int UpperBound = 450;
 
   //arm controller 0 = stay, 1 = up, -1 = down

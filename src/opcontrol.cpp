@@ -71,11 +71,6 @@ void opcontrol()
 			//run intake
 			Intake::running = true;
 		}
-		else
-		{
-			//stop intake
-			Intake::running = false;
-		}
 
 		//run controllers
 		Flywheel::Controller();
