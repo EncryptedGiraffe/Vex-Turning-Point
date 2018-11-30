@@ -35,9 +35,29 @@ namespace Motors
 //flywheel controller
 namespace Flywheel
 {
+  //velocity management variables
   int flywheelSpeed = 0;
   Mode mode = Variable;
   int speed = 0;
+
+  //speeds
+  int row = 0;
+  bool isHighFlag = true;
+
+  void SetSpeed()
+  {
+    //high or low?
+    if(isHighFlag)
+    {
+      //set the flywheel speed
+      speed = HighSpeeds[row];
+    }
+    else
+    {
+      //set the flywheel speed
+      speed = LowSpeeds[row];
+    }
+  }
 
   void Controller()
   {
@@ -129,7 +149,7 @@ namespace Flippin
       if(Time::gameTime - flippinTimeout == 20)
       {
         //raise arm
-        Arm::position += 50;
+        Arm::position += 60;
       }
       if(Time::gameTime - flippinTimeout == 300)
       {

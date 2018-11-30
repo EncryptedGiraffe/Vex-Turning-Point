@@ -1,12 +1,30 @@
 #include "controller.hpp"
 
+//functions
+void UpdateFlywheel()
+{
+	//set the flywheel to variable mode
+	Flywheel::mode = Flywheel::Variable;
+	//tell the flywheel to update its speed
+	Flywheel::SetSpeed();
+	//write the row and flag to the controller screen
+	//check flag
+	if(Flywheel::isHighFlag)
+	{
+		masterController.setText(1, 0, "High, " + std::to_string(Flywheel::row));
+	}
+	else
+	{
+		masterController.setText(1, 0, "Low, " + std::to_string(Flywheel::row));
+	}
+}
 
 //buttons
 okapi::ControllerButton Btn_flywheelCoast(okapi::ControllerDigital::Y);
-okapi::ControllerButton Btn_lowFlag(okapi::ControllerDigital::B);
-okapi::ControllerButton Btn_highFlag(okapi::ControllerDigital::X);
-okapi::ControllerButton Btn_increaseRow(okapi::ControllerDigital::R2);
-okapi::ControllerButton Btn_decreaseRow(okapi::ControllerDigital::R1);
+okapi::ControllerButton Btn_flywheelLowFlag(okapi::ControllerDigital::B);
+okapi::ControllerButton Btn_flywheelHighFlag(okapi::ControllerDigital::X);
+okapi::ControllerButton Btn_flywheelIncreaseRow(okapi::ControllerDigital::R2);
+okapi::ControllerButton Btn_flywheelDecreaseRow(okapi::ControllerDigital::R1);
 okapi::ControllerButton Btn_highPost(okapi::ControllerDigital::up);
 okapi::ControllerButton Btn_lowPost(okapi::ControllerDigital::down);
 okapi::ControllerButton Btn_flip(okapi::ControllerDigital::left);
@@ -21,6 +39,44 @@ void opcontrol()
 		//wait
 		pros::delay(20);
 
+		//check for high or low flag modes
+		if(Btn_flywheelHighFlag.changedToPressed())
+		{
+			//set the flywheel to high flag mode
+			Flywheel::isHighFlag = true;
+			//update the flywheel
+			UpdateFlywheel();
+		}
+		else if(Btn_flywheelLowFlag.changedToPressed())
+		{
+			//set the flywheel to low flag mode
+			Flywheel::isHighFlag = false;
+			//update the flywheel
+			UpdateFlywheel();
+		}
+		//check for changing rows
+		if(Btn_flywheelIncreaseRow.changedToPressed())
+		{
+			//check if its at the edge of the range
+			if(!(Flywheel::row >= 4))
+			{
+				//increase
+				Flywheel::row += 1;
+			}
+			//update the flywheel
+			UpdateFlywheel();
+		}
+		else if(Btn_flywheelDecreaseRow.changedToPressed())
+		{
+			//check if its at the edge of the range
+			if(!(Flywheel::row <= 0))
+			{
+				//decrease
+				Flywheel::row -= 1;
+			}
+			//update the flywheel
+			UpdateFlywheel();
+		}
 		//check for flywheel variable speed mode
 		if(Btn_flywheelCoast.changedToPressed())
 		{
@@ -32,8 +88,6 @@ void opcontrol()
 			}
 			else
 			{
-				//set the flywheel to variable mode
-				Flywheel::mode = Flywheel::Variable;
 				//set the speed to 100
 				Flywheel::speed = 100;
 			}
