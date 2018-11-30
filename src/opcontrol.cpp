@@ -71,13 +71,20 @@ void opcontrol()
 			//run intake
 			Intake::running = true;
 		}
+		else
+		{
+			//stop intake
+			Intake::running = false;
+		}
 
 		//run controllers
 		Flywheel::Controller();
 		Arm::Controller();
 		Intake::Controller();
+		Time::Controller();
+		Flippin::Controller();
 
 		//tank drive controller
-		Drive::controller.tank(masterController.getAnalog(okapi::ControllerAnalog::leftY), masterController.getAnalog(okapi::ControllerAnalog::rightY));
+		Drive::controller.tank(masterController.getAnalog(okapi::ControllerAnalog::leftY), -masterController.getAnalog(okapi::ControllerAnalog::rightY));
 	}
 }

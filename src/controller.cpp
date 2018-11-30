@@ -1,13 +1,11 @@
 #include "controller.hpp"
 
 //variables
-int flywheelSpeed = 0;
-int flippinPosition = 0;
 okapi::ADIButton intakeSwitch(intakeLimit);
 
 //controllers
 okapi::Controller masterController(okapi::ControllerId::master);
-okapi::Controller partnerController(okapi::ControllerId::partner);
+//okapi::Controller partnerController(okapi::ControllerId::partner);
 
 //motors
 namespace Motors
@@ -37,12 +35,13 @@ namespace Motors
 //flywheel controller
 namespace Flywheel
 {
+  int flywheelSpeed = 0;
   Mode mode = Stopped;
   int speed = 0;
 
   void Controller()
   {
-    switch(speed)
+    switch(mode)
     {
       case Stopped:
         //check if the motors are stopped
@@ -136,12 +135,47 @@ namespace Arm
 
 namespace Flippin
 {
+  int flippinPosition = 0;
+  int flippinTimeout = 0;
+  bool isFlippin = false;
   void Flip()
   {
-    //increase the flippin position by 180
-    flippinPosition += 180;
-    //set to position
-    Motors::flippin->move_absolute(flippinPosition, 150);
+    if(isFlippin == false)
+    {
+      //now flippin
+      isFlippin = true;
+      //set timeout
+      flippinTimeout = Time::gameTime;
+    }
+  }
+
+  void Controller()
+  {
+    if(isFlippin)
+    {
+      if(Time::gameTime - flippinTimeout == 0)
+      {
+        //raise arm
+        Arm::position = 100;
+      }
+      if(Time::gameTime - flippinTimeout == 500)
+      {
+        //increase the flippin position by 180
+        flippinPosition += 180;
+        //set to position
+        Motors::flippin->move_absolute(flippinPosition, 150);
+      }
+      if(Time::gameTime - flippinTimeout == 660)
+      {
+        //drop the arm
+        Arm::position = 0;
+      }
+      if(Time::gameTime - flippinTimeout == 1000)
+      {
+        //done
+        isFlippin = false;
+      }
+    }
   }
 }
 
@@ -152,20 +186,32 @@ namespace Intake
   void Controller()
   {
     //check if the limit switch has been hit
-    if(intakeSwitch.isPressed())
+    /*
+    if(!intakeSwitch.isPressed())
     {
       //stop
       running = false;
     }
+    */
     if(running)
     {
       //run motor
-      Motors::intake->move_voltage(127);
+      Motors::intake->move(127);
     }
     else
     {
       //stop motor
-      Motors::intake->move_voltage(0);
+      Motors::intake->move(0);
     }
+  }
+}
+
+namespace Time
+{
+  int gameTime = 0;
+
+  void Controller()
+  {
+    gameTime += 20;
   }
 }

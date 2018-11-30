@@ -11,7 +11,7 @@
 
 //controllers
 extern okapi::Controller masterController;
-extern okapi::Controller partnerController;
+//extern okapi::Controller partnerController;
 
 //port variables
 #define driveLeftPort 20
@@ -21,7 +21,7 @@ extern okapi::Controller partnerController;
 #define armTopPort 18
 #define armBottomPort 17
 #define flippinPort 11
-#define intakePort 16
+#define intakePort 13
 #define intakeLimit 'A'
 
 //motors
@@ -81,11 +81,20 @@ namespace Arm
 namespace Flippin
 {
   extern void Flip();
+
+  extern void Controller();
 }
 
 namespace Intake
 {
   extern bool running;
+
+  extern void Controller();
+}
+
+namespace Time
+{
+  extern int gameTime;
 
   extern void Controller();
 }
