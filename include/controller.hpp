@@ -43,8 +43,7 @@ namespace Flywheel
   enum Mode
   {
     Stopped,
-    Variable,
-    Max
+    Variable
   };
 
   extern Mode mode;

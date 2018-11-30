@@ -1,14 +1,9 @@
 #include "main.h"
 #include "controller.hpp"
 
-void on_center_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
+void on_center_button()
+{
 		pros::lcd::set_text(2, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
-	}
 }
 
 /**

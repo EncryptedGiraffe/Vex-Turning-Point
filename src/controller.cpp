@@ -36,7 +36,7 @@ namespace Motors
 namespace Flywheel
 {
   int flywheelSpeed = 0;
-  Mode mode = Stopped;
+  Mode mode = Variable;
   int speed = 0;
 
   void Controller()
@@ -55,10 +55,6 @@ namespace Flywheel
           //set the velocity to 0
           flywheelSpeed = 0;
         }
-        break;
-      case Max:
-        //set motors to full power
-        flywheelSpeed = MOTOR_GEARSET_18_MAXSPEED;
         break;
       case Variable:
         //upper bounds checking
@@ -156,21 +152,21 @@ namespace Flippin
       if(Time::gameTime - flippinTimeout == 20)
       {
         //raise arm
-        Arm::position = 50;
+        Arm::position += 50;
       }
-      if(Time::gameTime - flippinTimeout == 400)
+      if(Time::gameTime - flippinTimeout == 300)
       {
         //increase the flippin position by 180
         flippinPosition += 180;
         //set to position
         Motors::flippin->move_absolute(flippinPosition, 150);
       }
-      if(Time::gameTime - flippinTimeout == 700)
+      if(Time::gameTime - flippinTimeout == 600)
       {
         //drop the arm
-        Arm::position = 0;
+        Arm::position -= 50;
       }
-      if(Time::gameTime - flippinTimeout == 1000)
+      if(Time::gameTime - flippinTimeout == 900)
       {
         //done
         isFlippin = false;
@@ -186,7 +182,7 @@ namespace Intake
   void Controller()
   {
     //check if the limit switch has been hit
-    if(intakeSwitch.isPressed())
+    if(intakeSwitch.changedToPressed())
     {
       //stop
       running = false;
