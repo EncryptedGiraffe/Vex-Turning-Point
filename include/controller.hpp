@@ -70,8 +70,9 @@ namespace Arm
   const int LowerBound = -5;
   const int UpperBound = 450;
 
-  //arm controller 0 = stay, 1 = up, -1 = down
-  void Simple(int mode);
+  //arm heights
+  const int LowPostHeight = 0;
+  const int HighPostHeight = 0;
 
   //arm controller sets the arm to the position
   void Controller();

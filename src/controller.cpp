@@ -104,29 +104,6 @@ namespace Arm
     Motors::armTop->move_absolute(position, 100);
     Motors::armBottom->move_absolute(position, 100);
   }
-
-  //arm controller 0 = stay, 1 = up, -1 = down
-  void Simple(int mode)
-  {
-    if(mode == 1)
-    {
-      //arm up
-      Motors::armTop->move(127);
-      Motors::armBottom->move(127);
-    }
-    else if(mode == -1)
-    {
-      //arm down
-      Motors::armTop->move(-127);
-      Motors::armBottom->move(-127);
-    }
-    else
-    {
-      //arm off
-      Motors::armTop->move(0);
-      Motors::armBottom->move(0);
-    }
-  }
 }
 
 namespace Flippin

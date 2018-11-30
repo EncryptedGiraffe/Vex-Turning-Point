@@ -21,12 +21,6 @@ void opcontrol()
 		//wait
 		pros::delay(20);
 
-		//check for flywheel stopping mode
-		if(Btn_flywheelStop.isPressed())
-		{
-			//set the flywheel to stopping
-			Flywheel::mode = Flywheel::Stopped;
-		}
 		//check for flywheel variable speed mode
 		if(Btn_flywheelCoast.changedToPressed())
 		{
@@ -43,18 +37,6 @@ void opcontrol()
 				//set the speed to 100
 				Flywheel::speed = 100;
 			}
-		}
-		//do we want to increase flywheel speed
-		if(Btn_flywheelIncrease.changedToPressed())
-		{
-			//increase speed
-			Flywheel::speed += 10;
-		}
-		//do we want to decrease flywheel speed
-		if(Btn_flywheelDecrease.changedToPressed())
-		{
-			//decrease speed
-			Flywheel::speed -= 10;
 		}
 		//do we want to flip the flipper
 		if(Btn_flip.changedToPressed())
@@ -73,6 +55,18 @@ void opcontrol()
 			//decrease position
 			Arm::position -= 10;
 		}
+		//go to arm heights?
+		if (Btn_lowPost.changedToPressed())
+		{
+			//go to low post height
+			Arm::position = Arm::LowPostHeight;
+		}
+		else if(Btn_highPost.changedToPressed())
+		{
+			//go to high post height
+			Arm::position = Arm::HighPostHeight;
+		}
+		// run the intake?
 		if(Btn_intake.isPressed())
 		{
 			//run intake
