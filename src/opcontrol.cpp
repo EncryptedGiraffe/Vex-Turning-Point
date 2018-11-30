@@ -11,11 +11,11 @@ void UpdateFlywheel()
 	//check flag
 	if(Flywheel::isHighFlag)
 	{
-		masterController.setText(1, 0, "High, " + std::to_string(Flywheel::row));
+		masterController.setText(1, 0, "High, " + std::to_string(Flywheel::row) + "   ");
 	}
 	else
 	{
-		masterController.setText(1, 0, "Low, " + std::to_string(Flywheel::row));
+		masterController.setText(1, 0, "Low, " + std::to_string(Flywheel::row) + "   ");
 	}
 }
 
@@ -23,8 +23,8 @@ void UpdateFlywheel()
 okapi::ControllerButton Btn_flywheelCoast(okapi::ControllerDigital::Y);
 okapi::ControllerButton Btn_flywheelLowFlag(okapi::ControllerDigital::B);
 okapi::ControllerButton Btn_flywheelHighFlag(okapi::ControllerDigital::X);
-okapi::ControllerButton Btn_flywheelIncreaseRow(okapi::ControllerDigital::R2);
-okapi::ControllerButton Btn_flywheelDecreaseRow(okapi::ControllerDigital::R1);
+okapi::ControllerButton Btn_flywheelIncreaseRow(okapi::ControllerDigital::R1);
+okapi::ControllerButton Btn_flywheelDecreaseRow(okapi::ControllerDigital::R2);
 okapi::ControllerButton Btn_highPost(okapi::ControllerDigital::up);
 okapi::ControllerButton Btn_lowPost(okapi::ControllerDigital::down);
 okapi::ControllerButton Btn_flip(okapi::ControllerDigital::left);
@@ -85,6 +85,7 @@ void opcontrol()
 			{
 				//stop the flywheel
 				Flywheel::mode = Flywheel::Stopped;
+				Flywheel::speed = 0;
 			}
 			else
 			{

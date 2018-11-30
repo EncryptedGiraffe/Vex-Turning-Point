@@ -52,8 +52,8 @@ namespace Flywheel
 
   //flywheel speeds for different tiles for the high and low ball-toggled flags
   // first element is for tile 1 away from flags, last element full-court
-  const int HighSpeeds[] = {0, 0, 0, 0, 0}; //the speeds for the high flag
-  const int LowSpeeds[] = {0, 0, 0, 0, 0}; //the speeds for the low flag
+  const int HighSpeeds[] = {0, 105, 130, 140, 170}; //the speeds for the high flag
+  const int LowSpeeds[] = {130, 170, 140, 115, 120}; //the speeds for the low flag
 
   //speeds
   extern int row;
@@ -84,8 +84,8 @@ namespace Arm
   const int UpperBound = 450;
 
   //arm heights
-  const int LowPostHeight = 250;
-  const int HighPostHeight = 400;
+  const int LowPostHeight = 300;
+  const int HighPostHeight = 450;
 
   //arm controller sets the arm to the position
   void Controller();

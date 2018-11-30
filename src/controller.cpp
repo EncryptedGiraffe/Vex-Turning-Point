@@ -183,6 +183,8 @@ namespace Intake
     {
       //stop
       running = false;
+      //rumble the controller
+      masterController.rumble(". .");
     }
     if(running)
     {
