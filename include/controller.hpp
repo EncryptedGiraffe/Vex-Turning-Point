@@ -71,8 +71,8 @@ namespace Arm
   const int UpperBound = 450;
 
   //arm heights
-  const int LowPostHeight = 0;
-  const int HighPostHeight = 0;
+  const int LowPostHeight = 250;
+  const int HighPostHeight = 400;
 
   //arm controller sets the arm to the position
   void Controller();
