@@ -3,10 +3,11 @@
 //variables
 int flywheelSpeed = 0;
 int flippinPosition = 0;
+okapi::ADIButton intakeSwitch(intakeLimit);
 
 //controllers
-okapi::Controller* masterController = new okapi::Controller(okapi::ControllerId::master);
-okapi::Controller* partnerController = new okapi::Controller(okapi::ControllerId::partner);
+okapi::Controller masterController(okapi::ControllerId::master);
+okapi::Controller partnerController(okapi::ControllerId::partner);
 
 //motors
 namespace Motors
@@ -85,7 +86,7 @@ namespace Flywheel
 
 namespace Drive
 {
-  okapi::ChassisControllerIntegrated controller = okapi::ChassisControllerFactory::create(driveLeftPort, driveRightPort, AbstractMotor::gearset::green, {4_in, 12.7_in});
+  okapi::ChassisControllerIntegrated controller = okapi::ChassisControllerFactory::create(driveLeftPort, driveRightPort, okapi::AbstractMotor::gearset::green, {1128, 3.125});
 }
 
 namespace Arm
@@ -146,23 +147,25 @@ namespace Flippin
 
 namespace Intake
 {
-  //1 = forwards, 0 = stopped, -1 = backwards
-  void Simple(int mode)
+  bool running = false;
+
+  void Controller()
   {
-    if(mode == 1)
+    //check if the limit switch has been hit
+    if(intakeSwitch.isPressed())
     {
-      //forwards
-      Motors::intake->move(127);
+      //stop
+      running = false;
     }
-    else if(mode == -1)
+    if(running)
     {
-      //backwards
-      Motors::intake->move(-127);
+      //run motor
+      Motors::intake->move_voltage(127);
     }
     else
     {
-      //stopped
-      Motors::intake->move(0);
+      //stop motor
+      Motors::intake->move_voltage(0);
     }
   }
 }

@@ -10,18 +10,18 @@
 #define MOTOR_GEARSET_36_MAXSPEED 600 //maximum speed for the 6:1 gear set
 
 //controllers
-extern okapi::Controller* masterController;
-extern okapi::Controller* partnerController;
+extern okapi::Controller masterController;
+extern okapi::Controller partnerController;
 
 //port variables
 #define driveLeftPort 20
 #define driveRightPort 19
-#define flywheelTopPort 1
-#define flywheelBottomPort 2
+#define flywheelTopPort 15
+#define flywheelBottomPort 14
 #define armTopPort 18
 #define armBottomPort 17
-#define flippinPort 16
-#define intakePort 15
+#define flippinPort 11
+#define intakePort 16
 #define intakeLimit 'A'
 
 //motors
@@ -80,13 +80,14 @@ namespace Arm
 
 namespace Flippin
 {
-    extern void Flip();
+  extern void Flip();
 }
 
 namespace Intake
 {
-  //simple controller for the intake, 1 = forwards, 0 = stopped, -1 = backwards
-  extern void Simple(int mode);
+  extern bool running;
+
+  extern void Controller();
 }
 
 #endif

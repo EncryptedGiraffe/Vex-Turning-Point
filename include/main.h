@@ -32,7 +32,7 @@
  *
  * For instance, you can do `4_mtr = 50` to set motor 4's target velocity to 50
  */
-//#define PROS_USE_LITERALS
+#define PROS_USE_LITERALS
 
 #include "api.h"
 
@@ -52,7 +52,7 @@
  */
 // using namespace pros;
 // using namespace pros::literals;
-using namespace okapi;
+// using namespace okapi;
 
 /**
  * Prototypes for the competition control tasks are redefined here to ensure

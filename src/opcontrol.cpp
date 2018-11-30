@@ -10,6 +10,7 @@ okapi::ControllerButton Btn_flywheelDecrease(okapi::ControllerDigital::R2);
 okapi::ControllerButton Btn_flip(okapi::ControllerDigital::A);
 okapi::ControllerButton Btn_armUp(okapi::ControllerDigital::L1);
 okapi::ControllerButton Btn_armDown(okapi::ControllerDigital::L2);
+okapi::ControllerButton Btn_intake(okapi::ControllerDigital::up);
 
 void opcontrol()
 {
@@ -65,12 +66,18 @@ void opcontrol()
 			//decrease position
 			Arm::position -= 10;
 		}
+		if(Btn_intake.isPressed())
+		{
+			//run intake
+			Intake::running = true;
+		}
 
 		//run controllers
 		Flywheel::Controller();
 		Arm::Controller();
+		Intake::Controller();
 
 		//tank drive controller
-		Drive::controller.tank(masterController->getAnalog(okapi::ControllerAnalog::leftY), masterController->getAnalog(okapi::ControllerAnalog::rightY));
+		Drive::controller.tank(masterController.getAnalog(okapi::ControllerAnalog::leftY), masterController.getAnalog(okapi::ControllerAnalog::rightY));
 	}
 }
