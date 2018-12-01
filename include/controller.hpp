@@ -112,4 +112,11 @@ namespace Time
   extern void Controller();
 }
 
+namespace Manager
+{
+  extern bool isStarted;
+
+  extern void Manager();
+}
+
 #endif

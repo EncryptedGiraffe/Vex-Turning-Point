@@ -184,7 +184,7 @@ namespace Intake
       //stop
       running = false;
       //rumble the controller
-      masterController.rumble(". .");
+      masterController.rumble("..");
     }
     if(running)
     {
@@ -206,5 +206,44 @@ namespace Time
   void Controller()
   {
     gameTime += 20;
+  }
+}
+
+namespace Manager
+{
+  bool isStarted = false;
+
+  void Manager()
+  {
+    //check if we have not started yet
+    if(!isStarted)
+    {
+      //set the flipper to rotate slightly
+      Motors::flippin->move_absolute(60, 100);
+      //wait for it to do so
+      pros::delay(250);
+      //set the flipper back to zero
+      Motors::flippin->move_absolute(0, 100);
+      //wait for it to do so
+      pros::delay(250);
+      //hand control back to the flipper controllers
+      isStarted = true;
+      return;
+    }
+
+    //check for end-of-game controller rumble
+    if((((Time::gameTime - 4760) * 20) % 1000) == 0)
+    {
+      //10 seconds left
+      //rumble controller
+      masterController.rumble("-.-");
+    }
+
+    //check for end-of-game flywheel spin-down
+    if(Time::gameTime < 5100)
+    {
+      //shut down the flywheel
+      Flywheel::mode = Flywheel::Stopped;
+    }
   }
 }

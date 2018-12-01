@@ -129,11 +129,12 @@ void opcontrol()
 		}
 
 		//run controllers
-		Flywheel::Controller();
-		Arm::Controller();
-		Intake::Controller();
-		Time::Controller();
-		Flippin::Controller();
+		Manager::Manager(); //Check for start-of-game and end-of-game events and perform their functions
+		Time::Controller(); //run timestep
+		Flywheel::Controller(); //flywheel velocity controller
+		Arm::Controller(); //Arm position tracking
+		Intake::Controller(); //Run intake until sensor is triggered
+		Flippin::Controller(); //Controller position of flipper
 
 		//tank drive controller
 		Drive::controller.tank(masterController.getAnalog(okapi::ControllerAnalog::leftY), -masterController.getAnalog(okapi::ControllerAnalog::rightY));
