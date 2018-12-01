@@ -1,12 +1,11 @@
 #include "controller.hpp"
 
 //variables
-int flywheelSpeed = 0;
-int flippinPosition = 0;
+okapi::ADIButton intakeSwitch(intakeLimit);
 
 //controllers
-okapi::Controller* masterController = new okapi::Controller(okapi::ControllerId::master);
-okapi::Controller* partnerController = new okapi::Controller(okapi::ControllerId::partner);
+okapi::Controller masterController(okapi::ControllerId::master);
+//okapi::Controller partnerController(okapi::ControllerId::partner);
 
 //motors
 namespace Motors
@@ -36,12 +35,33 @@ namespace Motors
 //flywheel controller
 namespace Flywheel
 {
-  Mode mode = Stopped;
+  //velocity management variables
+  int flywheelSpeed = 0;
+  Mode mode = Variable;
   int speed = 0;
+
+  //speeds
+  int row = 0;
+  bool isHighFlag = true;
+
+  void SetSpeed()
+  {
+    //high or low?
+    if(isHighFlag)
+    {
+      //set the flywheel speed
+      speed = HighSpeeds[row];
+    }
+    else
+    {
+      //set the flywheel speed
+      speed = LowSpeeds[row];
+    }
+  }
 
   void Controller()
   {
-    switch(speed)
+    switch(mode)
     {
       case Stopped:
         //check if the motors are stopped
@@ -55,10 +75,6 @@ namespace Flywheel
           //set the velocity to 0
           flywheelSpeed = 0;
         }
-        break;
-      case Max:
-        //set motors to full power
-        flywheelSpeed = MOTOR_GEARSET_18_MAXSPEED;
         break;
       case Variable:
         //upper bounds checking
@@ -85,7 +101,7 @@ namespace Flywheel
 
 namespace Drive
 {
-  okapi::ChassisControllerIntegrated controller = okapi::ChassisControllerFactory::create(driveLeftPort, driveRightPort, AbstractMotor::gearset::green, {4_in, 12.7_in});
+  okapi::ChassisControllerIntegrated controller = okapi::ChassisControllerFactory::create(driveLeftPort, driveRightPort, okapi::AbstractMotor::gearset::green, {1128, 3.125});
 }
 
 namespace Arm
@@ -105,64 +121,129 @@ namespace Arm
       position = LowerBound;
 
     //set motors to the position
-    Motors::armTop->move_absolute(position, 200);
-    Motors::armBottom->move_absolute(position, 200);
-  }
-
-  //arm controller 0 = stay, 1 = up, -1 = down
-  void Simple(int mode)
-  {
-    if(mode == 1)
-    {
-      //arm up
-      Motors::armTop->move(127);
-      Motors::armBottom->move(127);
-    }
-    else if(mode == -1)
-    {
-      //arm down
-      Motors::armTop->move(-127);
-      Motors::armBottom->move(-127);
-    }
-    else
-    {
-      //arm off
-      Motors::armTop->move(0);
-      Motors::armBottom->move(0);
-    }
+    Motors::armTop->move_absolute(position, 100);
+    Motors::armBottom->move_absolute(position, 100);
   }
 }
 
 namespace Flippin
 {
+  int flippinPosition = 0;
+  int flippinTimeout = 0;
+  bool isFlippin = false;
   void Flip()
   {
-    //increase the flippin position by 180
-    flippinPosition += 180;
-    //set to position
-    Motors::flippin->move_absolute(flippinPosition, 150);
+    if(isFlippin == false)
+    {
+      //now flippin
+      isFlippin = true;
+      //set timeout
+      flippinTimeout = Time::gameTime;
+    }
+  }
+
+  void Controller()
+  {
+    if(isFlippin)
+    {
+      if(Time::gameTime - flippinTimeout == 20)
+      {
+        //raise arm
+        Arm::position += 60;
+      }
+      if(Time::gameTime - flippinTimeout == 300)
+      {
+        //increase the flippin position by 180
+        flippinPosition += 180;
+        //set to position
+        Motors::flippin->move_absolute(flippinPosition, 150);
+      }
+      if(Time::gameTime - flippinTimeout == 600)
+      {
+        //drop the arm
+        Arm::position -= 50;
+      }
+      if(Time::gameTime - flippinTimeout == 900)
+      {
+        //done
+        isFlippin = false;
+      }
+    }
   }
 }
 
 namespace Intake
 {
-  //1 = forwards, 0 = stopped, -1 = backwards
-  void Simple(int mode)
+  bool running = false;
+
+  void Controller()
   {
-    if(mode == 1)
+    //check if the limit switch has been hit
+    if(intakeSwitch.changedToPressed())
     {
-      //forwards
-      Motors::intake->move(127);
+      //stop
+      running = false;
+      //rumble the controller
+      masterController.rumble("..");
     }
-    else if(mode == -1)
+    if(running)
     {
-      //backwards
-      Motors::intake->move(-127);
+      //run motor
+      Motors::intake->move(127);
     }
     else
     {
-      //stopped
+      //stop motor
       Motors::intake->move(0);
+    }
+  }
+}
+
+namespace Time
+{
+  int gameTime = 0;
+
+  void Controller()
+  {
+    gameTime += 20;
+  }
+}
+
+namespace Manager
+{
+  bool isStarted = false;
+
+  void Manager()
+  {
+    //check if we have not started yet
+    if(!isStarted)
+    {
+      //set the flipper to rotate slightly
+      Motors::flippin->move_absolute(100, 100);
+      //wait for it to do so
+      pros::delay(250);
+      //set the flipper back to zero
+      Motors::flippin->move_absolute(0, 100);
+      //wait for it to do so
+      pros::delay(250);
+      //hand control back to the flipper controllers
+      isStarted = true;
+      return;
+    }
+
+    //check for end-of-game controller rumble
+    if((((Time::gameTime - 4760) * 20) % 1000) == 0)
+    {
+      //10 seconds left
+      //rumble controller
+      masterController.rumble("-.-");
+    }
+
+    //check for end-of-game flywheel spin-down
+    if(Time::gameTime < 5100)
+    {
+      //shut down the flywheel
+      Flywheel::mode = Flywheel::Stopped;
     }
   }
 }

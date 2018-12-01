@@ -10,18 +10,18 @@
 #define MOTOR_GEARSET_36_MAXSPEED 600 //maximum speed for the 6:1 gear set
 
 //controllers
-extern okapi::Controller* masterController;
-extern okapi::Controller* partnerController;
+extern okapi::Controller masterController;
+//extern okapi::Controller partnerController;
 
 //port variables
 #define driveLeftPort 20
 #define driveRightPort 19
-#define flywheelTopPort 1
-#define flywheelBottomPort 2
+#define flywheelTopPort 15
+#define flywheelBottomPort 14
 #define armTopPort 18
 #define armBottomPort 17
-#define flippinPort 16
-#define intakePort 15
+#define flippinPort 11
+#define intakePort 13
 #define intakeLimit 'A'
 
 //motors
@@ -43,12 +43,24 @@ namespace Flywheel
   enum Mode
   {
     Stopped,
-    Variable,
-    Max
+    Variable
   };
 
+  //velocity management variables
   extern Mode mode;
   extern int speed;
+
+  //flywheel speeds for different tiles for the high and low ball-toggled flags
+  // first element is for tile 1 away from flags, last element full-court
+  const int HighSpeeds[] = {0, 105, 130, 140, 170}; //the speeds for the high flag
+  const int LowSpeeds[] = {130, 170, 140, 115, 120}; //the speeds for the low flag
+
+  //speeds
+  extern int row;
+  extern bool isHighFlag;
+
+  //set flywheel speed
+  void SetSpeed();
 
   //manage flywheel speed
   void Controller();
@@ -68,11 +80,12 @@ namespace Arm
   extern int position;
 
   //arm bounds
-  const int LowerBound = 0;
+  const int LowerBound = -5;
   const int UpperBound = 450;
 
-  //arm controller 0 = stay, 1 = up, -1 = down
-  void Simple(int mode);
+  //arm heights
+  const int LowPostHeight = 300;
+  const int HighPostHeight = 450;
 
   //arm controller sets the arm to the position
   void Controller();
@@ -80,13 +93,30 @@ namespace Arm
 
 namespace Flippin
 {
-    extern void Flip();
+  extern void Flip();
+
+  extern void Controller();
 }
 
 namespace Intake
 {
-  //simple controller for the intake, 1 = forwards, 0 = stopped, -1 = backwards
-  extern void Simple(int mode);
+  extern bool running;
+
+  extern void Controller();
+}
+
+namespace Time
+{
+  extern int gameTime;
+
+  extern void Controller();
+}
+
+namespace Manager
+{
+  extern bool isStarted;
+
+  extern void Manager();
 }
 
 #endif

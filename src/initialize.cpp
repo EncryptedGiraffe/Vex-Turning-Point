@@ -1,14 +1,9 @@
 #include "main.h"
 #include "controller.hpp"
 
-void on_center_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
+void on_center_button()
+{
 		pros::lcd::set_text(2, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
-	}
 }
 
 /**
@@ -23,6 +18,9 @@ void initialize()
 	pros::lcd::set_text(1, "Hello, Tommy the Terminator!");
 
 	pros::lcd::register_btn1_cb(on_center_button);
+
+	//setup motors
+	//Motors::intake->set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 }
 
 /**
