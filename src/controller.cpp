@@ -219,7 +219,7 @@ namespace Manager
     if(!isStarted)
     {
       //set the flipper to rotate slightly
-      Motors::flippin->move_absolute(60, 100);
+      Motors::flippin->move_absolute(100, 100);
       //wait for it to do so
       pros::delay(250);
       //set the flipper back to zero
