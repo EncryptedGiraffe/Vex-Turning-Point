@@ -121,8 +121,8 @@ namespace Arm
       position = LowerBound;
 
     //set motors to the position
-    Motors::armTop->move_absolute(position, 100);
-    Motors::armBottom->move_absolute(position, 100);
+    Motors::armTop->move_absolute(position, 200);
+    Motors::armBottom->move_absolute(position, 200);
   }
 }
 
