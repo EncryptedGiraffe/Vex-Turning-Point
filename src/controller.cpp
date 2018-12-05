@@ -149,7 +149,7 @@ namespace Flippin
       if(Time::gameTime - flippinTimeout == 20)
       {
         //raise arm
-        Arm::position += 60;
+        Arm::position += 50;
       }
       if(Time::gameTime - flippinTimeout == 300)
       {
@@ -232,15 +232,18 @@ namespace Manager
     }
 
     //check for end-of-game controller rumble
-    if((((Time::gameTime - 4760) * 20) % 1000) == 0)
+    if(Time::gameTime > 95000)
     {
-      //10 seconds left
-      //rumble controller
-      masterController.rumble("-.-");
+      if(((Time::gameTime * 20) % 1000) == 0)
+      {
+        //10 seconds left
+        //rumble controller
+        masterController.rumble("-");
+      }
     }
 
     //check for end-of-game flywheel spin-down
-    if(Time::gameTime < 5100)
+    if(Time::gameTime > 120000)
     {
       //shut down the flywheel
       Flywheel::mode = Flywheel::Stopped;
