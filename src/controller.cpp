@@ -1,7 +1,7 @@
 #include "controller.hpp"
 
 //variables
-okapi::ADIButton intakeSwitch(intakeLimit);
+okapi::ADIButton intakeSwitch(intakeLimitPort);
 
 //controllers
 okapi::Controller masterController(okapi::ControllerId::master);
@@ -249,4 +249,8 @@ namespace Manager
       Flywheel::mode = Flywheel::Stopped;
     }
   }
+}
+namespace Vision
+{
+  pros::Vision vision(visionPort);
 }
