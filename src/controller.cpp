@@ -1,7 +1,7 @@
 #include "controller.hpp"
 
 //variables
-okapi::ADIButton intakeSwitch(intakeLimit);
+okapi::ADIButton intakeSwitch(intakeLimitPort);
 
 //controllers
 okapi::Controller masterController(okapi::ControllerId::master);
@@ -23,9 +23,7 @@ namespace Motors
   //Flywheel bottom motor
   pros::Motor* flywheelBottom = new pros::Motor(flywheelBottomPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
   //arm top motor
-  pros::Motor* armTop = new pros::Motor(armTopPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
-  //arm bottom motor
-  pros::Motor* armBottom = new pros::Motor(armBottomPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+  pros::Motor* arm = new pros::Motor(armPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
   //flippin motor
   pros::Motor* flippin = new pros::Motor(flippinPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
   //intake motor
@@ -121,8 +119,7 @@ namespace Arm
       position = LowerBound;
 
     //set motors to the position
-    Motors::armTop->move_absolute(position, 200);
-    Motors::armBottom->move_absolute(position, 200);
+    Motors::arm->move_absolute(position, 200);
   }
 }
 

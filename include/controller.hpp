@@ -18,11 +18,11 @@ extern okapi::Controller masterController;
 #define driveRightPort 19
 #define flywheelTopPort 15
 #define flywheelBottomPort 14
-#define armTopPort 18
-#define armBottomPort 17
+#define armPort 17
 #define flippinPort 11
 #define intakePort 13
-#define intakeLimit 'A'
+#define intakeLimitPort 'A'
+#define visionPort 1
 
 //motors
 namespace Motors
@@ -30,8 +30,7 @@ namespace Motors
   //motors
   extern pros::Motor* flywheelTop;
   extern pros::Motor* flywheelBottom;
-  extern pros::Motor* armTop;
-  extern pros::Motor* armBottom;
+  extern pros::Motor* arm;
   extern pros::Motor* flippin;
   extern pros::Motor* intake;
 }
@@ -80,12 +79,11 @@ namespace Arm
   extern int position;
 
   //arm bounds
-  const int LowerBound = -50;
-  const int UpperBound = 450;
+  const int LowerBound = 0;
+  const int UpperBound = 500;
 
   //arm heights
-  const int LowPostHeight = 300;
-  const int HighPostHeight = 450;
+  const int PostHeight = 300;
 
   //arm controller sets the arm to the position
   void Controller();
@@ -117,6 +115,11 @@ namespace Manager
   extern bool isStarted;
 
   extern void Manager();
+}
+
+namespace Sensors
+{
+  //extern pros::Vision vision;
 }
 
 #endif

@@ -25,8 +25,7 @@ okapi::ControllerButton Btn_flywheelLowFlag(okapi::ControllerDigital::B);
 okapi::ControllerButton Btn_flywheelHighFlag(okapi::ControllerDigital::X);
 okapi::ControllerButton Btn_flywheelIncreaseRow(okapi::ControllerDigital::R1);
 okapi::ControllerButton Btn_flywheelDecreaseRow(okapi::ControllerDigital::R2);
-okapi::ControllerButton Btn_highPost(okapi::ControllerDigital::up);
-okapi::ControllerButton Btn_lowPost(okapi::ControllerDigital::down);
+okapi::ControllerButton Btn_postHeight(okapi::ControllerDigital::down);
 okapi::ControllerButton Btn_flip(okapi::ControllerDigital::left);
 okapi::ControllerButton Btn_armUp(okapi::ControllerDigital::L1);
 okapi::ControllerButton Btn_armDown(okapi::ControllerDigital::L2);
@@ -111,15 +110,10 @@ void opcontrol()
 			Arm::position -= 10;
 		}
 		//go to arm heights?
-		if (Btn_lowPost.changedToPressed())
+		if (Btn_postHeight.changedToPressed())
 		{
 			//go to low post height
-			Arm::position = Arm::LowPostHeight;
-		}
-		else if(Btn_highPost.changedToPressed())
-		{
-			//go to high post height
-			Arm::position = Arm::HighPostHeight;
+			Arm::position = Arm::PostHeight;
 		}
 		// run the intake?
 		if(Btn_intake.isPressed())
