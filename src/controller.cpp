@@ -235,12 +235,12 @@ namespace Manager
       {
         //10 seconds left
         //rumble controller
-        masterController.rumble("-");
+        masterController.rumble("-  ");
       }
     }
 
     //check for end-of-game flywheel spin-down
-    if(Time::gameTime > 120000)
+    if(Time::gameTime > 102000)
     {
       //shut down the flywheel
       Flywheel::mode = Flywheel::Stopped;
