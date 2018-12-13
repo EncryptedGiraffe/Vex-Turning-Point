@@ -240,7 +240,7 @@ namespace Manager
     }
 
     //check for end-of-game flywheel spin-down
-    if(Time::gameTime > 102000)
+    if(Time::gameTime > 103000)
     {
       //shut down the flywheel
       Flywheel::mode = Flywheel::Stopped;
