@@ -230,7 +230,7 @@ namespace Manager
     }
 
     //check for end-of-game controller rumble
-    if(Time::gameTime > 95000)
+    if(Time::gameTime > 95000 && Time::gameTime < 105000)
     {
       if(((Time::gameTime * 20) % 1000) == 0)
       {
