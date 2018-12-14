@@ -116,7 +116,7 @@ void opcontrol()
 			Arm::position = Arm::PostHeight;
 		}
 		// run the intake?
-		if(Btn_intake.isPressed())
+		if(Btn_intake.changedToPressed())
 		{
 			//check if the intake is running
 			if(Intake::running == true)
