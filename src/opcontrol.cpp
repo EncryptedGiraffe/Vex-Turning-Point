@@ -20,16 +20,21 @@ void UpdateFlywheel()
 }
 
 //buttons
-ControllerButton Btn_flywheelCoast(ControllerDigital::Y);
-ControllerButton Btn_flywheelLowFlag(ControllerDigital::B);
-ControllerButton Btn_flywheelHighFlag(ControllerDigital::X);
-ControllerButton Btn_flywheelIncreaseRow(ControllerDigital::R1);
-ControllerButton Btn_flywheelDecreaseRow(ControllerDigital::R2);
 ControllerButton Btn_postHeight(ControllerDigital::down);
 ControllerButton Btn_flip(ControllerDigital::left);
 ControllerButton Btn_armUp(ControllerDigital::L1);
 ControllerButton Btn_armDown(ControllerDigital::L2);
 ControllerButton Btn_intake(ControllerDigital::A);
+#ifdef FLYWHEEL_FINE_CONTROL_MODE
+ControllerButton Btn_flywheelIncreaseSpeed(ControllerDigital::R1);
+ControllerButton Btn_flywheelDecreaseSpeed(ControllerDigital::R2);
+#else
+ControllerButton Btn_flywheelCoast(ControllerDigital::Y);
+ControllerButton Btn_flywheelLowFlag(ControllerDigital::B);
+ControllerButton Btn_flywheelHighFlag(ControllerDigital::X);
+ControllerButton Btn_flywheelIncreaseRow(ControllerDigital::R1);
+ControllerButton Btn_flywheelDecreaseRow(ControllerDigital::R2);
+#endif
 
 void opcontrol()
 {
@@ -37,7 +42,24 @@ void opcontrol()
 	{
 		//wait
 		pros::delay(20);
-
+		#ifdef FLYWHEEL_FINE_CONTROL_MODE
+		//set the flywheel to variable mode
+		Flywheel::mode = Flywheel::Variable;
+		if(Btn_flywheelIncreaseSpeed.changedToPressed())
+		{
+			//increase speed
+			Flywheel::speed += 5;
+			//set speed text
+			masterController.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+		}
+		else if(Btn_flywheelDecreaseSpeed.changedToPressed())
+		{
+			//decrease speed
+			Flywheel::speed -= 5;
+			//set speed text
+			masterController.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+		}
+		#else
 		//check for high or low flag modes
 		if(Btn_flywheelHighFlag.changedToPressed())
 		{
@@ -92,6 +114,7 @@ void opcontrol()
 				Flywheel::speed = 100;
 			}
 		}
+		#endif
 		//do we want to flip the flipper
 		if(Btn_flip.changedToPressed())
 		{

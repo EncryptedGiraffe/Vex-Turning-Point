@@ -38,6 +38,8 @@ namespace Motors
 //flywheel controller
 namespace Flywheel
 {
+  //are we in flywheel speed finding mode?
+  //#define FLYWHEEL_FINE_CONTROL_MODE
   //flywheel speeds
   enum Mode
   {
