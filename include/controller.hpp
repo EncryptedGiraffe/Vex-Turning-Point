@@ -10,17 +10,17 @@
 #define MOTOR_GEARSET_36_MAXSPEED 600 //maximum speed for the 6:1 gear set
 
 //controllers
-extern okapi::Controller masterController;
-//extern okapi::Controller partnerController;
+extern Controller masterController;
+//extern Controller partnerController;
 
 //port variables
-#define driveLeftPort 20
-#define driveRightPort 19
-#define flywheelTopPort 15
-#define flywheelBottomPort 14
-#define armPort 17
-#define flippinPort 11
-#define intakePort 13
+#define driveLeftPort 13
+#define driveRightPort 17
+#define flywheelTopPort 14
+#define flywheelBottomPort 15
+#define armPort 11
+#define flippinPort 12
+#define intakePort 16
 #define intakeLimitPort 'A'
 #define visionPort 1
 
@@ -69,7 +69,7 @@ namespace Flywheel
 namespace Drive
 {
   //tank drive
-  extern okapi::ChassisControllerIntegrated controller;
+  extern ChassisControllerIntegrated controller;
 }
 
 //arm controller
@@ -79,11 +79,11 @@ namespace Arm
   extern int position;
 
   //arm bounds
-  const int LowerBound = 0;
-  const int UpperBound = 500;
+  const int LowerBound = -50;
+  const int UpperBound = 550;
 
   //arm heights
-  const int PostHeight = 300;
+  const int PostHeight = 550;
 
   //arm controller sets the arm to the position
   void Controller();

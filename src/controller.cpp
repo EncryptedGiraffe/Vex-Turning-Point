@@ -1,11 +1,11 @@
 #include "controller.hpp"
 
 //variables
-okapi::ADIButton intakeSwitch(intakeLimitPort);
+ADIButton intakeSwitch(intakeLimitPort);
 
 //controllers
-okapi::Controller masterController(okapi::ControllerId::master);
-//okapi::Controller partnerController(okapi::ControllerId::partner);
+Controller masterController(ControllerId::master);
+//Controller partnerController(ControllerId::partner);
 
 //motors
 namespace Motors
@@ -99,8 +99,9 @@ namespace Flywheel
 
 namespace Drive
 {
-  okapi::ChassisControllerIntegrated controller = okapi::ChassisControllerFactory::create(driveLeftPort, driveRightPort, okapi::AbstractMotor::gearset::green, {1128, 3.125});
+  ChassisControllerIntegrated controller = ChassisControllerFactory::create(driveLeftPort, driveRightPort, AbstractMotor::gearset::green, {4_in, 12.75_in});
 }
+
 
 namespace Arm
 {

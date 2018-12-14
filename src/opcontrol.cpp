@@ -20,16 +20,16 @@ void UpdateFlywheel()
 }
 
 //buttons
-okapi::ControllerButton Btn_flywheelCoast(okapi::ControllerDigital::Y);
-okapi::ControllerButton Btn_flywheelLowFlag(okapi::ControllerDigital::B);
-okapi::ControllerButton Btn_flywheelHighFlag(okapi::ControllerDigital::X);
-okapi::ControllerButton Btn_flywheelIncreaseRow(okapi::ControllerDigital::R1);
-okapi::ControllerButton Btn_flywheelDecreaseRow(okapi::ControllerDigital::R2);
-okapi::ControllerButton Btn_postHeight(okapi::ControllerDigital::down);
-okapi::ControllerButton Btn_flip(okapi::ControllerDigital::left);
-okapi::ControllerButton Btn_armUp(okapi::ControllerDigital::L1);
-okapi::ControllerButton Btn_armDown(okapi::ControllerDigital::L2);
-okapi::ControllerButton Btn_intake(okapi::ControllerDigital::A);
+ControllerButton Btn_flywheelCoast(ControllerDigital::Y);
+ControllerButton Btn_flywheelLowFlag(ControllerDigital::B);
+ControllerButton Btn_flywheelHighFlag(ControllerDigital::X);
+ControllerButton Btn_flywheelIncreaseRow(ControllerDigital::R1);
+ControllerButton Btn_flywheelDecreaseRow(ControllerDigital::R2);
+ControllerButton Btn_postHeight(ControllerDigital::down);
+ControllerButton Btn_flip(ControllerDigital::left);
+ControllerButton Btn_armUp(ControllerDigital::L1);
+ControllerButton Btn_armDown(ControllerDigital::L2);
+ControllerButton Btn_intake(ControllerDigital::A);
 
 void opcontrol()
 {
@@ -118,8 +118,17 @@ void opcontrol()
 		// run the intake?
 		if(Btn_intake.isPressed())
 		{
-			//run intake
-			Intake::running = true;
+			//check if the intake is running
+			if(Intake::running == true)
+			{
+				//turn off intake
+				Intake::running = false;
+			}
+			else
+			{
+				//turn on intake
+				Intake::running = true;
+			}
 		}
 
 		//run controllers
