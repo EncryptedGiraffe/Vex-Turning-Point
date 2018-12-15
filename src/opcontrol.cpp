@@ -20,17 +20,21 @@ void UpdateFlywheel()
 }
 
 //buttons
-okapi::ControllerButton Btn_flywheelCoast(okapi::ControllerDigital::Y);
-okapi::ControllerButton Btn_flywheelLowFlag(okapi::ControllerDigital::B);
-okapi::ControllerButton Btn_flywheelHighFlag(okapi::ControllerDigital::X);
-okapi::ControllerButton Btn_flywheelIncreaseRow(okapi::ControllerDigital::R1);
-okapi::ControllerButton Btn_flywheelDecreaseRow(okapi::ControllerDigital::R2);
-okapi::ControllerButton Btn_highPost(okapi::ControllerDigital::up);
-okapi::ControllerButton Btn_lowPost(okapi::ControllerDigital::down);
-okapi::ControllerButton Btn_flip(okapi::ControllerDigital::left);
-okapi::ControllerButton Btn_armUp(okapi::ControllerDigital::L1);
-okapi::ControllerButton Btn_armDown(okapi::ControllerDigital::L2);
-okapi::ControllerButton Btn_intake(okapi::ControllerDigital::A);
+ControllerButton Btn_postHeight(ControllerDigital::down);
+ControllerButton Btn_flip(ControllerDigital::left);
+ControllerButton Btn_armUp(ControllerDigital::L1);
+ControllerButton Btn_armDown(ControllerDigital::L2);
+ControllerButton Btn_intake(ControllerDigital::A);
+#ifdef FLYWHEEL_FINE_CONTROL_MODE
+ControllerButton Btn_flywheelIncreaseSpeed(ControllerDigital::R1);
+ControllerButton Btn_flywheelDecreaseSpeed(ControllerDigital::R2);
+#else
+ControllerButton Btn_flywheelCoast(ControllerDigital::Y);
+ControllerButton Btn_flywheelLowFlag(ControllerDigital::B);
+ControllerButton Btn_flywheelHighFlag(ControllerDigital::X);
+ControllerButton Btn_flywheelIncreaseRow(ControllerDigital::R1);
+ControllerButton Btn_flywheelDecreaseRow(ControllerDigital::R2);
+#endif
 
 void opcontrol()
 {
@@ -38,7 +42,24 @@ void opcontrol()
 	{
 		//wait
 		pros::delay(20);
-
+		#ifdef FLYWHEEL_FINE_CONTROL_MODE
+		//set the flywheel to variable mode
+		Flywheel::mode = Flywheel::Variable;
+		if(Btn_flywheelIncreaseSpeed.changedToPressed())
+		{
+			//increase speed
+			Flywheel::speed += 5;
+			//set speed text
+			masterController.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+		}
+		else if(Btn_flywheelDecreaseSpeed.changedToPressed())
+		{
+			//decrease speed
+			Flywheel::speed -= 5;
+			//set speed text
+			masterController.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+		}
+		#else
 		//check for high or low flag modes
 		if(Btn_flywheelHighFlag.changedToPressed())
 		{
@@ -93,6 +114,7 @@ void opcontrol()
 				Flywheel::speed = 100;
 			}
 		}
+		#endif
 		//do we want to flip the flipper
 		if(Btn_flip.changedToPressed())
 		{
@@ -111,21 +133,25 @@ void opcontrol()
 			Arm::position -= 10;
 		}
 		//go to arm heights?
-		if (Btn_lowPost.changedToPressed())
+		if (Btn_postHeight.changedToPressed())
 		{
 			//go to low post height
-			Arm::position = Arm::LowPostHeight;
-		}
-		else if(Btn_highPost.changedToPressed())
-		{
-			//go to high post height
-			Arm::position = Arm::HighPostHeight;
+			Arm::position = Arm::PostHeight;
 		}
 		// run the intake?
-		if(Btn_intake.isPressed())
+		if(Btn_intake.changedToPressed())
 		{
-			//run intake
-			Intake::running = true;
+			//check if the intake is running
+			if(Intake::running == true)
+			{
+				//turn off intake
+				Intake::running = false;
+			}
+			else
+			{
+				//turn on intake
+				Intake::running = true;
+			}
 		}
 
 		//run controllers

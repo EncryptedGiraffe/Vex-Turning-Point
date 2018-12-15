@@ -1,11 +1,11 @@
 #include "controller.hpp"
 
 //variables
-okapi::ADIButton intakeSwitch(intakeLimitPort);
+ADIButton intakeSwitch(intakeLimitPort);
 
 //controllers
-okapi::Controller masterController(okapi::ControllerId::master);
-//okapi::Controller partnerController(okapi::ControllerId::partner);
+Controller masterController(ControllerId::master);
+//Controller partnerController(ControllerId::partner);
 
 //motors
 namespace Motors
@@ -23,9 +23,7 @@ namespace Motors
   //Flywheel bottom motor
   pros::Motor* flywheelBottom = new pros::Motor(flywheelBottomPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
   //arm top motor
-  pros::Motor* armTop = new pros::Motor(armTopPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
-  //arm bottom motor
-  pros::Motor* armBottom = new pros::Motor(armBottomPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+  pros::Motor* arm = new pros::Motor(armPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
   //flippin motor
   pros::Motor* flippin = new pros::Motor(flippinPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
   //intake motor
@@ -101,8 +99,9 @@ namespace Flywheel
 
 namespace Drive
 {
-  okapi::ChassisControllerIntegrated controller = okapi::ChassisControllerFactory::create(driveLeftPort, driveRightPort, okapi::AbstractMotor::gearset::green, {1128, 3.125});
+  ChassisControllerIntegrated controller = ChassisControllerFactory::create(driveLeftPort, driveRightPort, AbstractMotor::gearset::green, {4_in, 12.75_in});
 }
+
 
 namespace Arm
 {
@@ -121,8 +120,7 @@ namespace Arm
       position = LowerBound;
 
     //set motors to the position
-    Motors::armTop->move_absolute(position, 200);
-    Motors::armBottom->move_absolute(position, 200);
+    Motors::arm->move_absolute(position, 200);
   }
 }
 
@@ -232,18 +230,18 @@ namespace Manager
     }
 
     //check for end-of-game controller rumble
-    if(Time::gameTime > 95000)
+    if(Time::gameTime > 95000 && Time::gameTime < 105000)
     {
       if(((Time::gameTime * 20) % 1000) == 0)
       {
         //10 seconds left
         //rumble controller
-        masterController.rumble("-");
+        masterController.rumble("-  ");
       }
     }
 
     //check for end-of-game flywheel spin-down
-    if(Time::gameTime > 120000)
+    if(Time::gameTime > 103000)
     {
       //shut down the flywheel
       Flywheel::mode = Flywheel::Stopped;

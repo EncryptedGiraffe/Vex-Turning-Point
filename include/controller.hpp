@@ -10,18 +10,17 @@
 #define MOTOR_GEARSET_36_MAXSPEED 600 //maximum speed for the 6:1 gear set
 
 //controllers
-extern okapi::Controller masterController;
-//extern okapi::Controller partnerController;
+extern Controller masterController;
+//extern Controller partnerController;
 
 //port variables
-#define driveLeftPort 20
-#define driveRightPort 19
-#define flywheelTopPort 15
-#define flywheelBottomPort 14
-#define armTopPort 18
-#define armBottomPort 17
-#define flippinPort 11
-#define intakePort 13
+#define driveLeftPort 13
+#define driveRightPort 17
+#define flywheelTopPort 14
+#define flywheelBottomPort 15
+#define armPort 11
+#define flippinPort 12
+#define intakePort 16
 #define intakeLimitPort 'A'
 #define visionPort 1
 
@@ -31,8 +30,7 @@ namespace Motors
   //motors
   extern pros::Motor* flywheelTop;
   extern pros::Motor* flywheelBottom;
-  extern pros::Motor* armTop;
-  extern pros::Motor* armBottom;
+  extern pros::Motor* arm;
   extern pros::Motor* flippin;
   extern pros::Motor* intake;
 }
@@ -40,6 +38,8 @@ namespace Motors
 //flywheel controller
 namespace Flywheel
 {
+  //are we in flywheel speed finding mode?
+  //#define FLYWHEEL_FINE_CONTROL_MODE
   //flywheel speeds
   enum Mode
   {
@@ -71,7 +71,7 @@ namespace Flywheel
 namespace Drive
 {
   //tank drive
-  extern okapi::ChassisControllerIntegrated controller;
+  extern ChassisControllerIntegrated controller;
 }
 
 //arm controller
@@ -82,11 +82,10 @@ namespace Arm
 
   //arm bounds
   const int LowerBound = -50;
-  const int UpperBound = 450;
+  const int UpperBound = 550;
 
   //arm heights
-  const int LowPostHeight = 300;
-  const int HighPostHeight = 450;
+  const int PostHeight = 550;
 
   //arm controller sets the arm to the position
   void Controller();
