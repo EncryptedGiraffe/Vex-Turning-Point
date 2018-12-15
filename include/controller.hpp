@@ -39,7 +39,7 @@ namespace Motors
 namespace Flywheel
 {
   //are we in flywheel speed finding mode?
-  #define FLYWHEEL_FINE_CONTROL_MODE
+  //#define FLYWHEEL_FINE_CONTROL_MODE
   //flywheel speeds
   enum Mode
   {
@@ -53,8 +53,8 @@ namespace Flywheel
 
   //flywheel speeds for different tiles for the high and low ball-toggled flags
   // first element is for tile 1 away from flags, last element full-court
-  const int HighSpeeds[] = {100, 105, 140, 140, 170}; //the speeds for the high flag
-  const int LowSpeeds[] = {130, 170, 140, 115, 120}; //the speeds for the low flag
+  const int HighSpeeds[] = {100, 170, 142, 142, 145}; //the speeds for the high flag
+  const int LowSpeeds[] = {115, 105, 118, 125, 85}; //the speeds for the low flag
 
   //speeds
   extern int row;
@@ -93,6 +93,8 @@ namespace Arm
 
 namespace Flippin
 {
+const int startupFlipAmount = 80;
+
   extern void Flip();
 
   extern void Controller();
