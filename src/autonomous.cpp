@@ -19,7 +19,7 @@ void DeployFlipper()
   while (!((Motors::flippin->get_position() < 5) && (Motors::flippin->get_position() > -5)))
   {
     //wait
-    pros::delay(2);
+    //pros::delay(2);
   }
 }
 
@@ -66,16 +66,6 @@ void autonomous()
   Motors::intake->move_velocity(0);
   //shutdown the flywheel
   ShutdownFlywheel();
-  /*
-  //drive forward 2 tiles to toggle low flag
-  Drive::controller.moveDistance(48_in);
-  //drive backwards 1 tile
-  Drive::controller.moveDistance(24_in);
-  //rotate 90 degrees right to face center of field
-  Drive::controller.turnAngle(90_deg);
-  //deploy the flipper
-  DeployFlipper();
-  */
   #else
   //rev up flywheel to shoot high flag
   flywheelSpeed = Flywheel::HighSpeeds[1];
@@ -95,15 +85,22 @@ void autonomous()
   Motors::intake->move_velocity(0);
   //shutdown the flywheel
   ShutdownFlywheel();
+  //rotate 180 degrees
+  Drive::controller.turnAngle(180_deg);
   //drive forward 2 tiles to toggle low flag
-  Drive::controller.moveDistance(48_in);
-  /*
+  Drive::controller.moveDistance(-48_in);
   //drive backwards 1 tile
   Drive::controller.moveDistance(24_in);
+  //wait for us to stop
+  pros::delay(500);
+  #ifdef AUTO_RED
   //rotate 90 degrees right to face center of field
   Drive::controller.turnAngle(90_deg);
+  #else
+  //rotate 90 degrees left to face center of field
+  Drive::controller.turnAngle(-90_deg);
+  #endif
   //deploy the flipper
   DeployFlipper();
-  */
   #endif
 }
