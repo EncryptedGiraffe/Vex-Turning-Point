@@ -54,7 +54,7 @@ namespace Flywheel
   //flywheel speeds for different tiles for the high and low ball-toggled flags
   // first element is for tile 1 away from flags, last element full-court
   const int HighSpeeds[] = {100, 170, 142, 142, 145}; //the speeds for the high flag
-  const int LowSpeeds[] = {115, 105, 118, 125, 85}; //the speeds for the low flag
+  const int LowSpeeds[] = {115, 105, 118, 125, 133}; //the speeds for the low flag
 
   //speeds
   extern int row;
@@ -93,7 +93,7 @@ namespace Arm
 
 namespace Flippin
 {
-const int startupFlipAmount = 80;
+const int startupFlipAmount = 100;
 
   extern void Flip();
 
