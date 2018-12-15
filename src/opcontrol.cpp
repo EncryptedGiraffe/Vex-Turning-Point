@@ -38,6 +38,12 @@ ControllerButton Btn_flywheelDecreaseRow(ControllerDigital::R2);
 
 void opcontrol()
 {
+	#ifdef FLYWHEEL_FINE_CONTROL_MODE
+	//set the flywheel to variable mode
+	Flywheel::mode = Flywheel::Variable;
+	//set speed to 0
+	Flywheel::speed = 0;
+	#endif
 	while (true)
 	{
 		//wait

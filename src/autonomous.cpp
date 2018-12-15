@@ -1,6 +1,6 @@
 #include "controller.hpp"
 
-void AutonomousStart()
+void DeployFlipper()
 {
   //set the flipper to rotate slightly
   Motors::flippin->move_absolute(100, 100);
@@ -22,10 +22,9 @@ void AutonomousStart()
 
 void autonomous()
 {
-  //start autonomous
-  AutonomousStart();
   //rev up flywheel to shoot high flag
-  Flywheel::speed = Flywheel::HighSpeeds[1];
+  Motors::flywheelTop->move(Flywheel::HighSpeeds[1]);
+  Motors::flywheelBottom->move(Flywheel::HighSpeeds[1]);
   //wait for it to do so
   while (!((Motors::flywheelTop->get_actual_velocity() < Flywheel::HighSpeeds[1] + 10) && (Motors::flywheelTop->get_actual_velocity() > Flywheel::HighSpeeds[1] - 10)))
   {
@@ -37,9 +36,11 @@ void autonomous()
   //wait for the ball to fire
   pros::delay(1000);
   //drive forward 2 tiles to toggle low flag
-  Drive::controller.okapi::ChassisController::moveDistance(48_in);
+  Drive::controller.moveDistance(48_in);
   //drive backwards 1 tile
-  Drive::controller.okapi::ChassisController::moveDistance(24_in);
+  Drive::controller.moveDistance(24_in);
   //rotate 90 degrees right to face center of field
-  Drive::controller.okapi::ChassisController::turnAngle(90_deg);
+  Drive::controller.turnAngle(90_deg);
+  //deploy the flipper
+  DeployFlipper();
 }
