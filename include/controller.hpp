@@ -11,7 +11,7 @@
 
 //AUTONOMOUS SWITCH
 //#define AUTO_FAR
-#define AUTO_RED
+//#define AUTO_RED
 
 //controllers
 extern Controller masterController;
@@ -57,8 +57,8 @@ namespace Flywheel
 
   //flywheel speeds for different tiles for the high and low ball-toggled flags
   // first element is for tile 1 away from flags, last element full-court
-  const int HighSpeeds[] = {100, 170, 142, 130, 145}; //the speeds for the high flag
-  const int LowSpeeds[] = {115, 105, 118, 125, 133}; //the speeds for the low flag
+  const int HighSpeeds[] = {100, 170, 142, 133, 145}; //the speeds for the high flag
+  const int LowSpeeds[] = {115, 105, 118, 120, 133}; //the speeds for the low flag
 
   //speeds
   extern int row;
