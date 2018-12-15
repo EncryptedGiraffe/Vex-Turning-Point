@@ -22,7 +22,8 @@ extern okapi::Controller masterController;
 #define armBottomPort 17
 #define flippinPort 11
 #define intakePort 13
-#define intakeLimit 'A'
+#define intakeLimitPort 'A'
+#define visionPort 1
 
 //motors
 namespace Motors
@@ -117,6 +118,10 @@ namespace Manager
   extern bool isStarted;
 
   extern void Manager();
+}
+namespace Sensors
+{
+  extern pros::Vision vision;
 }
 
 #endif
