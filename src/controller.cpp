@@ -99,7 +99,7 @@ namespace Flywheel
 
 namespace Drive
 {
-  ChassisControllerIntegrated controller = ChassisControllerFactory::create(driveLeftPort, driveRightPort, AbstractMotor::gearset::green, {4_in, 12.75_in});
+  ChassisControllerIntegrated controller = ChassisControllerFactory::create(driveLeftPort, -driveRightPort, AbstractMotor::gearset::green, {4_in, 12.75_in});
 }
 
 
