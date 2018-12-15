@@ -248,3 +248,7 @@ namespace Manager
     }
   }
 }
+namespace Vision
+{
+  pros::Vision vision(visionPort);
+}

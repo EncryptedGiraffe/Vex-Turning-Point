@@ -118,10 +118,9 @@ namespace Manager
 
   extern void Manager();
 }
-
 namespace Sensors
 {
-  //extern pros::Vision vision;
+  extern pros::Vision vision;
 }
 
 #endif
