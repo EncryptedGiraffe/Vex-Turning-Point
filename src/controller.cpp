@@ -219,11 +219,19 @@ namespace Manager
       //set the flipper to rotate slightly
       Motors::flippin->move_absolute(100, 100);
       //wait for it to do so
-      pros::delay(250);
+      while (!((Motors::flippin->get_position() < 105) && (Motors::flippin->get_position() > 95)))
+      {
+        //wait
+        pros::delay(2);
+      }
       //set the flipper back to zero
       Motors::flippin->move_absolute(0, 100);
       //wait for it to do so
-      pros::delay(250);
+      while (!((Motors::flippin->get_position() < 5) && (Motors::flippin->get_position() > -5)))
+      {
+        //wait
+        pros::delay(2);
+      }
       //hand control back to the flipper controllers
       isStarted = true;
       return;
