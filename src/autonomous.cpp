@@ -3,9 +3,9 @@
 void DeployFlipper()
 {
   //set the flipper to rotate slightly
-  Motors::flippin->move_absolute(100, 100);
+  Motors::flippin->move_absolute(Flippin::startupFlipAmount, 100);
   //wait for it to do so
-  while (!((Motors::flippin->get_position() < 105) && (Motors::flippin->get_position() > 95)))
+  while (!((Motors::flippin->get_position() < Flippin::startupFlipAmount + 5) && (Motors::flippin->get_position() > Flippin::startupFlipAmount - 5)))
   {
     //wait
     pros::delay(2);
@@ -34,7 +34,9 @@ void autonomous()
   //run the intake to fire the ball
   Motors::intake->move_voltage(127);
   //wait for the ball to fire
-  pros::delay(1000);
+  pros::delay(2000);
+  //shut down intake
+  Motors::intake->move_voltage(0);
   //drive forward 2 tiles to toggle low flag
   Drive::controller.moveDistance(48_in);
   //drive backwards 1 tile
