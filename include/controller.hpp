@@ -5,9 +5,9 @@
 ////////////////////Variable declarations////////////////////
 
 //general variables
-#define MOTOR_GEARSET_06_MAXSPEED 100 //maximum speed for the 36:1 gear set
+#define MOTOR_GEARSET_06_MAXSPEED 600 //maximum speed for the 36:1 gear set
 #define MOTOR_GEARSET_18_MAXSPEED 200 //maximum speed for the 18:1 gear set
-#define MOTOR_GEARSET_36_MAXSPEED 600 //maximum speed for the 6:1 gear set
+#define MOTOR_GEARSET_36_MAXSPEED 100 //maximum speed for the 6:1 gear set
 
 //AUTONOMOUS SWITCH
 //#define AUTO_FAR
@@ -22,8 +22,7 @@ extern Controller masterController;
 #define driveLeftBackPort 2
 #define driveRightForwardPort 3
 #define driveRightBackPort 4
-#define flywheelTopPort 14
-#define flywheelBottomPort 15
+#define flywheelPort 14
 #define armPort 11
 #define flippinPort 12
 #define intakePort 16

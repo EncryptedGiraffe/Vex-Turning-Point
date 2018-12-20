@@ -19,9 +19,7 @@ namespace Motors
   E_MOTOR_GEARSET_06, 6:1, 600 RPM, Blue Gear Set
   */
   //Flywheel top motor
-  pros::Motor* flywheelTop = new pros::Motor(flywheelTopPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
-  //Flywheel bottom motor
-  pros::Motor* flywheelBottom = new pros::Motor(flywheelBottomPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+  pros::Motor* flywheel = new pros::Motor(flywheelPort, pros::E_MOTOR_GEARSET_06, true, pros::E_MOTOR_ENCODER_DEGREES);
   //arm top motor
   pros::Motor* arm = new pros::Motor(armPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
   //flippin motor
@@ -76,10 +74,10 @@ namespace Flywheel
         break;
       case Variable:
         //upper bounds checking
-        if(speed > MOTOR_GEARSET_18_MAXSPEED)
+        if(speed > MOTOR_GEARSET_06_MAXSPEED)
         {
           //set to limit
-          speed = MOTOR_GEARSET_18_MAXSPEED;
+          speed = MOTOR_GEARSET_06_MAXSPEED;
         }
         //lower bounds checking
         if(speed < 0)
@@ -92,8 +90,7 @@ namespace Flywheel
         break;
     }
     //set the motors
-    Motors::flywheelTop->move_velocity(flywheelSpeed);
-    Motors::flywheelBottom->move_velocity(flywheelSpeed);
+    Motors::flywheel->move_velocity(flywheelSpeed);
   }
 }
 
