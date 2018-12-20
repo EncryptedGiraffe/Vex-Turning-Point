@@ -99,7 +99,7 @@ namespace Flywheel
 
 namespace Drive
 {
-  ChassisControllerIntegrated controller = ChassisControllerFactory::create(driveLeftPort, -driveRightPort, AbstractMotor::gearset::green, {4_in, 12.75_in});
+  ChassisControllerIntegrated controller = ChassisControllerFactory::create({driveLeftForwardPort, driveLeftBackPort}, {-driveRightForwardPort, -driveRightBackPort}, AbstractMotor::gearset::green, {4_in, 12.75_in});
 }
 
 
@@ -209,7 +209,7 @@ namespace Time
 
 namespace Manager
 {
-  bool isStarted = false;
+  bool isStarted = true;
 
   void Manager()
   {

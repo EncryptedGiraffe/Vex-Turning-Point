@@ -18,15 +18,17 @@ extern Controller masterController;
 //extern Controller partnerController;
 
 //port variables
-#define driveLeftPort 13
-#define driveRightPort 17
+#define driveLeftForwardPort 1
+#define driveLeftBackPort 2
+#define driveRightForwardPort 3
+#define driveRightBackPort 4
 #define flywheelTopPort 14
 #define flywheelBottomPort 15
 #define armPort 11
 #define flippinPort 12
 #define intakePort 16
 #define intakeLimitPort 'A'
-#define visionPort 1
+#define visionPort 5
 
 //motors
 namespace Motors
