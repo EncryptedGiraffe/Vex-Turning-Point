@@ -18,9 +18,9 @@ namespace Motors
   E_MOTOR_GEARSET_18, 18:1, 200 RPM, Green gear set
   E_MOTOR_GEARSET_06, 6:1, 600 RPM, Blue Gear Set
   */
-  //Flywheel top motor
+  //Flywheel motor
   pros::Motor* flywheel = new pros::Motor(flywheelPort, pros::E_MOTOR_GEARSET_06, true, pros::E_MOTOR_ENCODER_DEGREES);
-  //arm top motor
+  //arm motor
   pros::Motor* arm = new pros::Motor(armPort, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
   //flippin motor
   pros::Motor* flippin = new pros::Motor(flippinPort, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
