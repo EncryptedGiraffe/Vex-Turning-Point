@@ -169,6 +169,6 @@ void opcontrol()
 		Flippin::Controller(); //Controller position of flipper
 
 		//tank drive controller
-		Drive::controller.tank(masterController.getAnalog(okapi::ControllerAnalog::leftY), -masterController.getAnalog(okapi::ControllerAnalog::rightY));
+		Drive::controller.tank(masterController.getAnalog(okapi::ControllerAnalog::leftY), masterController.getAnalog(okapi::ControllerAnalog::rightY));
 	}
 }

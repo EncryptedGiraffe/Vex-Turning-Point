@@ -1,5 +1,8 @@
 #include "controller.hpp"
 
+//variables
+int flywheelSpeed = 0;
+
 void DeployFlipper()
 {
   //set the flipper to rotate slightly
@@ -16,15 +19,58 @@ void DeployFlipper()
   while (!((Motors::flippin->get_position() < 5) && (Motors::flippin->get_position() > -5)))
   {
     //wait
-    pros::delay(2);
+    //pros::delay(2);
+  }
+}
+
+void ShutdownFlywheel()
+{
+  for(int i = 0; i <= 200; ++i)
+  {
+    //check if the flywheel is spinning
+    if(flywheelSpeed > 0)
+    {
+      //slow down flywheel
+      flywheelSpeed -= 1;
+      Motors::flywheelTop->move(flywheelSpeed);
+      Motors::flywheelBottom->move(flywheelSpeed);
+      //wait
+      pros::delay(10);
+    }
+    else
+    {
+      //done
+      break;
+    }
   }
 }
 
 void autonomous()
 {
+  #ifdef AUTO_FAR
   //rev up flywheel to shoot high flag
-  Motors::flywheelTop->move(Flywheel::HighSpeeds[1]);
-  Motors::flywheelBottom->move(Flywheel::HighSpeeds[1]);
+  flywheelSpeed = Flywheel::HighSpeeds[3];
+  Motors::flywheelTop->move(flywheelSpeed);
+  Motors::flywheelBottom->move(flywheelSpeed);
+  //wait for it to do so
+  while (!((Motors::flywheelTop->get_actual_velocity() < Flywheel::HighSpeeds[3] + 10) && (Motors::flywheelTop->get_actual_velocity() > Flywheel::HighSpeeds[3] - 10)))
+  {
+    //wait
+    pros::delay(2);
+  }
+  //run the intake to fire the ball
+  Motors::intake->move_velocity(200);
+  //wait for the ball to fire
+  pros::delay(2000);
+  //shut down intake
+  Motors::intake->move_velocity(0);
+  //shutdown the flywheel
+  ShutdownFlywheel();
+  #else
+  //rev up flywheel to shoot high flag
+  flywheelSpeed = Flywheel::HighSpeeds[1];
+  Motors::flywheelTop->move(flywheelSpeed);
+  Motors::flywheelBottom->move(flywheelSpeed);
   //wait for it to do so
   while (!((Motors::flywheelTop->get_actual_velocity() < Flywheel::HighSpeeds[1] + 10) && (Motors::flywheelTop->get_actual_velocity() > Flywheel::HighSpeeds[1] - 10)))
   {
@@ -32,17 +78,29 @@ void autonomous()
     pros::delay(2);
   }
   //run the intake to fire the ball
-  Motors::intake->move_voltage(127);
+  Motors::intake->move_velocity(200);
   //wait for the ball to fire
   pros::delay(2000);
   //shut down intake
-  Motors::intake->move_voltage(0);
+  Motors::intake->move_velocity(0);
+  //shutdown the flywheel
+  ShutdownFlywheel();
+  //rotate 180 degrees
+  Drive::controller.turnAngle(180_deg);
   //drive forward 2 tiles to toggle low flag
-  Drive::controller.moveDistance(48_in);
+  Drive::controller.moveDistance(-48_in);
   //drive backwards 1 tile
   Drive::controller.moveDistance(24_in);
+  //wait for us to stop
+  pros::delay(500);
+  #ifdef AUTO_RED
   //rotate 90 degrees right to face center of field
   Drive::controller.turnAngle(90_deg);
+  #else
+  //rotate 90 degrees left to face center of field
+  Drive::controller.turnAngle(-90_deg);
+  #endif
   //deploy the flipper
   DeployFlipper();
+  #endif
 }

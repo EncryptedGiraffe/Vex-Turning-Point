@@ -9,20 +9,26 @@
 #define MOTOR_GEARSET_18_MAXSPEED 200 //maximum speed for the 18:1 gear set
 #define MOTOR_GEARSET_36_MAXSPEED 600 //maximum speed for the 6:1 gear set
 
+//AUTONOMOUS SWITCH
+//#define AUTO_FAR
+//#define AUTO_RED
+
 //controllers
 extern Controller masterController;
 //extern Controller partnerController;
 
 //port variables
-#define driveLeftPort 13
-#define driveRightPort 17
+#define driveLeftForwardPort 1
+#define driveLeftBackPort 2
+#define driveRightForwardPort 3
+#define driveRightBackPort 4
 #define flywheelTopPort 14
 #define flywheelBottomPort 15
 #define armPort 11
 #define flippinPort 12
 #define intakePort 16
 #define intakeLimitPort 'A'
-#define visionPort 1
+#define visionPort 5
 
 //motors
 namespace Motors
@@ -53,8 +59,8 @@ namespace Flywheel
 
   //flywheel speeds for different tiles for the high and low ball-toggled flags
   // first element is for tile 1 away from flags, last element full-court
-  const int HighSpeeds[] = {100, 170, 142, 142, 145}; //the speeds for the high flag
-  const int LowSpeeds[] = {115, 105, 118, 125, 133}; //the speeds for the low flag
+  const int HighSpeeds[] = {100, 170, 142, 133, 145}; //the speeds for the high flag
+  const int LowSpeeds[] = {115, 105, 118, 120, 133}; //the speeds for the low flag
 
   //speeds
   extern int row;
