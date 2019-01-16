@@ -14,9 +14,19 @@ namespace Motors
 {
   //ports
   const int PortFlywheel = 1;
+  const int PortDriveLeftFront = 2;
+  const int PortDriveLeftBack = 3;
+  const int PortDriveRightFront = 4;
+  const int PortDriveRightBack = 5;
 
   //flywheel
   extern Motor* flywheel;
+}
+
+namespace Chassis
+{
+  //closed and open loop chassis controller using the V5 brain integrated controllers
+  extern ChassisControllerIntegrated controller;
 }
 
 namespace Flywheel

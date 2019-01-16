@@ -9,6 +9,11 @@ namespace Motors
   Motor* flywheel = new Motor(PortFlywheel);
 }
 
+namespace Chassis
+{
+  //closed and open loop control for chassis
+  ChassisControllerIntegrated controller = ChassisControllerFactory::create({Motors::PortDriveLeftFront, Motors::PortDriveLeftBack}, {Motors::PortDriveRightFront, Motors::PortDriveRightBack});
+}
 
 namespace Flywheel
 {
