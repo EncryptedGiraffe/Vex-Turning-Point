@@ -24,5 +24,9 @@ void opcontrol()
 			//set speed text
 			master->setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
 		}
+
+		//run all controller scripts
+		Flywheel::Controller();
+
 	}
 }
