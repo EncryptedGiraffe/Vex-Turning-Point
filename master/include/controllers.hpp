@@ -35,8 +35,7 @@ namespace Flywheel
   //velocity management variables
   extern Mode mode;
   extern int speed;
-  
+
   //manage flywheel speed
   void Controller();
-
 }
