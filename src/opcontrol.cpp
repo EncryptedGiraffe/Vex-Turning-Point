@@ -38,7 +38,7 @@ void opcontrol()
 		//intake run controller
 		Intake::Controller();
 		//open loop tank control for chassis
-		//Chassis::controller.tank(master->getAnalog(ControllerAnalog::leftY), master->getAnalog(ControllerAnalog::rightY));
+		Chassis::controller.tank(master->getAnalog(ControllerAnalog::leftY), master->getAnalog(ControllerAnalog::rightY));
 		//open loop arcade control for chassis
 		//Chassis::controller.arcade(master->getAnalog(ControllerAnalog::leftY), master->getAnalog(ControllerAnalog::rightX), 0.05);
 		}
