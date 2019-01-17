@@ -18,12 +18,22 @@ namespace Ports
   const int DriveLeftBack = 3;
   const int DriveRightFront = 4;
   const int DriveRightBack = 5;
+  const int Intake = 6;
 }
 
 namespace Motors
 {
   //flywheel
   extern Motor* flywheel;
+  //intake
+  extern Motor* intake;
+}
+
+namespace Intake
+{
+  extern bool IsRunning;
+
+  void Controller();
 }
 
 namespace Chassis

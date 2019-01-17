@@ -15,6 +15,26 @@ namespace Chassis
   ChassisControllerIntegrated controller = ChassisControllerFactory::create({Ports::DriveLeftFront, Ports::DriveLeftBack}, {Ports::DriveRightFront, Ports::DriveRightBack});
 }
 
+namespace Intake
+{
+  bool IsRunning = false;
+
+  void Controller()
+  {
+    //check if the intake should be running
+    if(IsRunning)
+    {
+      //turn on motor
+      Motors::intake->move_velocity(200);
+    }
+    else
+    {
+      //turn off motor
+      Motors::intake->move_velocity(0);
+    }
+  }
+}
+
 namespace Flywheel
 {
   //velocity management variables
