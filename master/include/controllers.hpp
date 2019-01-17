@@ -10,15 +10,18 @@
 //controllers
 extern Controller* master;
 
-namespace Motors
+namespace Ports
 {
   //ports
-  const int PortFlywheel = 1;
-  const int PortDriveLeftFront = 2;
-  const int PortDriveLeftBack = 3;
-  const int PortDriveRightFront = 4;
-  const int PortDriveRightBack = 5;
+  const int Flywheel = 1;
+  const int DriveLeftFront = 2;
+  const int DriveLeftBack = 3;
+  const int DriveRightFront = 4;
+  const int DriveRightBack = 5;
+}
 
+namespace Motors
+{
   //flywheel
   extern Motor* flywheel;
 }

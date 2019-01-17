@@ -6,13 +6,13 @@ Controller* master = new Controller(ControllerId::master);
 namespace Motors
 {
   //Flywheel
-  Motor* flywheel = new Motor(PortFlywheel);
+  Motor* flywheel = new Motor(Ports::Flywheel);
 }
 
 namespace Chassis
 {
   //closed and open loop control for chassis
-  ChassisControllerIntegrated controller = ChassisControllerFactory::create({Motors::PortDriveLeftFront, Motors::PortDriveLeftBack}, {Motors::PortDriveRightFront, Motors::PortDriveRightBack});
+  ChassisControllerIntegrated controller = ChassisControllerFactory::create({Ports::DriveLeftFront, Ports::DriveLeftBack}, {Ports::DriveRightFront, Ports::DriveRightBack});
 }
 
 namespace Flywheel
