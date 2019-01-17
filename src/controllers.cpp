@@ -60,9 +60,3 @@ namespace Flywheel
     Motors::flywheel->move_velocity(flywheelSpeed);
   }
 }
-
-namespace Vision
-{
-  //the dreaded sensor itself
-  pros::Vision* vision = new pros::Vision(0);
-}
