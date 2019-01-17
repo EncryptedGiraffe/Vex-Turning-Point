@@ -13,14 +13,14 @@ void opcontrol()
 		if(Btn_flywheelIncreaseSpeed.changedToPressed())
 		{
 			//increase speed
-			Flywheel::speed += 5;
+			Flywheel::speed += FLYWHEEL_FINE_CONTROL_INCREMENT;
 			//set speed text
 			master->setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
 		}
 		else if(Btn_flywheelDecreaseSpeed.changedToPressed())
 		{
 			//decrease speed
-			Flywheel::speed -= 5;
+			Flywheel::speed -= FLYWHEEL_FINE_CONTROL_INCREMENT;
 			//set speed text
 			master->setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
 		}

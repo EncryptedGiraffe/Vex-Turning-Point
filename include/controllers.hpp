@@ -35,8 +35,6 @@ namespace Chassis
 
 namespace Flywheel
 {
-  //are we in flywheel speed finding mode?
-  #define FLYWHEEL_FINE_CONTROL_MODE
   #define FLYWHEEL_FINE_CONTROL_INCREMENT 5
 
   //flywheel speeds
@@ -54,7 +52,14 @@ namespace Flywheel
   void Controller();
 }
 
-namespace Vision
+namespace Sensors
 {
-  extern pros::Vision* vision;
+  namespace Vision
+  {
+    //the dreaded sensor itself
+    extern pros::Vision* vision;
+
+    //prints the area, length, height, and position of the largest object that matches the given signature
+    void VisionPrintLargest(pros::vision_signature_s_t sig);
+  }
 }
