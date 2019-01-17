@@ -6,13 +6,35 @@ Controller* master = new Controller(ControllerId::master);
 namespace Motors
 {
   //Flywheel
-  Motor* flywheel = new Motor(Ports::Flywheel);
+  Motor* flywheel = new Motor(Ports::Flywheel, false, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees);
+  //intake
+  Motor* intake = new Motor(Ports::Intake, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
 }
 
 namespace Chassis
 {
   //closed and open loop control for chassis
   ChassisControllerIntegrated controller = ChassisControllerFactory::create({Ports::DriveLeftFront, Ports::DriveLeftBack}, {Ports::DriveRightFront, Ports::DriveRightBack});
+}
+
+namespace Intake
+{
+  bool IsRunning = false;
+
+  void Controller()
+  {
+    //check if the intake should be running
+    if(IsRunning)
+    {
+      //turn on motor
+      Motors::intake->move_velocity(200);
+    }
+    else
+    {
+      //turn off motor
+      Motors::intake->move_velocity(0);
+    }
+  }
 }
 
 namespace Flywheel
