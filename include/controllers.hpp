@@ -18,6 +18,7 @@ namespace Ports
   const int DriveLeftBack = 3;
   const int DriveRightFront = 4;
   const int DriveRightBack = 5;
+  const int Vision = 6;
 }
 
 namespace Motors
@@ -51,4 +52,9 @@ namespace Flywheel
 
   //manage flywheel speed
   void Controller();
+}
+
+namespace Vision
+{
+  extern pros::Vision* vision;
 }

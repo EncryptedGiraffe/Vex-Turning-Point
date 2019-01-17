@@ -64,5 +64,5 @@ namespace Flywheel
 namespace Vision
 {
   //the dreaded sensor itself
-  pros::Vision* vision = new pros::Vision(0);
+  pros::Vision* vision = new pros::Vision(Ports::Vision);
 }
