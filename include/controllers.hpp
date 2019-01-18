@@ -25,6 +25,15 @@ namespace Motors
 {
   //flywheel
   extern Motor* flywheel;
+  //intake
+  extern Motor* intake;
+}
+
+namespace Intake
+{
+  extern bool IsRunning;
+
+  void Controller();
 }
 
 namespace Chassis
