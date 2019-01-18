@@ -18,6 +18,7 @@ namespace Ports
   const int DriveLeftBack = 3;
   const int DriveRightFront = 4;
   const int DriveRightBack = 5;
+  const int Intake = 6;
   const int Vision = 20;
 }
 
