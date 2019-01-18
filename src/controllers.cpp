@@ -27,12 +27,12 @@ namespace Intake
     if(IsRunning)
     {
       //turn on motor
-      Motors::intake->move_velocity(200);
+      Motors::intake->move_voltage(127);
     }
     else
     {
       //turn off motor
-      Motors::intake->move_velocity(0);
+      Motors::intake->move_voltage(0);
     }
   }
 }
