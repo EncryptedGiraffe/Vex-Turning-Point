@@ -65,7 +65,7 @@ namespace Sensors
 {
   namespace Vision
   {
-    //the dreaded sensor itself
+    //the dreaded sensor incarnate
     extern pros::Vision* vision;
 
     //prints the area, length, height, and position of the largest object that matches the given signature
