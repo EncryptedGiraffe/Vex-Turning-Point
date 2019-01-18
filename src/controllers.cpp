@@ -27,12 +27,12 @@ namespace Intake
     if(IsRunning)
     {
       //turn on motor
-      Motors::intake->move_voltage(127);
+      Motors::intake->moveVoltage(12000);
     }
     else
     {
       //turn off motor
-      Motors::intake->move_voltage(0);
+      Motors::intake->moveVoltage(0);
     }
   }
 }
@@ -79,6 +79,6 @@ namespace Flywheel
         break;
     }
     //set the motors
-    Motors::flywheel->move_velocity(flywheelSpeed);
+    Motors::flywheel->moveVelocity(flywheelSpeed);
   }
 }
