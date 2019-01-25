@@ -23,8 +23,6 @@ namespace Ports
 
 namespace Motors
 {
-  //flywheel
-  extern Motor* flywheel;
   //intake
   extern Motor* intake;
 }
@@ -44,6 +42,14 @@ namespace Chassis
 
 namespace Flywheel
 {
+  //velocity PID variables
+  const double kP = 1.0;
+  const double kD = 0.1;
+  const double kF = 0.0;
+  const double kSF = 0.0;
+  const int NUM_AVE_POINTS = 5;
+  extern AsyncVelPIDController velController;
+
   //are we in flywheel speed finding mode?
   #define FLYWHEEL_FINE_CONTROL_MODE
   #define FLYWHEEL_FINE_CONTROL_INCREMENT 5

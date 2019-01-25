@@ -53,12 +53,31 @@ void opcontrol()
 
 		//run all controller scripts
 		//flywheel speed controller
-		Flywheel::Controller();
+		//Flywheel::Controller();
 		//intake run controller
 		Intake::Controller();
 		//open loop tank control for chassis
 		//Chassis::controller.tank(master->getAnalog(ControllerAnalog::leftY), master->getAnalog(ControllerAnalog::rightY));
 		//open loop arcade control for chassis
 		//Chassis::controller.arcade(master->getAnalog(ControllerAnalog::leftY), master->getAnalog(ControllerAnalog::rightX), 0.05);
+
+
+		//motor test code
+		Motor* testMotor = new Motor(10);
+		if(master->getDigital(ControllerDigital::up))
+		{
+			//turn motor on
+			testMotor->move(127);
+		}
+		else if(master->getDigital(ControllerDigital::down))
+		{
+			//turn motor on backwards
+			testMotor->move(-127);
+		}
+		else
+		{
+			//stop motor
+			testMotor->move(0);
+		}
 		}
 }

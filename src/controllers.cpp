@@ -5,8 +5,6 @@ Controller* master = new Controller(ControllerId::master);
 
 namespace Motors
 {
-  //Flywheel
-  Motor* flywheel = new Motor(Ports::Flywheel, false, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees);
   //intake
   Motor* intake = new Motor(Ports::Intake, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
 }
@@ -39,6 +37,8 @@ namespace Intake
 
 namespace Flywheel
 {
+  //velocity PID variables
+  AsyncVelPIDController velController = AsyncControllerFactory::velPID(Ports::Flywheel, kP, kD, kF, kSF, 300, std::make_unique<AverageFilter<NUM_AVE_POINTS>>());
   //velocity management variables
   int flywheelSpeed = 0;
   Mode mode = Variable;
@@ -79,6 +79,6 @@ namespace Flywheel
         break;
     }
     //set the motors
-    Motors::flywheel->moveVelocity(flywheelSpeed);
+    //Motors::flywheel->moveVelocity(flywheelSpeed);
   }
 }
