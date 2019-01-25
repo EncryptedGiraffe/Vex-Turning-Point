@@ -3,13 +3,16 @@
 //buttons
 ControllerButton Btn_flywheelIncreaseSpeed(ControllerDigital::R1);
 ControllerButton Btn_flywheelDecreaseSpeed(ControllerDigital::R2);
+ControllerButton Btn_flywheelFineIncreaseSpeed(ControllerDigital::L1);
+ControllerButton Btn_flywheelFineDecreaseSpeed(ControllerDigital::L2);
 
 void opcontrol()
 {
 	while (true)
 	{
 		pros::delay(20);
-		//flywheel fine control button checks
+
+		//flywheel control button checks
 		if(Btn_flywheelIncreaseSpeed.changedToPressed())
 		{
 			//increase speed
@@ -25,11 +28,27 @@ void opcontrol()
 			master->setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
 		}
 
+		//flywheel fine control button checks
+		if(Btn_flywheelFineIncreaseSpeed.changedToPressed())
+		{
+			//increase speed
+			Flywheel::speed += 1;
+			//set speed text
+			master->setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+		}
+		else if(Btn_flywheelFineDecreaseSpeed.changedToPressed())
+		{
+			//decrease speed
+			Flywheel::speed -= 1;
+			//set speed text
+			master->setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+		}
+
 		//run all controller scripts
 		//flywheel speed controller
 		Flywheel::Controller();
 		//open loop tank control for chassis
-		Chassis::controller.tank(master->getAnalog(ControllerAnalog::leftY), master->getAnalog(ControllerAnalog::rightY));
+		//Chassis::controller.tank(master->getAnalog(ControllerAnalog::leftY), master->getAnalog(ControllerAnalog::rightY));
 		//open loop arcade control for chassis
 		//Chassis::controller.arcade(master->getAnalog(ControllerAnalog::leftY), master->getAnalog(ControllerAnalog::rightX), 0.05);
 		}
