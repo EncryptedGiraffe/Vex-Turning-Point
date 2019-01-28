@@ -23,8 +23,6 @@ namespace Ports
 
 namespace Motors
 {
-  //flywheel
-  extern Motor* flywheel;
   //intake
   extern Motor* intake;
 }
@@ -44,6 +42,9 @@ namespace Chassis
 
 namespace Flywheel
 {
+  //velocity PID controller
+  extern AsyncVelIntegratedController velController;
+
   //are we in flywheel speed finding mode?
   #define FLYWHEEL_FINE_CONTROL_MODE
   #define FLYWHEEL_FINE_CONTROL_INCREMENT 5
