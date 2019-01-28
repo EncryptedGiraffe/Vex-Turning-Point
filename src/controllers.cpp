@@ -38,7 +38,7 @@ namespace Intake
 namespace Flywheel
 {
   //velocity PID variables
-  AsyncVelPIDController velController = AsyncControllerFactory::velPID(Ports::Flywheel, kP, kD, kF, kSF, 300, std::make_unique<AverageFilter<NUM_AVE_POINTS>>());
+  AsyncVelIntegratedController velController = AsyncControllerFactory::velIntegrated(Ports::Flywheel);
   //velocity management variables
   int flywheelSpeed = 0;
   Mode mode = Variable;
@@ -79,6 +79,7 @@ namespace Flywheel
         break;
     }
     //set the motors
+    velController.setTarget(flywheelSpeed);
     //Motors::flywheel->moveVelocity(flywheelSpeed);
   }
 }

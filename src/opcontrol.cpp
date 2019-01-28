@@ -53,7 +53,7 @@ void opcontrol()
 
 		//run all controller scripts
 		//flywheel speed controller
-		//Flywheel::Controller();
+		Flywheel::Controller();
 		//intake run controller
 		Intake::Controller();
 		//open loop tank control for chassis
