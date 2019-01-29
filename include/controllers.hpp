@@ -36,6 +36,7 @@ namespace Flipper
   const int startPos = 0;
   const int Raised = 35;
   const int Lowered = 160;
+  const int Ram = 100;
   const int MaxSpeed = 150;
   //start the flipper position
   void StartUp();

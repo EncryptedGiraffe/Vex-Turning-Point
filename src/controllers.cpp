@@ -119,8 +119,8 @@ namespace Flipper
   }
   void Ramming()
   {
-    //set the flipper to the lowered position
-    Motors::flipper->move_absolute(Lowered, MaxSpeed);
+    //set the flipper to the ram position
+    Motors::flipper->move_absolute(Ram, MaxSpeed);
   }
   void Controller()
   {
