@@ -9,30 +9,55 @@
 
 //controllers
 extern Controller* master;
+extern Controller* partner;
 
 namespace Ports
 {
-  //ports
+  //motor ports
   const int Flywheel = 1;
   const int DriveLeftFront = 2;
   const int DriveLeftBack = 3;
   const int DriveRightFront = 4;
   const int DriveRightBack = 5;
   const int Intake = 6;
+  const int Flipper = 7;
+  //sensor ports
+  const int IntakeSwitch = 'A';
   const int Vision = 20;
 }
 
 namespace Motors
 {
-  //flywheel
-  extern Motor* flywheel;
   //intake
   extern Motor* intake;
+  //flipper
+  extern Motor* flipper;
+}
+
+namespace Flipper
+{
+  //position variables
+  const int startPos = 0;
+  const int Raised = 35;
+  const int Lowered = 160;
+  const int Ram = 90;
+  const int MaxSpeed = 150;
+  //start the flipper position
+  void StartUp();
+  //position controller
+  void Controller();
+  //request the controller to flip
+  void RequestFlip();
+  //tell the flipper to move to the up position
+  void Raise();
+  //tell the flipper to move to the ramming position
+  void Ramming();
 }
 
 namespace Intake
 {
   extern bool IsRunning;
+  extern bool IsBackwards;
 
   void Controller();
 }
@@ -45,6 +70,11 @@ namespace Chassis
 
 namespace Flywheel
 {
+  //velocity PID controller
+  extern AsyncVelIntegratedController velController;
+
+  //are we in flywheel speed finding mode?
+  #define FLYWHEEL_FINE_CONTROL_MODE
   #define FLYWHEEL_FINE_CONTROL_INCREMENT 5
 
   //flywheel speeds

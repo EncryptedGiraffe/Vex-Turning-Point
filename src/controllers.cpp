@@ -2,13 +2,14 @@
 
 //controllers
 Controller* master = new Controller(ControllerId::master);
+Controller* partner = new Controller(ControllerId::partner);
 
 namespace Motors
 {
-  //Flywheel
-  Motor* flywheel = new Motor(Ports::Flywheel, false, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees);
   //intake
   Motor* intake = new Motor(Ports::Intake, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
+  //flipper
+  Motor* flipper = new Motor(Ports::Flipper, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
 }
 
 namespace Chassis
@@ -19,7 +20,10 @@ namespace Chassis
 
 namespace Intake
 {
+  ADIButton limit(Ports::IntakeSwitch);
+  bool IsPressed = false;
   bool IsRunning = false;
+  bool IsBackwards = false;
 
   void Controller()
   {
@@ -27,18 +31,34 @@ namespace Intake
     if(IsRunning)
     {
       //turn on motor
-      Motors::intake->moveVoltage(12000);
+      //check direction
+      if(IsBackwards)
+      {
+        Motors::intake->move(-127);
+      }
+      else
+      {
+        Motors::intake->move(127);
+      }
+      //check if the limit switch has been hit
+      if(limit.changedToPressed())
+      {
+        //stop the intake
+        IsRunning = false;
+      }
     }
     else
     {
       //turn off motor
-      Motors::intake->moveVoltage(0);
+      Motors::intake->move(0);
     }
   }
 }
 
 namespace Flywheel
 {
+  //velocity PID variables
+  AsyncVelIntegratedController velController = AsyncControllerFactory::velIntegrated(Ports::Flywheel);
   //velocity management variables
   int flywheelSpeed = 0;
   Mode mode = Variable;
@@ -79,7 +99,53 @@ namespace Flywheel
         break;
     }
     //set the motors
-    Motors::flywheel->moveVelocity(flywheelSpeed);
+    velController.setTarget(flywheelSpeed);
+    //Motors::flywheel->moveVelocity(flywheelSpeed);
+  }
+}
+
+namespace Flipper
+{
+  bool IsFlipping = false;
+  void StartUp()
+  {
+    //set the position of the motor to the lowered position
+    Motors::flipper->move_absolute(Lowered, 100);
+  }
+  void RequestFlip()
+  {
+    //start flipping
+    IsFlipping = true;
+  }
+  void Raise()
+  {
+    //set the flipper to the raised position
+    Motors::flipper->move_absolute(Raised, MaxSpeed);
+  }
+  void Ramming()
+  {
+    //set the flipper to the ram position
+    Motors::flipper->move_absolute(Ram, MaxSpeed);
+  }
+  void Controller()
+  {
+    //check if the flipper should be flipping
+    if(IsFlipping)
+    {
+      //check if the flipper is in the raised position
+      if(Motors::flipper->get_position() > (Raised-5) && Motors::flipper->get_position() < (Raised+5))
+      {
+        //lower the flipper
+        Motors::flipper->move_absolute(Lowered, MaxSpeed);
+        //done sending commands
+        IsFlipping = false;
+      }
+      else
+      {
+        //raise the flipper
+        Motors::flipper->move_absolute(Raised, MaxSpeed);
+      }
+    }
   }
 }
 
