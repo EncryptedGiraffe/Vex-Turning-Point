@@ -1,15 +1,15 @@
 #include "../include/controllers.hpp"
 
 //buttons
-ControllerButton Btn_intake(ControllerDigital::A); //toggle the intake
-ControllerButton Btn_flywheelIncreaseSpeed(ControllerDigital::R1); //increase the flywheel speed by 5
-ControllerButton Btn_flywheelDecreaseSpeed(ControllerDigital::R2); //decrease the flywheel speed by 5
-ControllerButton Btn_flywheelFineIncreaseSpeed(ControllerDigital::L1); //increase the flywheel speed by 1
-ControllerButton Btn_flywheelFineDecreaseSpeed(ControllerDigital::L2); //decrease the flywheel speed by 1
-ControllerButton Btn_flipper(ControllerDigital::B); //flip the flipper
-ControllerButton Btn_flipperUp(ControllerDigital::X); //raise the flipper to the up position
-ControllerButton Btn_flipperRam(ControllerDigital::Y); //set the flipper to ramming speed
-ControllerButton Btn_intakeReverse(ControllerDigital::left); //toggle the direction of the intake
+ControllerButton Btn_intake(ControllerId::master, ControllerDigital::A); //toggle the intake
+ControllerButton Btn_flywheelIncreaseSpeed(ControllerId::master, ControllerDigital::R1); //increase the flywheel speed by 5
+ControllerButton Btn_flywheelDecreaseSpeed(ControllerId::master, ControllerDigital::R2); //decrease the flywheel speed by 5
+ControllerButton Btn_flywheelFineIncreaseSpeed(ControllerId::master, ControllerDigital::L1); //increase the flywheel speed by 1
+ControllerButton Btn_flywheelFineDecreaseSpeed(ControllerId::master, ControllerDigital::L2); //decrease the flywheel speed by 1
+ControllerButton Btn_flipper(ControllerId::master, ControllerDigital::B); //flip the flipper
+ControllerButton Btn_flipperUp(ControllerId::master, ControllerDigital::X); //raise the flipper to the up position
+ControllerButton Btn_flipperRam(ControllerId::master, ControllerDigital::Y); //set the flipper to ramming speed
+ControllerButton Btn_intakeReverse(ControllerId::master, ControllerDigital::left); //toggle the direction of the intake
 
 void opcontrol()
 {
@@ -110,6 +110,12 @@ void opcontrol()
 		{
 			//stop motor
 			testMotor->move(0);
+		}
+		ControllerButton testButton(ControllerId::master, ControllerDigital::right);
+		if(testButton.changedToPressed())
+		{
+			//spin the motor 7 times
+			testMotor->move_relative(7 * 360, 200);
 		}
 		}
 }
