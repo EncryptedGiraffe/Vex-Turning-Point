@@ -105,12 +105,8 @@ namespace Flipper
   }
   void RequestFlip()
   {
-    //check if the flipper is in the lowered position
-    if(Motors::flipper->get_position() < (Lowered+2) && Motors::flipper->get_position() > (Lowered-2))
-    {
-      //start flipping
-      IsFlipping = true;
-    }
+    //start flipping
+    IsFlipping = true;
   }
   void Raise()
   {
