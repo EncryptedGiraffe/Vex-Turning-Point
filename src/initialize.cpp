@@ -26,6 +26,9 @@ void initialize()
 	pros::lcd::set_text(1, "Kylen is awesome!");
 
 	pros::lcd::register_btn1_cb(on_center_button);
+
+	//configure vision sensor
+	Sensors::Vision::vision->set_zero_point(pros::E_VISION_ZERO_CENTER);
 }
 
 /**

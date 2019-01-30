@@ -156,11 +156,15 @@ namespace Sensors
     //the dreaded sensor itself
     pros::Vision* sensor = new pros::Vision(Ports::Vision);
 
-    //prints the area, length, height, and position of the largest object that matches the given signature
+    //prints the area, length, height, and position of the largest object that matches the given signature to the brain
     void VisionPrintLargest(pros::vision_signature_s_t sig)
     {
       //get the largest object matching the provided signature
-
+      pros::vision_object_s_t obj = sensor->get_by_sig(0, sig.id);
+      //print size data
+      pros::lcd::set_text(1, "Area: " + std::to_string(obj.height * obj.width) + ", Height: " + std::to_string(obj.height) + ", Width: " + std::to_string(obj.width) + ".");
+      //print position data
+      pros::lcd::set_text(2, "X Pos: " + std::to_string(obj.x_middle_coord) + ", Y Pos: " + std::to_string(obj.y_middle_coord) + ".");
     }
   }
 }
