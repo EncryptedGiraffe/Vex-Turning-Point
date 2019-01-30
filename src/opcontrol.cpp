@@ -118,11 +118,5 @@ void opcontrol()
 			//stop motor
 			testMotor->move(0);
 		}
-		ControllerButton testButton(ControllerId::master, ControllerDigital::right);
-		if(testButton.changedToPressed())
-		{
-			//spin the motor 7 times
-			testMotor->move_relative(7 * 360, 200);
-		}
 		}
 }
