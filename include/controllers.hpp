@@ -96,10 +96,14 @@ namespace Sensors
 {
   namespace Vision
   {
+    //vision signatures
+    const uint32_t REDFLAG = 0;
+    const uint32_t BLUEFLAG = 1;
+
     //the dreaded sensor incarnate
     extern pros::Vision* vision;
 
     //prints the area, length, height, and position of the largest object that matches the given signature
-    void VisionPrintLargest(pros::vision_signature_s_t sig);
+    void VisionPrintLargest(uint32_t sig);
   }
 }
