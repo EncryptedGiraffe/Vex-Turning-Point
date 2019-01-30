@@ -101,7 +101,7 @@ namespace Sensors
     const uint32_t BLUEFLAG = 1;
 
     //the dreaded sensor incarnate
-    extern pros::Vision* vision;
+    extern pros::Vision* sensor;
 
     //prints the area, length, height, and position of the largest object that matches the given signature
     void VisionPrintLargest(uint32_t sig);

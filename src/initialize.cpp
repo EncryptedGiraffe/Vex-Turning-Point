@@ -28,7 +28,7 @@ void initialize()
 	pros::lcd::register_btn1_cb(on_center_button);
 
 	//configure vision sensor
-	Sensors::Vision::vision->set_zero_point(pros::E_VISION_ZERO_CENTER);
+	Sensors::Vision::sensor->set_zero_point(pros::E_VISION_ZERO_CENTER);
 }
 
 /**
