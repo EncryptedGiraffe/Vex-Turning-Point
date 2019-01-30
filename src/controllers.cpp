@@ -2,6 +2,7 @@
 
 //controllers
 Controller* master = new Controller(ControllerId::master);
+Controller* partner = new Controller(ControllerId::partner);
 
 namespace Motors
 {
@@ -19,6 +20,8 @@ namespace Chassis
 
 namespace Intake
 {
+  ADIButton limit(Ports::IntakeSwitch);
+  bool IsPressed = false;
   bool IsRunning = false;
   bool IsBackwards = false;
 
@@ -36,6 +39,12 @@ namespace Intake
       else
       {
         Motors::intake->move(127);
+      }
+      //check if the limit switch has been hit
+      if(limit.changedToPressed())
+      {
+        //stop the intake
+        IsRunning = false;
       }
     }
     else
@@ -124,7 +133,7 @@ namespace Flipper
     if(IsFlipping)
     {
       //check if the flipper is in the raised position
-      if(Motors::flipper->get_position() > (Raised-2) && Motors::flipper->get_position() < (Raised+2))
+      if(Motors::flipper->get_position() > (Raised-5) && Motors::flipper->get_position() < (Raised+5))
       {
         //lower the flipper
         Motors::flipper->move_absolute(Lowered, MaxSpeed);

@@ -9,10 +9,11 @@
 
 //controllers
 extern Controller* master;
+extern Controller* partner;
 
 namespace Ports
 {
-  //ports
+  //motor ports
   const int Flywheel = 1;
   const int DriveLeftFront = 2;
   const int DriveLeftBack = 3;
@@ -20,6 +21,8 @@ namespace Ports
   const int DriveRightBack = 5;
   const int Intake = 6;
   const int Flipper = 7;
+  //sensor ports
+  const int IntakeSwitch = 'A';
 }
 
 namespace Motors
