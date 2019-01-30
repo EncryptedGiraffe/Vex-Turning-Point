@@ -148,3 +148,19 @@ namespace Flipper
     }
   }
 }
+
+namespace Sensors
+{
+  namespace Vision
+  {
+    //the dreaded sensor itself
+    pros::Vision* sensor = new pros::Vision(Ports::Vision);
+
+    //prints the area, length, height, and position of the largest object that matches the given signature
+    void VisionPrintLargest(pros::vision_signature_s_t sig)
+    {
+      //get the largest object matching the provided signature
+
+    }
+  }
+}

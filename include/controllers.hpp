@@ -23,6 +23,7 @@ namespace Ports
   const int Flipper = 7;
   //sensor ports
   const int IntakeSwitch = 'A';
+  const int Vision = 20;
 }
 
 namespace Motors
@@ -89,4 +90,16 @@ namespace Flywheel
 
   //manage flywheel speed
   void Controller();
+}
+
+namespace Sensors
+{
+  namespace Vision
+  {
+    //the dreaded sensor incarnate
+    extern pros::Vision* vision;
+
+    //prints the area, length, height, and position of the largest object that matches the given signature
+    void VisionPrintLargest(pros::vision_signature_s_t sig);
+  }
 }
