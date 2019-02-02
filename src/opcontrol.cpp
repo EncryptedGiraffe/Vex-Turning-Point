@@ -24,7 +24,7 @@ void opcontrol()
 		if(Btn_vision.changedToPressed())
 		{
 			//print data
-			Sensors::Vision::VisionPrintLargest(Sensors::Vision::REDFLAG);
+			//Sensors::Vision::VisionPrintLargest(Sensors::Vision::REDFLAG);
 		}
 		//flywheel control button checks
 		if(Btn_flywheelIncreaseSpeed.changedToPressed())
@@ -32,14 +32,14 @@ void opcontrol()
 			//increase speed
 			Flywheel::speed += FLYWHEEL_FINE_CONTROL_INCREMENT;
 			//set speed text
-			master->setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+			master.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
 		}
 		else if(Btn_flywheelDecreaseSpeed.changedToPressed())
 		{
 			//decrease speed
 			Flywheel::speed -= FLYWHEEL_FINE_CONTROL_INCREMENT;
 			//set speed text
-			master->setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+			master.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
 		}
 		//check for toggling the intake
 		if(Btn_intake.changedToPressed())
@@ -54,14 +54,14 @@ void opcontrol()
 			//increase speed
 			Flywheel::speed += 1;
 			//set speed text
-			master->setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+			master.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
 		}
 		else if(Btn_flywheelFineDecreaseSpeed.changedToPressed())
 		{
 			//decrease speed
 			Flywheel::speed -= 1;
 			//set speed text
-			master->setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+			master.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
 		}
 		//check for a request to flip a cap
 		if(Btn_flipper.changedToPressed())
@@ -98,25 +98,25 @@ void opcontrol()
 		//open loop tank control for chassis
 		//Chassis::controller.tank(master->getAnalog(ControllerAnalog::leftY), master->getAnalog(ControllerAnalog::rightY));
 		//open loop arcade control for chassis
-		Chassis::controller.arcade(master->getAnalog(ControllerAnalog::leftY), master->getAnalog(ControllerAnalog::rightX), 0.05);
+		Chassis::controller.arcade(master.getAnalog(ControllerAnalog::leftY), master.getAnalog(ControllerAnalog::rightX), 0.05);
 
 
 		//motor test code
-		Motor* testMotor = new Motor(10);
-		if(master->getDigital(ControllerDigital::up))
+		Motor testMotor = Motor(10);
+		if(master.getDigital(ControllerDigital::up))
 		{
 			//turn motor on
-			testMotor->move(127);
+			testMotor.move(127);
 		}
-		else if(master->getDigital(ControllerDigital::down))
+		else if(master.getDigital(ControllerDigital::down))
 		{
 			//turn motor on backwards
-			testMotor->move(-127);
+			testMotor.move(-127);
 		}
 		else
 		{
 			//stop motor
-			testMotor->move(0);
+			testMotor.move(0);
 		}
 		}
 }
