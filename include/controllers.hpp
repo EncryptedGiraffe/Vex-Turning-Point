@@ -8,8 +8,8 @@
 #define MOTOR_GEARSET_36_MAXSPEED 100 //maximum speed for the 6:1 gear set
 
 //controllers
-extern Controller* master;
-extern Controller* partner;
+extern Controller master;
+extern Controller partner;
 
 namespace Ports
 {
@@ -26,12 +26,33 @@ namespace Ports
   const int Vision = 20;
 }
 
+namespace Robot
+{
+  //declarations
+  enum Team //what team are we on this match?
+  {
+    Red = 0,
+    Blue = 1
+  };
+  enum StartingTile //which starting tile do we start on? (Measured from flags)
+  {
+    Close,
+    Far
+  };
+  struct GameDataInfo //game information struct
+  {
+    Team team;
+    StartingTile startingTile;
+    uint32_t flagSig;
+  }GameData; //this instance will be populated by any initialization routine that is run.
+}
+
 namespace Motors
 {
   //intake
-  extern Motor* intake;
+  extern Motor intake;
   //flipper
-  extern Motor* flipper;
+  extern Motor flipper;
 }
 
 namespace Flipper
@@ -96,10 +117,14 @@ namespace Sensors
 {
   namespace Vision
   {
+    //vision signatures
+    const uint32_t REDFLAGSIG = 0;
+    const uint32_t BLUEFLAGSIG = 1;
+
     //the dreaded sensor incarnate
-    extern pros::Vision* vision;
+    extern pros::Vision sensor;
 
     //prints the area, length, height, and position of the largest object that matches the given signature
-    void VisionPrintLargest(pros::vision_signature_s_t sig);
+    void VisionPrintLargest(uint32_t sig);
   }
 }

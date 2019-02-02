@@ -1,15 +1,20 @@
 #include "../include/controllers.hpp"
 
 //controllers
-Controller* master = new Controller(ControllerId::master);
-Controller* partner = new Controller(ControllerId::partner);
+Controller master = Controller(ControllerId::master);
+Controller partner = Controller(ControllerId::partner);
+
+namespace Robot
+{
+
+}
 
 namespace Motors
 {
   //intake
-  Motor* intake = new Motor(Ports::Intake, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
+  Motor intake = Motor(Ports::Intake, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
   //flipper
-  Motor* flipper = new Motor(Ports::Flipper, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
+  Motor flipper = Motor(Ports::Flipper, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
 }
 
 namespace Chassis
@@ -34,11 +39,11 @@ namespace Intake
       //check direction
       if(IsBackwards)
       {
-        Motors::intake->move(-127);
+        Motors::intake.move(-127);
       }
       else
       {
-        Motors::intake->move(127);
+        Motors::intake.move(127);
       }
       //check if the limit switch has been hit
       if(limit.changedToPressed())
@@ -50,7 +55,7 @@ namespace Intake
     else
     {
       //turn off motor
-      Motors::intake->move(0);
+      Motors::intake.move(0);
     }
   }
 }
@@ -110,7 +115,7 @@ namespace Flipper
   void StartUp()
   {
     //set the position of the motor to the lowered position
-    Motors::flipper->move_absolute(Lowered, 100);
+    Motors::flipper.move_absolute(Lowered, 100);
   }
   void RequestFlip()
   {
@@ -120,12 +125,12 @@ namespace Flipper
   void Raise()
   {
     //set the flipper to the raised position
-    Motors::flipper->move_absolute(Raised, MaxSpeed);
+    Motors::flipper.move_absolute(Raised, MaxSpeed);
   }
   void Ramming()
   {
     //set the flipper to the ram position
-    Motors::flipper->move_absolute(Ram, MaxSpeed);
+    Motors::flipper.move_absolute(Ram, MaxSpeed);
   }
   void Controller()
   {
@@ -133,17 +138,17 @@ namespace Flipper
     if(IsFlipping)
     {
       //check if the flipper is in the raised position
-      if(Motors::flipper->get_position() > (Raised-5) && Motors::flipper->get_position() < (Raised+5))
+      if(Motors::flipper.get_position() > (Raised-5) && Motors::flipper.get_position() < (Raised+5))
       {
         //lower the flipper
-        Motors::flipper->move_absolute(Lowered, MaxSpeed);
+        Motors::flipper.move_absolute(Lowered, MaxSpeed);
         //done sending commands
         IsFlipping = false;
       }
       else
       {
         //raise the flipper
-        Motors::flipper->move_absolute(Raised, MaxSpeed);
+        Motors::flipper.move_absolute(Raised, MaxSpeed);
       }
     }
   }
@@ -154,13 +159,17 @@ namespace Sensors
   namespace Vision
   {
     //the dreaded sensor itself
-    pros::Vision* sensor = new pros::Vision(Ports::Vision);
+    pros::Vision sensor = pros::Vision(Ports::Vision);
 
-    //prints the area, length, height, and position of the largest object that matches the given signature
-    void VisionPrintLargest(pros::vision_signature_s_t sig)
+    //prints the area, length, height, and position of the largest object that matches the given signature to the brain
+    void VisionPrintLargest(uint32_t sig)
     {
       //get the largest object matching the provided signature
-
+      pros::vision_object_s_t obj = sensor.get_by_sig(0, sig);
+      //print size data
+      pros::lcd::set_text(1, "Area: " + std::to_string(obj.height * obj.width) + ", Height: " + std::to_string(obj.height) + ", Width: " + std::to_string(obj.width) + ".");
+      //print position data
+      pros::lcd::set_text(2, "X Pos: " + std::to_string(obj.x_middle_coord) + ", Y Pos: " + std::to_string(obj.y_middle_coord) + ".");
     }
   }
 }
