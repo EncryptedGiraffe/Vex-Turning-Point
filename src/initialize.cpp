@@ -29,6 +29,11 @@ void initialize()
 
 	//configure vision sensor
 	Sensors::Vision::sensor.set_zero_point(pros::E_VISION_ZERO_CENTER);
+
+	//give the gameData struct basic values, this functionality will be changed later
+	Robot::GameData.team = Robot::Team::Blue; //default of team blue
+	Robot::GameData.startingTile = Robot::StartingTile::Close; //default of close tile
+	Robot::GameData.flagSig = Robot::GameData.team; //red team is 0, red flag sig is 0, blue likewise for 1
 }
 
 /**

@@ -26,27 +26,25 @@ namespace Ports
   const int Vision = 20;
 }
 
-namespace RobotController
+namespace Robot
 {
   //declarations
   enum Team //what team are we on this match?
   {
-    Red,
-    Blue
+    Red = 0,
+    Blue = 1
   };
   enum StartingTile //which starting tile do we start on? (Measured from flags)
   {
     Close,
     Far
   };
-  struct GameDataInfo
+  struct GameDataInfo //game information struct
   {
     Team team;
     StartingTile startingTile;
     uint32_t flagSig;
-  };
-  //game information
-  extern GameDataInfo gameData;
+  }GameData; //this instance will be populated by any initialization routine that is run.
 }
 
 namespace Motors

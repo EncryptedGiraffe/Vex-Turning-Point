@@ -4,9 +4,9 @@
 Controller master = Controller(ControllerId::master);
 Controller partner = Controller(ControllerId::partner);
 
-namespace RobotController
+namespace Robot
 {
-  GameDataInfo gameData = GameDataInfo();
+
 }
 
 namespace Motors
