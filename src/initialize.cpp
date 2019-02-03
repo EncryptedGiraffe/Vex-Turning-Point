@@ -63,7 +63,7 @@ lv_res_t Button_Click(lv_obj_t* btn)
 					if(!IsTileDone)
 					{
 						//we are starting on the close tile
-						Robot::startingTile = Robot::StartingTile::Close;
+						Robot::startingTile = Robot::StartingTile_e_t::Close;
 						//tile selection done
 						IsTileDone = true;
 						//done
@@ -82,7 +82,7 @@ lv_res_t Button_Click(lv_obj_t* btn)
 				else
 				{
 					//we are on the red team
-					Robot::team = Robot::Team::Red;
+					Robot::team = Robot::Team_e_t::Red;
 					//team selection done
 					IsTeamDone = true;
 					//find team
@@ -110,7 +110,7 @@ lv_res_t Button_Click(lv_obj_t* btn)
 					if(!IsTileDone)
 					{
 						//we are starting on the close tile
-						Robot::startingTile = Robot::StartingTile::Far;
+						Robot::startingTile = Robot::StartingTile_e_t::Far;
 						//tile selection done
 						IsTileDone = true;
 						//done
@@ -129,7 +129,7 @@ lv_res_t Button_Click(lv_obj_t* btn)
 				else
 				{
 					//we are on the red team
-					Robot::team = Robot::Team::Blue;
+					Robot::team = Robot::Team_e_t::Blue;
 					//team selection done
 					IsTeamDone = true;
 					//find team
@@ -231,7 +231,7 @@ void SelectorDone_Comp()
 	//set title text
 	std::string message;
 	message.append("Robot configuration: Competition\n");
-	if(Robot::team == Robot::Team::Red)
+	if(Robot::team == Robot::Team_e_t::Red)
 	{
 		message.append("Team: Red\n");
 	}
@@ -239,7 +239,7 @@ void SelectorDone_Comp()
 	{
 		message.append("Team: Blue\n");
 	}
-	if(Robot::startingTile == Robot::StartingTile::Close)
+	if(Robot::startingTile == Robot::StartingTile_e_t::Close)
 	{
 		message.append("Starting Tile: Close\n");
 	}
@@ -263,7 +263,7 @@ void SelectorDone_NoComp()
 	//set title text
 	std::string message;
 	message.append("Robot configuration: General\n");
-	if(Robot::team == Robot::Team::Red)
+	if(Robot::team == Robot::Team_e_t::Red)
 	{
 		message.append("Team: Red\n");
 	}
@@ -271,7 +271,7 @@ void SelectorDone_NoComp()
 	{
 		message.append("Team: Blue\n");
 	}
-	if(Robot::startingTile == Robot::StartingTile::Close)
+	if(Robot::startingTile == Robot::StartingTile_e_t::Close)
 	{
 		message.append("Starting Tile: Close\n");
 	}

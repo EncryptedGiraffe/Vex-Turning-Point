@@ -6,8 +6,8 @@ Controller partner = Controller(ControllerId::partner);
 
 namespace Robot
 {
-  Team team;
-  StartingTile startingTile;
+  Team_e_t team;
+  StartingTile_e_t startingTile;
   uint32_t flagSig;
   bool IsCompetition;
 }
@@ -68,7 +68,7 @@ namespace Flywheel
   //velocity PID variables
   AsyncVelIntegratedController velController = AsyncControllerFactory::velIntegrated(Ports::Flywheel);
   //velocity management variables
-  int flywheelSpeed = 0;
+  int _speed = 0;
   Mode mode = Variable;
   int speed = 0;
 
@@ -78,15 +78,15 @@ namespace Flywheel
     {
       case Stopped:
         //check if the motors are stopped
-        if(flywheelSpeed > 20)
+        if(_speed > 20)
         {
           //lower the velocity by 1
-          flywheelSpeed -= 1;
+          _speed -= 1;
         }
         else
         {
           //set the velocity to 0
-          flywheelSpeed = 0;
+          _speed = 0;
         }
         break;
       case Variable:
@@ -103,11 +103,11 @@ namespace Flywheel
           speed = 0;
         }
         //set speed to variableSpeed
-        flywheelSpeed = speed;
+        _speed = speed;
         break;
     }
     //set the motors
-    velController.setTarget(flywheelSpeed);
+    velController.setTarget(_speed);
     //Motors::flywheel->moveVelocity(flywheelSpeed);
   }
 }
@@ -161,18 +161,42 @@ namespace Sensors
 {
   namespace Vision
   {
+    //flag sig
+    uint32_t flagSig;
+
     //the dreaded sensor itself
     pros::Vision sensor = pros::Vision(Ports::Vision);
 
-    //prints the area, length, height, and position of the largest object that matches the given signature to the brain
-    void VisionPrintLargest(uint32_t sig)
+    //init
+    void Initialize()
     {
-      //get the largest object matching the provided signature
-      pros::vision_object_s_t obj = sensor.get_by_sig(0, sig);
-      //print size data
-      pros::lcd::set_text(1, "Area: " + std::to_string(obj.height * obj.width) + ", Height: " + std::to_string(obj.height) + ", Width: " + std::to_string(obj.width) + ".");
-      //print position data
-      pros::lcd::set_text(2, "X Pos: " + std::to_string(obj.x_middle_coord) + ", Y Pos: " + std::to_string(obj.y_middle_coord) + ".");
+      //set the flag signature
+      flagSig = static_cast<uint32_t>(Robot::team);
+    }
+
+    //sorting
+    bool VisionObjectSort(pros::vision_object_s_t r, pros::vision_object_s_t l)
+    {
+      //return true if r goes before l
+      return std::abs(r.x_middle_coord) < std::abs(l.x_middle_coord);
+    }
+
+    //targeting controller
+    void TargetingController()
+    {
+      //create an array to hold the objects being read
+      pros::vision_object_s_t objects_arr[SAMPLE_SIZE];
+      //read the objects in
+      sensor.read_by_sig(0, flagSig, SAMPLE_SIZE, objects_arr);
+      //create a vector for the objects
+      std::vector<pros::vision_object_s_t> objects_vec(objects_arr, objects_arr+SAMPLE_SIZE);
+    }
+
+    //flywheel speed controller
+    void FlywheelController()
+    {
+      //set flywheel speed
+      Flywheel::speed = Flywheel::speed;
     }
   }
 }

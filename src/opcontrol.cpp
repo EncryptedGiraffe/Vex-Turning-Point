@@ -10,23 +10,18 @@ ControllerButton Btn_flipper(ControllerId::master, ControllerDigital::B); //flip
 ControllerButton Btn_flipperUp(ControllerId::master, ControllerDigital::X); //raise the flipper to the up position
 ControllerButton Btn_flipperRam(ControllerId::master, ControllerDigital::Y); //set the flipper to ramming speed
 ControllerButton Btn_intakeReverse(ControllerId::master, ControllerDigital::left); //toggle the direction of the intake
-ControllerButton Btn_vision(ControllerId::master, ControllerDigital::right); //get the data on the largest object the vision sensor sees
 
 void opcontrol()
 {
 	Robot::WriteMessage("Opcontrol started!");
 	//start the flipper
 	Flipper::StartUp();
+	//init vision
+	Sensors::Vision::Initialize();
 	while (true)
 	{
 		pros::delay(20);
 
-		//tell the vision sensor to take a snapshot and print data
-		if(Btn_vision.changedToPressed())
-		{
-			//print data
-			//Sensors::Vision::VisionPrintLargest(Sensors::Vision::REDFLAG);
-		}
 		//flywheel control button checks
 		if(Btn_flywheelIncreaseSpeed.changedToPressed())
 		{
@@ -90,8 +85,6 @@ void opcontrol()
 		}
 
 		//run all controller scripts
-		//flywheel speed controller
-		Flywheel::Controller();
 		//intake run controller
 		Intake::Controller();
 		//flipper position controller
@@ -100,7 +93,12 @@ void opcontrol()
 		//Chassis::controller.tank(master->getAnalog(ControllerAnalog::leftY), master->getAnalog(ControllerAnalog::rightY));
 		//open loop arcade control for chassis
 		Chassis::controller.arcade(master.getAnalog(ControllerAnalog::leftY), master.getAnalog(ControllerAnalog::rightX), 0.05);
-
+		//Targeting controller
+		Sensors::Vision::TargetingController();
+		//flywheel speed controller
+		Sensors::Vision::FlywheelController();
+		//flywheel speed controller
+		Flywheel::Controller();
 
 		//motor test code
 		Motor testMotor = Motor(10);

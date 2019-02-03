@@ -31,19 +31,19 @@ namespace Robot
   //write a lvgl message to the Brain.
   void WriteMessage(std::string message);
   //declarations
-  enum Team //what team are we on this match?
+  enum Team_e_t //what team are we on this match?
   {
     Red = 0,
     Blue = 1
   };
-  enum StartingTile //which starting tile do we start on? (Measured from flags)
+  enum StartingTile_e_t //which starting tile do we start on? (Measured from flags)
   {
     Close,
     Far
   };
   //game information
-  extern Team team;
-  extern StartingTile startingTile;
+  extern Team_e_t team;
+  extern StartingTile_e_t startingTile;
   extern uint32_t flagSig;
   extern bool IsCompetition;
 }
@@ -118,14 +118,49 @@ namespace Sensors
 {
   namespace Vision
   {
+    /* A note on vision coordinates
+    Vision is configured for zero center mode.
+    +Y = Down of center
+    -Y = Up of center
+    +X = Right of center
+    -X = Left of center
+    Top = 158
+    Bottom = -158
+    Right = 106
+    Left = -106
+    FOV Width = 316
+    FOV Height = 212
+    */
+    //constants
+    const int TOP_LIMIT = 158;
+    const int BOTTOM_LIMIT = -158;
+    const int RIGHT_LIMIT = 106;
+    const int LEFT_LIMIT = -106;
+    const int TOP_BOUND = TOP_LIMIT - 0;
+    const int BOTTOM_BOUND = BOTTOM_LIMIT + 0;
+    const int RIGHT_BOUND = RIGHT_LIMIT - 30;
+    const int LEFT_BOUND = LEFT_LIMIT + 30;
+
+    //target controller variables
+    const int SAMPLE_SIZE = 6;
+
     //vision signatures
-    const uint32_t REDFLAGSIG = 0;
-    const uint32_t BLUEFLAGSIG = 1;
+    const uint32_t RED_FLAG_SIG = 0;
+    const uint32_t BLUE_FLAG_SIG = 1;
 
     //the dreaded sensor incarnate
     extern pros::Vision sensor;
 
-    //prints the area, length, height, and position of the largest object that matches the given signature
-    void VisionPrintLargest(uint32_t sig);
+    //initialize the vision sensor
+    void Initialize();
+
+    //vision object sorting algorithm
+    bool VisionObjectSort(pros::vision_object_s_t r, pros::vision_object_s_t l);
+
+    //vision sensor targeting controller
+    void TargetingController();
+
+    //flywheel speed controller
+    void FlywheelController();
   }
 }
