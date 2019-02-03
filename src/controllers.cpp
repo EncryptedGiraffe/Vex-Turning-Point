@@ -6,7 +6,10 @@ Controller partner = Controller(ControllerId::partner);
 
 namespace Robot
 {
-
+  Team team;
+  StartingTile startingTile;
+  uint32_t flagSig;
+  bool IsCompetition;
 }
 
 namespace Motors

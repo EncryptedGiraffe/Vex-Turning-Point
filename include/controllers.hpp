@@ -28,6 +28,8 @@ namespace Ports
 
 namespace Robot
 {
+  //write a lvgl message to the Brain.
+  void WriteMessage(std::string message);
   //declarations
   enum Team //what team are we on this match?
   {
@@ -39,12 +41,11 @@ namespace Robot
     Close,
     Far
   };
-  struct GameDataInfo //game information struct
-  {
-    Team team;
-    StartingTile startingTile;
-    uint32_t flagSig;
-  }GameData; //this instance will be populated by any initialization routine that is run.
+  //game information
+  extern Team team;
+  extern StartingTile startingTile;
+  extern uint32_t flagSig;
+  extern bool IsCompetition;
 }
 
 namespace Motors
