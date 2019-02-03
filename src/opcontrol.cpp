@@ -14,6 +14,7 @@ ControllerButton Btn_vision(ControllerId::master, ControllerDigital::right); //g
 
 void opcontrol()
 {
+	Robot::WriteMessage("Opcontrol started!");
 	//start the flipper
 	Flipper::StartUp();
 	while (true)
