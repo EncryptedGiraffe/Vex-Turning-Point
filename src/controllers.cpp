@@ -23,7 +23,7 @@ namespace Motors
 namespace Chassis
 {
   //closed and open loop control for chassis
-  ChassisControllerIntegrated controller = ChassisControllerFactory::create({Ports::DriveLeftFront, Ports::DriveLeftBack}, {-Ports::DriveRightFront, -Ports::DriveRightBack});
+  ChassisControllerIntegrated controller = ChassisControllerFactory::create({Ports::DriveLeftFront, Ports::DriveLeftBack}, {-Ports::DriveRightFront, -Ports::DriveRightBack}, AbstractMotor::gearset::red, {4_in, 12_in});
 }
 
 namespace Intake
@@ -215,6 +215,26 @@ namespace Sensors
       //make sure the object is within bounds
       if(abs(object.x_middle_coord) > abs(LEFT_BOUND) || abs(object.y_middle_coord) > abs(TOP_BOUND))
         return;
+      //get the distance away from center
+      int distance = object.x_middle_coord;
+      //calculate direction of rotation
+      int direction = 0;
+      if(distance < -THRESHOLD)
+      {
+        //rotate in the position direction
+        direction = 1;
+      }
+      else if(distance > THRESHOLD)
+      {
+        //rotate in the negative direction
+        direction = -1;
+      }
+      else
+      {
+        //we are on target
+        direction = 0;
+        return;
+      }
     }
 
     //flywheel speed controller

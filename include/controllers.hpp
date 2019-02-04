@@ -1,5 +1,7 @@
 #pragma once
-
+/* TODO:
+Measure correct values for ChassisScales
+*/
 #include "main.h"
 
 //general variables
@@ -143,6 +145,8 @@ namespace Sensors
 
     //target controller variables
     const int SAMPLE_SIZE = 6;
+    const int THRESHOLD = 5;
+    const int MAX_ANGLE = 5;
 
     //vision signatures
     const uint32_t RED_FLAG_SIG = 0;
