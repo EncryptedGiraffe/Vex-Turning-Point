@@ -60,10 +60,10 @@ namespace Flipper
 {
   //position variables
   const int startPos = 0;
-  const int Raised = 35;
-  const int Lowered = 160;
-  const int Ram = 90;
-  const int MaxSpeed = 150;
+  const int Raised = 105;
+  const int Lowered = 480;
+  const int Ram = 270;
+  const int MaxSpeed = 200;
   //start the flipper position
   void StartUp();
   //position controller
