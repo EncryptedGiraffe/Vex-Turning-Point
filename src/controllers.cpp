@@ -164,6 +164,9 @@ namespace Sensors
     //flag sig
     uint32_t flagSig;
 
+    //state variables
+    bool IsTargeting = true;
+
     //the dreaded sensor itself
     pros::Vision sensor = pros::Vision(Ports::Vision);
 
@@ -177,19 +180,41 @@ namespace Sensors
     //sorting
     bool VisionObjectSort(pros::vision_object_s_t r, pros::vision_object_s_t l)
     {
-      //return true if r goes before l
-      return std::abs(r.x_middle_coord) < std::abs(l.x_middle_coord);
+      //check if they have the same x position
+      if(abs(r.x_middle_coord) != abs(l.x_middle_coord))
+      {
+        //return true if r goes before l based on x position
+        return abs(r.x_middle_coord) < abs(l.x_middle_coord);
+      }
+      else
+      {
+        //return true if r goes before l based on size
+        return abs(r.height * r.width) > abs(l.height * l.width);
+      }
     }
 
     //targeting controller
     void TargetingController()
     {
+      //check if we are targeting
+      if(!IsTargeting)
+        return;
       //create an array to hold the objects being read
       pros::vision_object_s_t objects_arr[SAMPLE_SIZE];
       //read the objects in
       sensor.read_by_sig(0, flagSig, SAMPLE_SIZE, objects_arr);
+      //make sure at least one object has been read
+      if(sizeof(objects_arr) < 1)
+        return;
       //create a vector for the objects
-      std::vector<pros::vision_object_s_t> objects_vec(objects_arr, objects_arr+SAMPLE_SIZE);
+      std::vector<pros::vision_object_s_t> objects_vect(objects_arr, objects_arr+sizeof(objects_arr));
+      //sort the vector
+      std::sort(objects_vect.begin(), objects_vect.end(), VisionObjectSort);
+      //get the target object
+      pros::vision_object_s_t object = objects_vect.front();
+      //make sure the object is within bounds
+      if(abs(object.x_middle_coord) > abs(LEFT_BOUND) || abs(object.y_middle_coord) > abs(TOP_BOUND))
+        return;
     }
 
     //flywheel speed controller
