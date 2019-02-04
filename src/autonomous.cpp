@@ -2,5 +2,5 @@
 
 void autonomous()
 {
-
+  Robot::WriteMessage("Autonomous started!");
 }
