@@ -219,12 +219,12 @@ namespace Sensors
       int distance = object.x_middle_coord;
       //calculate direction of rotation
       int direction = 0;
-      if(distance < -THRESHOLD)
+      if(distance > THRESHOLD)
       {
         //rotate in the position direction
         direction = 1;
       }
-      else if(distance > THRESHOLD)
+      else if(distance < -THRESHOLD)
       {
         //rotate in the negative direction
         direction = -1;
