@@ -17,7 +17,7 @@ namespace Motors
   //intake
   Motor intake = Motor(Ports::Intake, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
   //flipper
-  Motor flipper = Motor(Ports::Flipper, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
+  Motor flipper = Motor(Ports::Flipper, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
 }
 
 namespace Chassis
@@ -118,7 +118,7 @@ namespace Flipper
   void StartUp()
   {
     //set the position of the motor to the lowered position
-    Motors::flipper.move_absolute(Lowered, 100);
+    Motors::flipper.move_absolute(Lowered, 200);
   }
   void RequestFlip()
   {
