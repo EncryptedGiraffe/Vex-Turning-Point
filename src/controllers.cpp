@@ -211,6 +211,7 @@ namespace Sensors
       //check if we are targeting
       if(!IsTargeting)
         return;
+      Robot::WriteMessage("Targeting");
       //create an array to hold the objects being read
       pros::vision_object_s_t objects_arr[SAMPLE_SIZE];
       //read the objects in
@@ -218,6 +219,7 @@ namespace Sensors
       //make sure at least one object has been read
       if(sizeof(objects_arr) < 1)
         return;
+      Robot::WriteMessage("Read Objects");
       //create a vector for the objects
       std::vector<pros::vision_object_s_t> objects_vect(objects_arr, objects_arr+sizeof(objects_arr));
       //sort the vector
