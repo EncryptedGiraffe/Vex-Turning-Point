@@ -255,6 +255,21 @@ namespace Sensors
       Chassis::controller.turnAngle(angle);
     }
 
+    void TargetingControllerV2()
+    {
+      //check if we should be running
+      if(!IsTargeting)
+        return;
+      //create a debug log
+      std::string messages;
+      messages.append("Targeting");
+      //create a data container to hold the objects
+      pros::vision_object_s_t obj_arr[SAMPLE_SIZE];
+      //read in objects from the vision sensor
+      sensor.read_by_sig(0, flagSig, SAMPLE_SIZE, obj_arr);
+      
+    }
+
     //flywheel speed controller
     void FlywheelController()
     {

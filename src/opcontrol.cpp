@@ -108,7 +108,7 @@ void opcontrol()
 		//open loop arcade control for chassis
 		Chassis::controller.arcade(master.getAnalog(ControllerAnalog::leftY), master.getAnalog(ControllerAnalog::rightX), 0.05);
 		//Targeting controller
-		Sensors::Vision::TargetingController();
+		Sensors::Vision::TargetingControllerV2();
 		//flywheel speed controller
 		Sensors::Vision::FlywheelController();
 		//flywheel speed controller

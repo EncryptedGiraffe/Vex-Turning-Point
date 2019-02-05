@@ -170,6 +170,9 @@ namespace Sensors
     //vision sensor targeting controller
     void TargetingController();
 
+    //vision sensor targeting controller
+    void TargetingControllerV2();
+
     //flywheel speed controller
     void FlywheelController();
   }
