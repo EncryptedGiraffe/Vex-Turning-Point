@@ -158,6 +158,12 @@ namespace Sensors
     //initialize the vision sensor
     void Initialize();
 
+    //start targeting the flag
+    void StartTargeting();
+
+    //stop targeting the flag
+    void StopTargeting();
+
     //vision object sorting algorithm
     bool VisionObjectSort(pros::vision_object_s_t r, pros::vision_object_s_t l);
 

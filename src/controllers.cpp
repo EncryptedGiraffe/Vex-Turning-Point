@@ -165,7 +165,7 @@ namespace Sensors
     uint32_t flagSig;
 
     //state variables
-    bool IsTargeting = true;
+    bool IsTargeting = false;
 
     //the dreaded sensor itself
     pros::Vision sensor = pros::Vision(Ports::Vision);
@@ -175,6 +175,18 @@ namespace Sensors
     {
       //set the flag signature
       flagSig = static_cast<uint32_t>(Robot::team);
+    }
+
+    //start targeting
+    void StartTargeting()
+    {
+      IsTargeting = true;
+    }
+
+    //stop targeting
+    void StopTargeting()
+    {
+      IsTargeting = false;
     }
 
     //sorting
@@ -235,6 +247,10 @@ namespace Sensors
         direction = 0;
         return;
       }
+      //get the proportion of angle
+      double angle = (abs(distance / RIGHT_BOUND)) * MAX_ANGLE * direction;
+      //rotate the chassis by angle via a blocking call
+      Chassis::controller.turnAngle(angle);
     }
 
     //flywheel speed controller
