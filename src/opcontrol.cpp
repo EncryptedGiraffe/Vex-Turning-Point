@@ -36,14 +36,14 @@ void opcontrol()
 			//increase speed
 			Flywheel::speed += 5;
 			//set speed text
-			master.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+			partner.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
 		}
 		else if(Btn_flywheelDecreaseSpeed.changedToPressed())
 		{
 			//decrease speed
 			Flywheel::speed -= 5;
 			//set speed text
-			master.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+			partner.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
 		}
 		//check for toggling the intake
 		if(Btn_intake.changedToPressed())
@@ -58,7 +58,7 @@ void opcontrol()
 			//increase speed
 			Flywheel::speed += 1;
 			//set speed text
-			master.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+			partner.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
 		}
 		else if(Btn_flywheelFineDecreaseSpeed.changedToPressed())
 		{
@@ -73,14 +73,14 @@ void opcontrol()
 			//increase speed
 			Flywheel::speed += 20;
 			//set speed text
-			master.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+			partner.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
 		}
 		else if(Btn_flywheelLargeDecreaseSpeed.changedToPressed())
 		{
 			//decrease speed
 			Flywheel::speed -= 20;
 			//set speed text
-			master.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+			partner.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
 		}
 
 		//check for a request to flip a cap
