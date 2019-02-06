@@ -8,8 +8,8 @@
 #define MOTOR_GEARSET_36_MAXSPEED 100 //maximum speed for the 6:1 gear set
 
 //controllers
-extern Controller master;
-extern Controller partner;
+extern Controller master; //the drive controller
+extern Controller partner; //the flywheel controller
 
 namespace Ports
 {
@@ -97,7 +97,6 @@ namespace Flywheel
 
   //are we in flywheel speed finding mode?
   #define FLYWHEEL_FINE_CONTROL_MODE
-  #define FLYWHEEL_FINE_CONTROL_INCREMENT 5
 
   //flywheel speeds
   enum Mode

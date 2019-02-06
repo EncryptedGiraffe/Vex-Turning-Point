@@ -1,8 +1,8 @@
 #include "../include/controllers.hpp"
 
 //controllers
-Controller master = Controller(ControllerId::master);
-Controller partner = Controller(ControllerId::partner);
+Controller master = Controller(ControllerId::master); //the drive controller
+Controller partner = Controller(ControllerId::partner); //the flywheel controller
 
 namespace Robot
 {
