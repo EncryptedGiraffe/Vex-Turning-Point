@@ -1,13 +1,13 @@
 #include "../include/controllers.hpp"
 
 //drive controller buttons
-ControllerButton Btn_intake(ControllerId::master, ControllerDigital::A); //toggle the intake
 ControllerButton Btn_flipper(ControllerId::master, ControllerDigital::B); //flip the flipper
 ControllerButton Btn_flipperUp(ControllerId::master, ControllerDigital::X); //raise the flipper to the up position
 ControllerButton Btn_flipperRam(ControllerId::master, ControllerDigital::Y); //set the flipper to ramming speed
 ControllerButton Btn_intakeReverse(ControllerId::master, ControllerDigital::left); //toggle the direction of the intake
 ControllerButton Btn_vision(ControllerId::master, ControllerDigital::right); //get the data on the largest object the vision sensor sees
 //flywheel controller buttons
+ControllerButton Btn_intake(ControllerId::master, ControllerDigital::A); //toggle the intake
 ControllerButton Btn_flywheelIncreaseSpeed(ControllerId::partner, ControllerDigital::R1); //increase the flywheel speed by 5
 ControllerButton Btn_flywheelDecreaseSpeed(ControllerId::partner, ControllerDigital::R2); //decrease the flywheel speed by 5
 ControllerButton Btn_flywheelFineIncreaseSpeed(ControllerId::partner, ControllerDigital::L1); //increase the flywheel speed by 1
