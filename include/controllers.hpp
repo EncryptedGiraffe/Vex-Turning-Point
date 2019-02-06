@@ -35,8 +35,8 @@ namespace Robot
   //declarations
   enum Team_e_t //what team are we on this match?
   {
-    Red = 0,
-    Blue = 1
+    Red = 1, //this is 1 so that the vision sensor will look for a blue flag, which will have sig id 1
+    Blue = 0 //this is 0 so that the vision sensor will look for a red flag, which will have sig id 0
   };
   enum StartingTile_e_t //which starting tile do we start on? (Measured from flags)
   {
@@ -138,8 +138,8 @@ namespace Sensors
     const int BOTTOM_LIMIT = -158;
     const int RIGHT_LIMIT = 106;
     const int LEFT_LIMIT = -106;
-    const int TOP_BOUND = TOP_LIMIT - 0;
-    const int BOTTOM_BOUND = BOTTOM_LIMIT + 0;
+    const int TOP_BOUND = TOP_LIMIT - 5;
+    const int BOTTOM_BOUND = BOTTOM_LIMIT + 5;
     const int RIGHT_BOUND = RIGHT_LIMIT - 30;
     const int LEFT_BOUND = LEFT_LIMIT + 30;
 

@@ -262,12 +262,17 @@ namespace Sensors
         return;
       //create a debug log
       std::string messages;
-      messages.append("Targeting");
-      //create a data container to hold the objects
-      pros::vision_object_s_t obj_arr[SAMPLE_SIZE];
-      //read in objects from the vision sensor
-      sensor.read_by_sig(0, flagSig, SAMPLE_SIZE, obj_arr);
-      
+      messages.append("Targeting\n");
+      //get the biggest object matching the flag sig
+      pros::vision_object_s_t obj = sensor.get_by_sig(0, flagSig);
+      //make sure it is large enough to care about
+      if((obj.width * obj.width) < 10)
+        return;
+      //make sure object is in bounds
+      if((obj.x_middle_coord > RIGHT_BOUND) || (obj.x_middle_coord < LEFT_BOUND) || (obj.y_middle_coord > TOP_BOUND) || (obj.y_middle_coord < BOTTOM_BOUND))
+        return;
+      //object is good, big enough and in bounds
+      messages.append("Object found\n");
     }
 
     //flywheel speed controller
