@@ -117,18 +117,18 @@ namespace Sensors
   /*
   namespace Vision
   {
-    A note on vision coordinates
-    Vision is configured for zero center mode.
-    +Y = Down of center
-    -Y = Up of center
-    +X = Right of center
-    -X = Left of center
-    Top = 158
-    Bottom = -158
-    Right = 106
-    Left = -106
-    FOV Width = 316
-    FOV Height = 212
+    //A note on vision coordinates
+    //Vision is configured for zero center mode.
+    //+Y = Down of center
+    //-Y = Up of center
+    //+X = Right of center
+    //-X = Left of center
+    //Top = 158
+    //Bottom = -158
+    //Right = 106
+    //Left = -106
+    //FOV Width = 316
+    //FOV Height = 212
 
     //constants
     const int TOP_LIMIT = 158;

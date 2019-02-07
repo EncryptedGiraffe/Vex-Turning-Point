@@ -20,15 +20,22 @@ void opcontrol()
 	Robot::WriteMessage("Opcontrol started!");
 	//start the flipper
 	Flipper::StartUp();
+	//init vision
+	Sensors::Vision::Initialize();
 	while (true)
 	{
 		pros::delay(20);
 
-		//tell the vision sensor to take a snapshot and print data
-		if(Btn_vision.changedToPressed())
+		//check for enable or disable auto targeting
+		if(Btn_startTargeting.changedToPressed())
 		{
-			//print data
-			//Sensors::Vision::VisionPrintLargest(Sensors::Vision::REDFLAG);
+			//start targeting
+			Sensors::Vision::StartTargeting();
+		}
+		if(Btn_stopTargeting.changedToPressed())
+		{
+			//stop targeting
+			Sensors::Vision::StopTargeting();
 		}
 		//flywheel control button checks
 		if(Btn_flywheelIncreaseSpeed.changedToPressed())
@@ -65,7 +72,7 @@ void opcontrol()
 			//decrease speed
 			Flywheel::speed -= 1;
 			//set speed text
-			master.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+			partner.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
 		}
 		//flywheel control button checks
 		if(Btn_flywheelLargeIncreaseSpeed.changedToPressed())
@@ -109,8 +116,6 @@ void opcontrol()
 		}
 
 		//run all controller scripts
-		//flywheel speed controller
-		Flywheel::Controller();
 		//intake run controller
 		Intake::Controller();
 		//flipper position controller
@@ -119,7 +124,12 @@ void opcontrol()
 		//Chassis::controller.tank(master->getAnalog(ControllerAnalog::leftY), master->getAnalog(ControllerAnalog::rightY));
 		//open loop arcade control for chassis
 		Chassis::controller.arcade(master.getAnalog(ControllerAnalog::leftY), master.getAnalog(ControllerAnalog::rightX), 0.05);
-
+		//Targeting controller
+		Sensors::Vision::TargetingControllerV2();
+		//flywheel speed controller
+		Sensors::Vision::FlywheelController();
+		//flywheel speed controller
+		Flywheel::Controller();
 
 		//motor test code
 		Motor testMotor = Motor(10);
