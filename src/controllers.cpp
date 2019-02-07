@@ -159,6 +159,7 @@ namespace Flipper
 
 namespace Sensors
 {
+  /*
   namespace Vision
   {
     //the dreaded sensor itself
@@ -175,4 +176,5 @@ namespace Sensors
       pros::lcd::set_text(2, "X Pos: " + std::to_string(obj.x_middle_coord) + ", Y Pos: " + std::to_string(obj.y_middle_coord) + ".");
     }
   }
+  */
 }

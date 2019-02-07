@@ -1,5 +1,7 @@
 #pragma once
-
+/* TODO:
+Measure correct values for ChassisScales
+*/
 #include "main.h"
 
 //general variables
@@ -8,8 +10,8 @@
 #define MOTOR_GEARSET_36_MAXSPEED 100 //maximum speed for the 6:1 gear set
 
 //controllers
-extern Controller master; //the drive controller
-extern Controller partner; //the flywheel controller
+extern Controller master;
+extern Controller partner;
 
 namespace Ports
 {
@@ -31,19 +33,19 @@ namespace Robot
   //write a lvgl message to the Brain.
   void WriteMessage(std::string message);
   //declarations
-  enum Team //what team are we on this match?
+  enum Team_e_t //what team are we on this match?
   {
-    Red = 0,
-    Blue = 1
+    Red = 1, //this is 1 so that the vision sensor will look for a blue flag, which will have sig id 1
+    Blue = 0 //this is 0 so that the vision sensor will look for a red flag, which will have sig id 0
   };
-  enum StartingTile //which starting tile do we start on? (Measured from flags)
+  enum StartingTile_e_t //which starting tile do we start on? (Measured from flags)
   {
     Close,
     Far
   };
   //game information
-  extern Team team;
-  extern StartingTile startingTile;
+  extern Team_e_t team;
+  extern StartingTile_e_t startingTile;
   extern uint32_t flagSig;
   extern bool IsCompetition;
 }
@@ -95,9 +97,6 @@ namespace Flywheel
   //velocity PID controller
   extern AsyncVelIntegratedController velController;
 
-  //are we in flywheel speed finding mode?
-  #define FLYWHEEL_FINE_CONTROL_MODE
-
   //flywheel speeds
   enum Mode
   {
@@ -115,16 +114,64 @@ namespace Flywheel
 
 namespace Sensors
 {
+  /*
   namespace Vision
   {
+    A note on vision coordinates
+    Vision is configured for zero center mode.
+    +Y = Down of center
+    -Y = Up of center
+    +X = Right of center
+    -X = Left of center
+    Top = 158
+    Bottom = -158
+    Right = 106
+    Left = -106
+    FOV Width = 316
+    FOV Height = 212
+
+    //constants
+    const int TOP_LIMIT = 158;
+    const int BOTTOM_LIMIT = -158;
+    const int RIGHT_LIMIT = 106;
+    const int LEFT_LIMIT = -106;
+    const int TOP_BOUND = TOP_LIMIT - 5;
+    const int BOTTOM_BOUND = BOTTOM_LIMIT + 5;
+    const int RIGHT_BOUND = RIGHT_LIMIT - 30;
+    const int LEFT_BOUND = LEFT_LIMIT + 30;
+
+    //target controller variables
+    const int SAMPLE_SIZE = 6;
+    const int THRESHOLD = 5;
+    const int MAX_ANGLE = 5;
+
     //vision signatures
-    const uint32_t REDFLAGSIG = 0;
-    const uint32_t BLUEFLAGSIG = 1;
+    const uint32_t RED_FLAG_SIG = 0;
+    const uint32_t BLUE_FLAG_SIG = 1;
 
     //the dreaded sensor incarnate
     extern pros::Vision sensor;
 
-    //prints the area, length, height, and position of the largest object that matches the given signature
-    void VisionPrintLargest(uint32_t sig);
+    //initialize the vision sensor
+    void Initialize();
+
+    //start targeting the flag
+    void StartTargeting();
+
+    //stop targeting the flag
+    void StopTargeting();
+
+    //vision object sorting algorithm
+    bool VisionObjectSort(pros::vision_object_s_t r, pros::vision_object_s_t l);
+
+    //vision sensor targeting controller
+    void TargetingController();
+
+    //vision sensor targeting controller
+    void TargetingControllerV2();
+
+    //flywheel speed controller
+    void FlywheelController();
   }
+*/
 }
