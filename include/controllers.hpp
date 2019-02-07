@@ -25,6 +25,7 @@ namespace Ports
   const int Flipper = 7;
   //sensor ports
   const int IntakeSwitch = 'A';
+  const int FlipperSwitch = 'B';
   const int Vision = 20;
 }
 
@@ -64,7 +65,7 @@ namespace Flipper
   const int startPos = 0;
   const int Raised = 50;
   const int Lowered = 450;
-  const int Ram = 300;
+  const int Ram = 280;
   const int MaxSpeed = 200;
   //start the flipper position
   void StartUp();

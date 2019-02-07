@@ -114,6 +114,7 @@ namespace Flywheel
 
 namespace Flipper
 {
+  ADIButton flipperSwitch(Ports::FlipperSwitch);
   bool IsFlipping = false;
   void StartUp()
   {
@@ -137,6 +138,13 @@ namespace Flipper
   }
   void Controller()
   {
+    //check if the limit switch has been hit
+    if(flipperSwitch.changedToPressed())
+    {
+      //reset state
+      Motors::flipper.tarePosition();
+      Motors::flipper.move_absolute(Raised, MaxSpeed);
+    }
     //check if the flipper should be flipping
     if(IsFlipping)
     {
