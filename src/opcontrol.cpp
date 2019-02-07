@@ -18,7 +18,7 @@ ControllerButton Btn_flywheelLowSpeed(ControllerId::partner, ControllerDigital::
 void WriteFlywheelSpeed()
 {
 	//write speed
-	partner.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+	partner.setText(0, 0, "Speed: " + std::to_string(Flywheel::speed) + "  ");
 }
 
 void opcontrol()
