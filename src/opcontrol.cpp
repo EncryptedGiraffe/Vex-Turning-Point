@@ -12,8 +12,14 @@ ControllerButton Btn_flywheelIncreaseSpeed(ControllerId::partner, ControllerDigi
 ControllerButton Btn_flywheelDecreaseSpeed(ControllerId::partner, ControllerDigital::R2); //decrease the flywheel speed by 5
 ControllerButton Btn_flywheelFineIncreaseSpeed(ControllerId::partner, ControllerDigital::L1); //increase the flywheel speed by 1
 ControllerButton Btn_flywheelFineDecreaseSpeed(ControllerId::partner, ControllerDigital::L2); //decrease the flywheel speed by 1
-ControllerButton Btn_flywheelLargeIncreaseSpeed(ControllerId::partner, ControllerDigital::up); //increase the flywheel speed by 20
-ControllerButton Btn_flywheelLargeDecreaseSpeed(ControllerId::partner, ControllerDigital::down); //decrease the flywheel speed by 20
+ControllerButton Btn_flywheelHighSpeed(ControllerId::partner, ControllerDigital::up); //increase the flywheel speed by 20
+ControllerButton Btn_flywheelLowSpeed(ControllerId::partner, ControllerDigital::down); //decrease the flywheel speed by 20
+
+void WriteFlywheelSpeed()
+{
+	//write speed
+	partner.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+}
 
 void opcontrol()
 {
@@ -28,16 +34,14 @@ void opcontrol()
 		if(Btn_flywheelIncreaseSpeed.changedToPressed())
 		{
 			//increase speed
-			Flywheel::speed += 5;
-			//set speed text
-			partner.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+			Flywheel::speed += 20;
+			WriteFlywheelSpeed();
 		}
 		else if(Btn_flywheelDecreaseSpeed.changedToPressed())
 		{
 			//decrease speed
-			Flywheel::speed -= 5;
-			//set speed text
-			partner.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+			Flywheel::speed -= 20;
+			WriteFlywheelSpeed();
 		}
 		//check for toggling the intake
 		if(Btn_intake.changedToPressed())
@@ -50,31 +54,27 @@ void opcontrol()
 		if(Btn_flywheelFineIncreaseSpeed.changedToPressed())
 		{
 			//increase speed
-			Flywheel::speed += 1;
-			//set speed text
-			partner.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+			Flywheel::speed += 5;
+			WriteFlywheelSpeed();
 		}
 		else if(Btn_flywheelFineDecreaseSpeed.changedToPressed())
 		{
 			//decrease speed
-			Flywheel::speed -= 1;
-			//set speed text
-			partner.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+			Flywheel::speed -= 5;
+			WriteFlywheelSpeed();
 		}
 		//flywheel control button checks
-		if(Btn_flywheelLargeIncreaseSpeed.changedToPressed())
+		if(Btn_flywheelHighSpeed.changedToPressed())
 		{
 			//increase speed
-			Flywheel::speed += 20;
-			//set speed text
-			partner.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+			Flywheel::speed = 170;
+			WriteFlywheelSpeed();
 		}
-		else if(Btn_flywheelLargeDecreaseSpeed.changedToPressed())
+		else if(Btn_flywheelLowSpeed.changedToPressed())
 		{
 			//decrease speed
-			Flywheel::speed -= 20;
-			//set speed text
-			partner.setText(1, 0, "Speed: " + std::to_string(Flywheel::speed) + "   ");
+			Flywheel::speed -= 120;
+			WriteFlywheelSpeed();
 		}
 
 		//check for a request to flip a cap
