@@ -273,6 +273,25 @@ namespace Sensors
         return;
       //object is good, big enough and in bounds
       messages.append("Object found\n");
+      //calculate direction
+      int direction = 0;
+      if(obj.x_middle_coord > THRESHOLD)
+      {
+        //rotate clockwise
+        direction = 1;
+      }
+      else if(obj.x_middle_coord < (THRESHOLD * -(1)))
+      {
+        //rotate counter clockwise
+        direction = -1;
+      }
+      else
+      {
+        //we are good
+        direction = 0;
+      }
+      messages.append("Rotating: " + std::to_string(direction) + "\n");
+      //figure what how much to rotate by making a proportion between the distance from center and the side bound
     }
 
     //flywheel speed controller
