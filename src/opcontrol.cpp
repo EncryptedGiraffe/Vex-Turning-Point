@@ -113,5 +113,7 @@ void opcontrol()
 		Chassis::controller.arcade(master.getAnalog(ControllerAnalog::leftY), master.getAnalog(ControllerAnalog::rightX), 0.05);
 		//flywheel speed controller
 		Flywheel::Controller();
+		//robot timing system
+		Robot::Timer();
 		}
 }

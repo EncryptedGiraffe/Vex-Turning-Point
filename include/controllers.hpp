@@ -45,10 +45,13 @@ namespace Robot
     Far
   };
   //game information
-  extern Team_e_t team;
-  extern StartingTile_e_t startingTile;
-  extern uint32_t flagSig;
-  extern bool IsCompetition;
+  extern Team_e_t team; //What team are we on?
+  extern StartingTile_e_t startingTile; //what tile are we starting on. Measured from flags
+  extern uint32_t flagSig; //what flag signature to use?
+  extern bool IsCompetition; //are we in competition mode?
+  extern int gameTime; //time since game start in miliseconds
+
+  void Timer();
 }
 
 namespace Motors

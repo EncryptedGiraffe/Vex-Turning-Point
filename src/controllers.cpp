@@ -6,10 +6,29 @@ Controller partner = Controller(ControllerId::partner); //the flywheel controlle
 
 namespace Robot
 {
-  Team_e_t team;
-  StartingTile_e_t startingTile;
-  uint32_t flagSig;
-  bool IsCompetition;
+  Team_e_t team = Team_e_t::Red;
+  StartingTile_e_t startingTile = StartingTile_e_t::Close;
+  uint32_t flagSig = 0;
+  bool IsCompetition = false;
+  int gameTime = 0; //the time since game start in miliseconds
+
+  void Timer()
+  {
+    //increase game time by 20 miliseconds
+    gameTime += 20;
+
+    //check if in competition mode
+    if(IsCompetition)
+    {
+      //check for end of game rumble.  Past 15 seconds, every second
+      if((gameTime > 90000) && ((gameTime % 1000) == 0))
+      {
+        //rumble both controllers
+        master.rumble(".");
+        partner.rumble(".");
+      }
+    }
+  }
 }
 
 namespace Motors
@@ -53,6 +72,8 @@ namespace Intake
       {
         //stop the intake
         IsRunning = false;
+        //rumble the flywheel controller
+        partner.rumble(".");
       }
     }
     else
