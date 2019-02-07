@@ -113,23 +113,5 @@ void opcontrol()
 		Chassis::controller.arcade(master.getAnalog(ControllerAnalog::leftY), master.getAnalog(ControllerAnalog::rightX), 0.05);
 		//flywheel speed controller
 		Flywheel::Controller();
-
-		//motor test code
-		Motor testMotor = Motor(10);
-		if(master.getDigital(ControllerDigital::up))
-		{
-			//turn motor on
-			testMotor.move(127);
-		}
-		else if(master.getDigital(ControllerDigital::down))
-		{
-			//turn motor on backwards
-			testMotor.move(-127);
-		}
-		else
-		{
-			//stop motor
-			testMotor.move(0);
-		}
 		}
 }
