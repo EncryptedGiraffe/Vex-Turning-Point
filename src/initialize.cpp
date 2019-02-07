@@ -299,7 +299,7 @@ void SelectorDone_NoComp()
 void initialize()
 {
 	//configure vision sensor
-	Sensors::Vision::sensor.set_zero_point(pros::E_VISION_ZERO_CENTER);
+	//Sensors::Vision::sensor.set_zero_point(pros::E_VISION_ZERO_CENTER);
 	//draw initial screen
 	StartSelector();
 	//is in competition mode?

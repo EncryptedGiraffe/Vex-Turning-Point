@@ -20,23 +20,10 @@ void opcontrol()
 	Robot::WriteMessage("Opcontrol started!");
 	//start the flipper
 	Flipper::StartUp();
-	//init vision
-	Sensors::Vision::Initialize();
 	while (true)
 	{
 		pros::delay(20);
 
-		//check for enable or disable auto targeting
-		if(Btn_startTargeting.changedToPressed())
-		{
-			//start targeting
-			Sensors::Vision::StartTargeting();
-		}
-		if(Btn_stopTargeting.changedToPressed())
-		{
-			//stop targeting
-			Sensors::Vision::StopTargeting();
-		}
 		//flywheel control button checks
 		if(Btn_flywheelIncreaseSpeed.changedToPressed())
 		{
@@ -124,10 +111,6 @@ void opcontrol()
 		//Chassis::controller.tank(master->getAnalog(ControllerAnalog::leftY), master->getAnalog(ControllerAnalog::rightY));
 		//open loop arcade control for chassis
 		Chassis::controller.arcade(master.getAnalog(ControllerAnalog::leftY), master.getAnalog(ControllerAnalog::rightX), 0.05);
-		//Targeting controller
-		Sensors::Vision::TargetingControllerV2();
-		//flywheel speed controller
-		Sensors::Vision::FlywheelController();
 		//flywheel speed controller
 		Flywheel::Controller();
 
