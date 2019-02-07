@@ -97,10 +97,6 @@ namespace Flywheel
   //velocity PID controller
   extern AsyncVelIntegratedController velController;
 
-  //are we in flywheel speed finding mode?
-  #define FLYWHEEL_FINE_CONTROL_MODE
-  #define FLYWHEEL_FINE_CONTROL_INCREMENT 5
-
   //flywheel speeds
   enum Mode
   {
@@ -118,21 +114,22 @@ namespace Flywheel
 
 namespace Sensors
 {
+  /*
   namespace Vision
   {
-    /* A note on vision coordinates
-    Vision is configured for zero center mode.
-    +Y = Down of center
-    -Y = Up of center
-    +X = Right of center
-    -X = Left of center
-    Top = 158
-    Bottom = -158
-    Right = 106
-    Left = -106
-    FOV Width = 316
-    FOV Height = 212
-    */
+    //A note on vision coordinates
+    //Vision is configured for zero center mode.
+    //+Y = Down of center
+    //-Y = Up of center
+    //+X = Right of center
+    //-X = Left of center
+    //Top = 158
+    //Bottom = -158
+    //Right = 106
+    //Left = -106
+    //FOV Width = 316
+    //FOV Height = 212
+
     //constants
     const int TOP_LIMIT = 158;
     const int BOTTOM_LIMIT = -158;
@@ -176,4 +173,5 @@ namespace Sensors
     //flywheel speed controller
     void FlywheelController();
   }
+*/
 }
