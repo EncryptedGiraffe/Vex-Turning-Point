@@ -10,6 +10,7 @@ namespace Robot
   StartingTile_e_t startingTile = StartingTile_e_t::Close;
   uint32_t flagSig = 0;
   bool IsCompetition = false;
+  bool IsParking = false;
   int gameTime = 0; //the time since game start in miliseconds
 
   void Timer()

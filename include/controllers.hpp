@@ -49,6 +49,7 @@ namespace Robot
   extern StartingTile_e_t startingTile; //what tile are we starting on. Measured from flags
   extern uint32_t flagSig; //what flag signature to use?
   extern bool IsCompetition; //are we in competition mode?
+  extern bool IsParking; //should we park at the end of autonomous?
   extern int gameTime; //time since game start in miliseconds
 
   void Timer();
