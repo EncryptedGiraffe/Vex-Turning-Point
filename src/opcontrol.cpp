@@ -19,6 +19,7 @@ void WriteControllerStatus()
 {
 	//write flywheel speed
 	std::string status;
+	/*
 	status.append("V:");
 	status.append(std::to_string(Flywheel::speed));
 	status.append(",In:");
@@ -40,6 +41,24 @@ void WriteControllerStatus()
 		status.append("F");
 	}
 	status.append(" ");
+	*/
+	//intake info
+	if(Intake::IsRunning)
+	{
+		if(Intake::IsBackwards)
+		{
+			status.append("B");
+		}
+		else
+		{
+			status.append("F");
+		}
+	}
+	else
+	{
+		status.append("O");
+	}
+
 	//set texts
 	partner.setText(0, 0, status);
 }
