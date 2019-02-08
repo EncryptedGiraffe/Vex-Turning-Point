@@ -282,7 +282,15 @@ void SelectorDone_Comp()
 	}
 	else
 	{
-		message.append("Starting Tile: Far");
+		message.append("Starting Tile: Far\n");
+	}
+	if(Robot::IsParking)
+	{
+		message.append("Autonomous Parking: Enabled\n");
+	}
+	else
+	{
+		message.append("Autonomous Parking: Disabled\n");
 	}
 	lv_label_set_text(title, message.c_str());
 	lv_obj_align(title, NULL, LV_ALIGN_CENTER, titleX, titleY);
@@ -315,6 +323,14 @@ void SelectorDone_NoComp()
 	else
 	{
 		message.append("Starting Tile: Far");
+	}
+	if(Robot::IsParking)
+	{
+		message.append("Autonomous Parking: Enabled\n");
+	}
+	else
+	{
+		message.append("Autonomous Parking: Disabled\n");
 	}
 	lv_label_set_text(title, message.c_str());
 	lv_obj_align(title, NULL, LV_ALIGN_CENTER, titleX, titleY);

@@ -18,31 +18,29 @@ ControllerButton Btn_flywheelLowSpeed(ControllerId::partner, ControllerDigital::
 void WriteControllerStatus()
 {
 	//write flywheel speed
-	std::string Flywheel_Status;
-	std::string Intake_Status;
-	Flywheel_Status.append("Speed: ");
-	Flywheel_Status.append(std::to_string(Flywheel::speed));
-	Intake_Status.append("Intake: ");
+	std::string status;
+	status.append("Spd: ");
+	status.append(std::to_string(Flywheel::speed));
+	status.append("Intake: ");
 	if(Intake::IsRunning)
 	{
-		Intake_Status.append("Running");
+		status.append("On");
 	}
 	else
 	{
-		Intake_Status.append("Stopped");
+		status.append("Off");
 	}
-	Intake_Status.append(", Direction: ");
+	status.append(", ");
 	if(Intake::IsBackwards)
 	{
-		Intake_Status.append("Backwards");
+		status.append("Bwd");
 	}
 	else
 	{
-		Intake_Status.append("Forwards");
+		status.append("Fwd");
 	}
 	//set texts
-	partner.setText(0, 0, Flywheel_Status);
-	partner.setText(1, 0, Intake_Status);
+	partner.setText(0, 0, status);
 }
 
 void opcontrol()
@@ -72,6 +70,7 @@ void opcontrol()
 		{
 			//toggle whether intake is running
 			Intake::IsRunning = !Intake::IsRunning;
+			WriteControllerStatus();
 		}
 
 		//flywheel fine control button checks
@@ -124,6 +123,7 @@ void opcontrol()
 		{
 			//toggle the direction of the flipper
 			Intake::IsBackwards = !Intake::IsBackwards;
+			WriteControllerStatus();
 		}
 
 		//run all controller scripts
