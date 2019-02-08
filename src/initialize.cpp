@@ -27,6 +27,7 @@ const int messagesY = 65;
 bool IsModeDone = false;
 bool IsTeamDone = false;
 bool IsTileDone = false;
+bool IsParkDone = false;
 bool IsInitDone = false;
 
 //function declarations
@@ -35,6 +36,7 @@ void StartSelector();
 void ModeSelector();
 void TeamSelector();
 void TileSelector();
+void ParkSelector();
 void SelectorDone_Comp();
 void SelectorDone_NoComp();
 
@@ -60,23 +62,35 @@ lv_res_t Button_Click(lv_obj_t* btn)
 			{
 				if(IsTeamDone)
 				{
-					if(!IsTileDone)
+					if(IsTileDone)
+					{
+						if(!IsParkDone)
+						{
+							//we are starting on the close tile
+							Robot::IsParking = true;
+							//tile selection done
+							IsParkDone = true;
+							//done
+							//fully initialized
+							//check which done script to run
+							if(Robot::IsCompetition)
+							{
+								SelectorDone_Comp();
+							}
+							else
+							{
+								SelectorDone_NoComp();
+							}
+						}
+					}
+					else
 					{
 						//we are starting on the close tile
 						Robot::startingTile = Robot::StartingTile_e_t::Close;
 						//tile selection done
 						IsTileDone = true;
-						//done
-						//fully initialized
-						//check which done script to run
-						if(Robot::IsCompetition)
-						{
-							SelectorDone_Comp();
-						}
-						else
-						{
-							SelectorDone_NoComp();
-						}
+						//find park
+						ParkSelector();
 					}
 				}
 				else
@@ -85,7 +99,7 @@ lv_res_t Button_Click(lv_obj_t* btn)
 					Robot::team = Robot::Team_e_t::Red;
 					//team selection done
 					IsTeamDone = true;
-					//find team
+					//find tile
 					TileSelector();
 				}
 			}
@@ -107,23 +121,35 @@ lv_res_t Button_Click(lv_obj_t* btn)
 			{
 				if(IsTeamDone)
 				{
-					if(!IsTileDone)
+					if(IsTileDone)
+					{
+						if(!IsParkDone)
+						{
+							//we are starting on the close tile
+							Robot::IsParking = false;
+							//tile selection done
+							IsParkDone = true;
+							//done
+							//fully initialized
+							//check which done script to run
+							if(Robot::IsCompetition)
+							{
+								SelectorDone_Comp();
+							}
+							else
+							{
+								SelectorDone_NoComp();
+							}
+						}
+					}
+					else
 					{
 						//we are starting on the close tile
 						Robot::startingTile = Robot::StartingTile_e_t::Far;
 						//tile selection done
 						IsTileDone = true;
-						//done
-						//fully initialized
-						//check which done script to run
-						if(Robot::IsCompetition)
-						{
-							SelectorDone_Comp();
-						}
-						else
-						{
-							SelectorDone_NoComp();
-						}
+						//find park
+						ParkSelector();
 					}
 				}
 				else
@@ -224,6 +250,17 @@ void TileSelector()
 	lv_label_set_text(btnLeftLabel, "Close");
 	//set right button text
 	lv_label_set_text(btnRightLabel, "Far");
+}
+
+void ParkSelector()
+{
+	//set title text
+	lv_label_set_text(title, "Park in autonomous?");
+	lv_obj_align(title, NULL, LV_ALIGN_CENTER, titleX, titleY);
+	//set left button text
+	lv_label_set_text(btnLeftLabel, "Yes");
+	//set right button text
+	lv_label_set_text(btnRightLabel, "No");
 }
 
 void SelectorDone_Comp()

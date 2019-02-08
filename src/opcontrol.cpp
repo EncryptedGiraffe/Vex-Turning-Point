@@ -15,10 +15,34 @@ ControllerButton Btn_flywheelFineDecreaseSpeed(ControllerId::partner, Controller
 ControllerButton Btn_flywheelHighSpeed(ControllerId::partner, ControllerDigital::up); //increase the flywheel speed by 20
 ControllerButton Btn_flywheelLowSpeed(ControllerId::partner, ControllerDigital::down); //decrease the flywheel speed by 20
 
-void WriteFlywheelSpeed()
+void WriteControllerStatus()
 {
-	//write speed
-	partner.setText(0, 0, "Speed: " + std::to_string(Flywheel::speed) + "  ");
+	//write flywheel speed
+	std::string Flywheel_Status;
+	std::string Intake_Status;
+	Flywheel_Status.append("Speed: ");
+	Flywheel_Status.append(std::to_string(Flywheel::speed));
+	Intake_Status.append("Intake: ");
+	if(Intake::IsRunning)
+	{
+		Intake_Status.append("Running");
+	}
+	else
+	{
+		Intake_Status.append("Stopped");
+	}
+	Intake_Status.append(", Direction: ");
+	if(Intake::IsBackwards)
+	{
+		Intake_Status.append("Backwards");
+	}
+	else
+	{
+		Intake_Status.append("Forwards");
+	}
+	//set texts
+	partner.setText(0, 0, Flywheel_Status);
+	partner.setText(1, 0, Intake_Status);
 }
 
 void opcontrol()
@@ -35,13 +59,13 @@ void opcontrol()
 		{
 			//increase speed
 			Flywheel::speed += 20;
-			WriteFlywheelSpeed();
+			WriteControllerStatus();
 		}
 		else if(Btn_flywheelDecreaseSpeed.changedToPressed())
 		{
 			//decrease speed
 			Flywheel::speed -= 20;
-			WriteFlywheelSpeed();
+			WriteControllerStatus();
 		}
 		//check for toggling the intake
 		if(Btn_intake.changedToPressed())
@@ -55,26 +79,26 @@ void opcontrol()
 		{
 			//increase speed
 			Flywheel::speed += 5;
-			WriteFlywheelSpeed();
+			WriteControllerStatus();
 		}
 		else if(Btn_flywheelFineDecreaseSpeed.changedToPressed())
 		{
 			//decrease speed
 			Flywheel::speed -= 5;
-			WriteFlywheelSpeed();
+			WriteControllerStatus();
 		}
 		//flywheel control button checks
 		if(Btn_flywheelHighSpeed.changedToPressed())
 		{
 			//increase speed
 			Flywheel::speed = 170;
-			WriteFlywheelSpeed();
+			WriteControllerStatus();
 		}
 		else if(Btn_flywheelLowSpeed.changedToPressed())
 		{
 			//decrease speed
 			Flywheel::speed -= 120;
-			WriteFlywheelSpeed();
+			WriteControllerStatus();
 		}
 
 		//check for a request to flip a cap
