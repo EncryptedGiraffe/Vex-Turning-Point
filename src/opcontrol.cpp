@@ -98,7 +98,7 @@ void opcontrol()
 		else if(Btn_flywheelLowSpeed.changedToPressed())
 		{
 			//decrease speed
-			Flywheel::speed -= 120;
+			Flywheel::speed = 120;
 			WriteControllerStatus();
 		}
 
