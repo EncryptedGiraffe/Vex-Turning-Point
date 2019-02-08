@@ -19,9 +19,9 @@ void WriteControllerStatus()
 {
 	//write flywheel speed
 	std::string status;
-	status.append("Spd: ");
+	status.append("V:");
 	status.append(std::to_string(Flywheel::speed));
-	status.append("Intake: ");
+	status.append(",In:");
 	if(Intake::IsRunning)
 	{
 		status.append("On");
@@ -30,15 +30,16 @@ void WriteControllerStatus()
 	{
 		status.append("Off");
 	}
-	status.append(", ");
+	status.append(",");
 	if(Intake::IsBackwards)
 	{
-		status.append("Bwd");
+		status.append("B");
 	}
 	else
 	{
-		status.append("Fwd");
+		status.append("F");
 	}
+	status.append(" ");
 	//set texts
 	partner.setText(0, 0, status);
 }
@@ -46,6 +47,7 @@ void WriteControllerStatus()
 void opcontrol()
 {
 	Robot::WriteMessage("Opcontrol started!");
+	WriteControllerStatus();
 	//start the flipper
 	Flipper::StartUp();
 	while (true)

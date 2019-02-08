@@ -1,4 +1,7 @@
 #pragma once
+/* NOTES:
+The controller can only be set to a string with 15 characters.
+*/
 /* TODO:
 Measure correct values for ChassisScales
 */
