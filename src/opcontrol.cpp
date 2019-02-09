@@ -65,10 +65,13 @@ void WriteControllerStatus()
 
 void opcontrol()
 {
+	autonomous();
 	Robot::WriteMessage("Opcontrol started!");
 	WriteControllerStatus();
 	//start the flipper
 	Flipper::StartUp();
+	//make sure flywheel is in variable shooting mode
+	Flywheel::mode = Flywheel::Variable;
 	while (true)
 	{
 		pros::delay(20);

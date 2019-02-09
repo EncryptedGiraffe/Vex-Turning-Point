@@ -70,7 +70,7 @@ namespace Flipper
 {
   //position variables
   const int startPos = 0;
-  const int Raised = 50;
+  const int Raised = 40;
   const int Lowered = 450;
   const int Ram = 280;
   const int MaxSpeed = 200;
