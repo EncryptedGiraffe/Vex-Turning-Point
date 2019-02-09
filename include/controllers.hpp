@@ -90,6 +90,7 @@ namespace Intake
 {
   extern bool IsRunning;
   extern bool IsBackwards;
+  extern bool IsBall;
 
   void Controller();
 }

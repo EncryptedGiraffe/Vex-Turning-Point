@@ -52,12 +52,15 @@ namespace Intake
   bool IsPressed = false;
   bool IsRunning = false;
   bool IsBackwards = false;
+  bool IsBall = false;
 
   void Controller()
   {
     //check if the intake should be running
     if(IsRunning)
     {
+      //ball has exited
+      IsBall = false;
       //turn on motor
       //check direction
       if(IsBackwards)
@@ -73,6 +76,8 @@ namespace Intake
       {
         //stop the intake
         IsRunning = false;
+        //ball is loaded
+        IsBall = true;
         //rumble the flywheel controller
         partner.rumble(".");
       }
