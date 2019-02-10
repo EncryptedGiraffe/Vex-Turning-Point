@@ -103,6 +103,11 @@ namespace Chassis
 
 namespace Flywheel
 {
+  //speeds
+  const int HIGH_SPEED = 170;
+  const int LOW_SPEED = 120;
+  extern bool highSpeed;
+
   //velocity PID controller
   extern AsyncVelIntegratedController velController;
 

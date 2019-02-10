@@ -42,7 +42,24 @@ void WriteControllerStatus()
 	}
 	status.append(" ");
 	*/
-	//intake info
+	/* Character Map
+	Intake on/off state. F=forward,B=backward,O=off
+	-
+	Intake ball state. B=ball,E=empty
+	|
+	Flywheel high/low state. H=high,L=low
+	+/- Flywheel power from current state in increments of 5
+	+/- Flywheel power from current state in increments of 5
+	+/- Flywheel power from current state in increments of 5
+	+/- Flywheel power from current state in increments of 5
+	+/- Flywheel power from current state in increments of 5
+
+
+	Flywheel speed
+	Flywheel speed
+	Flywheel speed
+	*/
+	//intake info - character 1
 	if(Intake::IsRunning)
 	{
 		if(Intake::IsBackwards)
@@ -58,6 +75,91 @@ void WriteControllerStatus()
 	{
 		status.append("O");
 	}
+	//separator - character 2
+	status.append("-");
+	//intake ball info - character 3
+	if(Intake::IsBall)
+	{
+		status.append("B");
+	}
+	else
+	{
+		status.append("E");
+	}
+	//separator - character 4
+	status.append("|");
+	//flywheel state - character 5
+	if(Flywheel::highSpeed)
+	{
+		status.append("H");
+	}
+	else
+	{
+		status.append("L");
+	}
+	//flywheel speed deviation - characters 6-11
+	if(Flywheel::highSpeed)
+	{
+		//get the deviance
+		int d = (Flywheel::speed - Flywheel::HIGH_SPEED) / 5;
+		//loop for all 6 characters
+		for(int i = 0; i < 6; ++i)
+		{
+			//check on which side the deviance lies
+			if(d > 0)
+			{
+				//add a plus
+				status.append("+");
+				//adjust d
+				d -= 1;
+			}
+			else if(d < 0)
+			{
+				//add a minus
+				status.append("-");
+				//adjust d
+				d += 1;
+			}
+			else
+			{
+				//add a space
+				status.append(" ");
+			}
+		}
+	}
+	else
+	{
+		//get the deviance
+		int d = (Flywheel::speed - Flywheel::LOW_SPEED) / 5;
+		//loop for all 6 characters
+		for(int i = 0; i < 6; ++i)
+		{
+			//check on which side the deviance lies
+			if(d > 0)
+			{
+				//add a plus
+				status.append("+");
+				//adjust d
+				d -= 1;
+			}
+			else if(d < 0)
+			{
+				//add a minus
+				status.append("-");
+				//adjust d
+				d += 1;
+			}
+			else
+			{
+				//add a space
+				status.append(" ");
+			}
+		}
+	}
+	//separator - character 12
+	status.append(":");
+	//flywheel speed - characters 13-15
+	status.append(std::to_string(Flywheel::speed));
 
 	//set texts
 	partner.setText(0, 0, status);
@@ -111,14 +213,16 @@ void opcontrol()
 		if(Btn_flywheelHighSpeed.changedToPressed())
 		{
 			//increase speed
-			Flywheel::speed = 170;
+			Flywheel::speed = Flywheel::HIGH_SPEED;
 			WriteControllerStatus();
+			Flywheel::highSpeed = true;
 		}
 		else if(Btn_flywheelLowSpeed.changedToPressed())
 		{
 			//decrease speed
-			Flywheel::speed = 120;
+			Flywheel::speed = Flywheel::LOW_SPEED;
 			WriteControllerStatus();
+			Flywheel::highSpeed = false;
 		}
 
 		//check for a request to flip a cap
