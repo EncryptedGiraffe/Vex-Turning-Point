@@ -98,6 +98,7 @@ namespace Flywheel
   int _speed = 0;
   Mode mode = Variable;
   int speed = 0;
+  bool highSpeed = false;
 
   void Controller()
   {
