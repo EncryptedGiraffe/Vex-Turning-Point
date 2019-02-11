@@ -59,25 +59,27 @@ void WriteControllerStatus()
 	Flywheel speed
 	Flywheel speed
 	*/
-	//intake info - character 1
+	//intake state - character 1
 	if(Intake::IsRunning)
 	{
-		if(Intake::IsBackwards)
-		{
-			status.append("B");
-		}
-		else
-		{
-			status.append("F");
-		}
+		status.append("G");
 	}
 	else
 	{
-		status.append("O");
+		status.append("S");
 	}
-	//separator - character 2
+	//intake direction - character 2
+	if(Intake::IsBackwards)
+	{
+		status.append("B");
+	}
+	else
+	{
+		status.append("F");
+	}
+	//separator - character 3
 	status.append("-");
-	//intake ball info - character 3
+	//intake ball info - character 4
 	if(Intake::IsBall)
 	{
 		status.append("B");
@@ -86,9 +88,9 @@ void WriteControllerStatus()
 	{
 		status.append("E");
 	}
-	//separator - character 4
+	//separator - character 5
 	status.append("|");
-	//flywheel state - character 5
+	//flywheel state - character 6
 	if(Flywheel::highSpeed)
 	{
 		status.append("H");
@@ -97,7 +99,7 @@ void WriteControllerStatus()
 	{
 		status.append("L");
 	}
-	//flywheel speed deviation - characters 6-11
+	//flywheel speed deviation - characters 7-12
 	if(Flywheel::highSpeed)
 	{
 		//get the deviance
@@ -156,9 +158,13 @@ void WriteControllerStatus()
 			}
 		}
 	}
-	//separator - character 12
-	status.append(":");
 	//flywheel speed - characters 13-15
+	//check if the flywheel speed is only two digits
+	if(Flywheel::speed < 100)
+	{
+		//add a zero
+		status.append("0");
+	}
 	status.append(std::to_string(Flywheel::speed));
 
 	//set texts
