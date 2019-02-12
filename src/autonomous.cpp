@@ -112,5 +112,77 @@ void Close()
 
 void Far()
 {
+  //check team
+  if(Robot::team == Robot::Red)
+  {
 
+  }
+  else
+  {
+    //rev up flywheel to shoot high middle flag
+    Flywheel::speed = 145;
+    //apply it
+    Flywheel::Controller();
+    //allow the flywheel to get to the velocity
+    //Flywheel::velController.waitUntilSettled();
+    pros::delay(2700);
+    //run the intake to fire the ball
+    Motors::intake.move(127);
+    //wait for the ball to fire
+    pros::delay(1000);
+    //stop the intake
+    Motors::intake.move(0);
+    //rotate counter clockwise
+    Chassis::controller.turnAngle(112_deg);
+    //drive backwards 2 tiles
+    Chassis::controller.moveDistance(-41_in);
+    //set the flywheel to shoot mid flag linearly
+    Flywheel::speed = 125;
+    Flywheel::Controller();
+    //run the intake until so it picks up a ball
+    Motors::intake.move(127);
+    //run the intake for one second
+    for(int i = 0; i < 50; ++i)
+    {
+      if(Intake::limit.changedToPressed())
+      {
+        Motors::intake.move(0);
+        break;
+      }
+      pros::delay(10);
+    }
+    //stop intake in case ball wasn't loaded
+    Motors::intake.move(0);
+    //rotate clockwise
+    Chassis::controller.turnAngle(-91_deg);
+    //run the intake to fire the ball
+    Motors::intake.move(127);
+    //wait for the ball to fire
+    pros::delay(800);
+    //stop the intake
+    Motors::intake.move(0);
+    /*
+    //deploy the flipper
+    Flipper::StartUp();
+    //rotate clockwise
+    Chassis::controller.turnAngle(185_deg);
+    //drive forward
+    Chassis::controller.moveDistance(10_in);
+    //drive backwards
+    Chassis::controller.moveDistance(-5_in);
+    */
+    //Shutdown flywheel
+    //set flywheel to stopping
+    Flywheel::mode = Flywheel::Stopped;
+    //run the flywheel controller until the flywheel is stopped
+    for(int i = 0; i < 200; ++i)
+    {
+      Flywheel::Controller();
+      pros::delay(10);
+    }
+    //make sure it is stopped
+    Flywheel::mode = Flywheel::Variable;
+    Flywheel::speed = 0;
+    Flywheel::Controller();
+  }
 }
