@@ -43,7 +43,7 @@ namespace Motors
 namespace Chassis
 {
   //closed and open loop control for chassis
-  ChassisControllerIntegrated controller = ChassisControllerFactory::create({Ports::DriveLeftFront, Ports::DriveLeftBack}, {-Ports::DriveRightFront, -Ports::DriveRightBack}, AbstractMotor::gearset::red, {4_in, 12_in});
+  ChassisControllerIntegrated controller = ChassisControllerFactory::create({Ports::DriveLeftFront, Ports::DriveLeftBack}, {-Ports::DriveRightFront, -Ports::DriveRightBack}, AbstractMotor::gearset::green, {4_in, 15.4_in});
 }
 
 namespace Intake

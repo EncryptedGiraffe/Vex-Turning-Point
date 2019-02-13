@@ -1,7 +1,7 @@
 {
     "py/object": "pros.conductor.project.Project",
     "py/state": {
-        "project_name": "99197w Master",
+        "project_name": "Programming Skills",
         "target": "v5",
         "templates": {
             "kernel": {
