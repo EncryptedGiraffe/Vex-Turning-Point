@@ -34,6 +34,9 @@ namespace Ports
 
 namespace Robot
 {
+  //////////SKILLS/////////
+  const bool IsSkills = false;
+
   //write a lvgl message to the Brain.
   void WriteMessage(std::string message);
   //declarations
@@ -71,7 +74,7 @@ namespace Flipper
   //position variables
   const int startPos = 0;
   const int Raised = 0;
-  const int Lowered = 460;
+  const int Lowered = 480;
   const int Ram = 290;
   const int MaxSpeed = 200;
   //start the flipper position
