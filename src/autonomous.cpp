@@ -128,13 +128,13 @@ void Close()
     //////////End of fire ball step///////////
     //////////Toggle low flag step////////////
     //turn clockwise
-    Chassis::controller.turnAngle(15_deg);
+    Chassis::controller.turnAngle(11_deg);
     pros::delay(100);
     //drive forward 2 tiles which is 48 inches
     Chassis::controller.moveDistance(50_in);
     pros::delay(100);
-    //turn clockwise
-    Chassis::controller.turnAngle(5_deg);
+    //turn counter clockwise
+    Chassis::controller.turnAngle(-10_deg);
     pros::delay(100);
     //drive backward 1 tile which is 24 inches
     Chassis::controller.moveDistance(-24_in);
@@ -144,11 +144,11 @@ void Close()
     //deploy the flipper
     Flipper::StartUp();
     //rotate counter clockwise
-    Chassis::controller.turnAngle(-88_deg);
+    Chassis::controller.turnAngle(-86_deg);
     //drive forward a small amount
     //Chassis::controller.moveDistance(10_in);
     //start moving forward
-    Chassis::controller.moveDistanceAsync(32_in);
+    Chassis::controller.moveDistanceAsync(35_in);
     //give it time to move forward
     pros::delay(400);
     //raise the flipper
@@ -159,10 +159,10 @@ void Close()
     //////////Platform parking step///////////////
     if(Robot::IsParking)
     {
-      //rotate 90 degrees clockwise
-      Chassis::controller.turnAngle(-86_deg);
+      //rotate counter clockwise
+      Chassis::controller.turnAngle(-89_deg);
       //drive forward onto the platform
-      Chassis::controller.moveDistance(58_in);
+      Chassis::controller.moveDistance(57_in);
     }
     //////////End of platform parking step//////////
     //////////Flip second cap step//////////////////
