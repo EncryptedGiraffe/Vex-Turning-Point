@@ -51,13 +51,13 @@ void Close()
     //////////End of fire ball step///////////
     //////////Toggle low flag step////////////
     //turn counter clockwise
-    Chassis::controller.turnAngle(-15);
+    Chassis::controller.turnAngle(-7);
     pros::delay(100);
     //drive forward 2 tiles which is 48 inches
-    Chassis::controller.moveDistance(50_in);
+    Chassis::controller.moveDistance(48_in);
     pros::delay(100);
     //turn counter clockwise
-    Chassis::controller.turnAngle(-10_deg);
+    Chassis::controller.turnAngle(-20_deg);
     pros::delay(100);
     //drive backward 1 tile which is 24 inches
     Chassis::controller.moveDistance(-24_in);
@@ -67,7 +67,7 @@ void Close()
     //deploy the flipper
     Flipper::StartUp();
     //rotate 90 degress clockwise
-    Chassis::controller.turnAngle(88_deg);
+    Chassis::controller.turnAngle(96_deg);
     //drive forward a small amount
     //Chassis::controller.moveDistance(10_in);
     //start moving forward
@@ -83,9 +83,9 @@ void Close()
     if(Robot::IsParking)
     {
       //rotate 90 degrees clockwise
-      Chassis::controller.turnAngle(86_deg);
+      Chassis::controller.turnAngle(94_deg);
       //drive forward onto the platform
-      Chassis::controller.moveDistance(58_in);
+      Chassis::controller.moveDistance(60_in);
     }
     //////////End of platform parking step//////////
     //////////Flip second cap step//////////////////
@@ -127,13 +127,13 @@ void Close()
     //////////End of fire ball step///////////
     //////////Toggle low flag step////////////
     //turn clockwise
-    Chassis::controller.turnAngle(11_deg);
+    Chassis::controller.turnAngle(16_deg);
     pros::delay(100);
     //drive forward 2 tiles which is 48 inches
-    Chassis::controller.moveDistance(50_in);
+    Chassis::controller.moveDistance(48_in);
     pros::delay(100);
     //turn counter clockwise
-    Chassis::controller.turnAngle(-10_deg);
+    Chassis::controller.turnAngle(20_deg);
     pros::delay(100);
     //drive backward 1 tile which is 24 inches
     Chassis::controller.moveDistance(-24_in);
@@ -143,7 +143,7 @@ void Close()
     //deploy the flipper
     Flipper::StartUp();
     //rotate counter clockwise
-    Chassis::controller.turnAngle(-86_deg);
+    Chassis::controller.turnAngle(-90_deg);
     //drive forward a small amount
     //Chassis::controller.moveDistance(10_in);
     //start moving forward
@@ -159,7 +159,7 @@ void Close()
     if(Robot::IsParking)
     {
       //rotate counter clockwise
-      Chassis::controller.turnAngle(-89_deg);
+      Chassis::controller.turnAngle(-92_deg);
       //drive forward onto the platform
       Chassis::controller.moveDistance(57_in);
     }

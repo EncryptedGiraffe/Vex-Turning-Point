@@ -35,7 +35,7 @@ namespace Ports
 namespace Robot
 {
   //////////SKILLS/////////
-  const bool IsSkills = true;
+  const bool IsSkills = false;
 
   //write a lvgl message to the Brain.
   void WriteMessage(std::string message);
