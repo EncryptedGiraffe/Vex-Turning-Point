@@ -1,9 +1,9 @@
 #include "../include/controllers.hpp"
 
 //drive controller buttons
-ControllerButton Btn_flipper(ControllerId::master, ControllerDigital::B); //flip the flipper
-ControllerButton Btn_flipperUp(ControllerId::master, ControllerDigital::X); //raise the flipper to the up position
-ControllerButton Btn_flipperRam(ControllerId::master, ControllerDigital::Y); //set the flipper to ramming speed
+//ControllerButton Btn_flipper(ControllerId::master, ControllerDigital::B); //flip the flipper
+//ControllerButton Btn_flipperUp(ControllerId::master, ControllerDigital::X); //raise the flipper to the up position
+//ControllerButton Btn_flipperRam(ControllerId::master, ControllerDigital::Y); //set the flipper to ramming speed
 ControllerButton Btn_vision(ControllerId::master, ControllerDigital::right); //get the data on the largest object the vision sensor sees
 //flywheel controller buttons
 ControllerButton Btn_intakeReverse(ControllerId::partner, ControllerDigital::X); //toggle the direction of the intake
@@ -176,7 +176,7 @@ void opcontrol()
 	Robot::WriteMessage("Opcontrol started!");
 	WriteControllerStatus();
 	//start the flipper
-	Flipper::StartUp();
+	//Flipper::StartUp();
 	//make sure flywheel is in variable shooting mode
 	Flywheel::mode = Flywheel::Variable;
 	while (true)
@@ -232,7 +232,7 @@ void opcontrol()
 			WriteControllerStatus();
 			Flywheel::highSpeed = false;
 		}
-
+		/*
 		//check for a request to flip a cap
 		if(Btn_flipper.changedToPressed())
 		{
@@ -251,6 +251,7 @@ void opcontrol()
 			//ram the flipper
 			Flipper::Ramming();
 		}
+		*/
 		//toggle direction of intake
 		if(Btn_intakeReverse.changedToPressed())
 		{
@@ -263,7 +264,7 @@ void opcontrol()
 		//intake run controller
 		Intake::Controller();
 		//flipper position controller
-		Flipper::Controller();
+		//Flipper::Controller();
 		//open loop tank control for chassis
 		//Chassis::controller.tank(master->getAnalog(ControllerAnalog::leftY), master->getAnalog(ControllerAnalog::rightY));
 		//open loop arcade control for chassis

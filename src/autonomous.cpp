@@ -3,6 +3,7 @@
 //function declarations
 void Far();
 void Close();
+void Close2();
 void Skills();
 
 void autonomous()
@@ -18,14 +19,53 @@ void autonomous()
   if(Robot::startingTile == Robot::StartingTile_e_t::Close)
   {
     //close tile autonomous
-    Close();
+    Close2();
     return;
   }
   else
   {
     //far tile autonomous
-    Far();
+    //Far();
     return;
+  }
+}
+
+void Close2()
+{
+  //team check
+  if(Robot::team == Robot::Red)
+  {
+    //set flywheel speed
+    Flywheel::speed = 200;
+    //run its controller to get to that speed
+    Flywheel::Controller();
+    //wait until it gets to that speed
+    //Flywheel::velController.waitUntilSettled();
+    pros::delay(3100);
+    //run the intake to fire the ball
+    Motors::intake.move(127);
+    //wait for the ball to have time to fire
+    pros::delay(1000);
+    //shutdown the intake
+    Motors::intake.move(0);
+    //turn counter clockwise
+    Chassis::controller.turnAngle(-15);
+    pros::delay(100);
+    //drive forward 2 tiles which is 48 inches
+    Chassis::controller.moveDistance(50_in);
+    pros::delay(100);
+    //turn counter clockwise
+    Chassis::controller.turnAngle(-10_deg);
+    pros::delay(100);
+    //drive backward 3 tiles which is 72 inches
+    Chassis::controller.moveDistance(-72_in);
+    pros::delay(100);
+    //rotate clockwise to point toward platforms
+    Chassis::controller.turnAngle(90_deg);
+  }
+  else
+  {
+
   }
 }
 
@@ -65,7 +105,7 @@ void Close()
     /////////End of toggle low flag step//////////
     /////////Flip first cap step//////////////////
     //deploy the flipper
-    Flipper::StartUp();
+    //Flipper::StartUp();
     //rotate 90 degress clockwise
     Chassis::controller.turnAngle(88_deg);
     //drive forward a small amount
@@ -75,7 +115,7 @@ void Close()
     //give it time to move forward
     pros::delay(400);
     //raise the flipper
-    Flipper::Raise();
+    //Flipper::Raise();
     //wait for us to stop moving
     Chassis::controller.waitUntilSettled();
     //////////End of flip first cap step//////////
@@ -141,7 +181,7 @@ void Close()
     /////////End of toggle low flag step//////////
     /////////Flip first cap step//////////////////
     //deploy the flipper
-    Flipper::StartUp();
+    //Flipper::StartUp();
     //rotate counter clockwise
     Chassis::controller.turnAngle(-86_deg);
     //drive forward a small amount
@@ -151,7 +191,7 @@ void Close()
     //give it time to move forward
     pros::delay(400);
     //raise the flipper
-    Flipper::Raise();
+    //Flipper::Raise();
     //wait for us to stop moving
     Chassis::controller.waitUntilSettled();
     //////////End of flip first cap step//////////
@@ -208,7 +248,7 @@ void Far()
     //rotate clock wise
     Chassis::controller.turnAngle(68_deg);
     //deploy flipper
-    Flipper::StartUp();
+    //Flipper::StartUp();
     //drive forward
     Chassis::controller.moveDistance(32_in);
     //rotate counter clockwise
@@ -221,7 +261,7 @@ void Far()
     //wait for it to move
     pros::delay(700);
     //raise the flipper
-    Flipper::Raise();
+    //Flipper::Raise();
 
     //Shutdown flywheel
     //set flywheel to stopping
@@ -256,7 +296,7 @@ void Far()
     //rotate clock wise
     Chassis::controller.turnAngle(-68_deg);
     //deploy flipper
-    Flipper::StartUp();
+    //Flipper::StartUp();
     //drive forward
     Chassis::controller.moveDistance(32_in);
     //rotate counter clockwise
@@ -269,7 +309,7 @@ void Far()
     //wait for it to move
     pros::delay(700);
     //raise the flipper
-    Flipper::Raise();
+    //Flipper::Raise();
 
     //Shutdown flywheel
     //set flywheel to stopping
@@ -321,7 +361,7 @@ void Skills()
   /////////End of toggle low flag step//////////
   /////////Flip first cap step//////////////////
   //deploy the flipper
-  Flipper::StartUp();
+  //Flipper::StartUp();
   //rotate 90 degress clockwise
   Chassis::controller.turnAngle(88_deg);
   //drive forward a small amount
@@ -329,12 +369,12 @@ void Skills()
   //start moving forward
   Chassis::controller.moveDistance(12_in);
   //raise the flipper
-  Flipper::Raise();
+  //Flipper::Raise();
   //////////End of flip first cap step//////////
   //rotate clockwise
   Chassis::controller.turnAngle(90_deg);
   //lower the flipper
-  Flipper::StartUp();
+  //Flipper::StartUp();
   //drive forward
   Chassis::controller.moveDistance(24_in);
   //rotate counter clock wise

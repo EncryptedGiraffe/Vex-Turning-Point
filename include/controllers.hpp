@@ -69,6 +69,7 @@ namespace Motors
   extern Motor flipper;
 }
 
+/*
 namespace Flipper
 {
   //position variables
@@ -88,6 +89,7 @@ namespace Flipper
   //tell the flipper to move to the ramming position
   void Ramming();
 }
+*/
 
 namespace Intake
 {

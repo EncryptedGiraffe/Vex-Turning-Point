@@ -140,6 +140,7 @@ namespace Flywheel
   }
 }
 
+/*
 namespace Flipper
 {
   ADIButton flipperSwitch(Ports::FlipperSwitch);
@@ -192,7 +193,7 @@ namespace Flipper
     }
   }
 }
-
+*/
 namespace Sensors
 {
   /*
