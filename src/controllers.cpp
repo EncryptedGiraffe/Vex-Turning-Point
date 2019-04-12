@@ -140,6 +140,12 @@ namespace Flywheel
   }
 }
 
+namespace Flipper
+{
+  //configure flipper
+  pros::ADIDigitalOut flipper('F');
+}
+
 /*
 namespace Flipper
 {

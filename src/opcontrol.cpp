@@ -1,7 +1,7 @@
 #include "../include/controllers.hpp"
 
 //drive controller buttons
-//ControllerButton Btn_flipper(ControllerId::master, ControllerDigital::B); //flip the flipper
+ControllerButton Btn_flipper(ControllerId::master, ControllerDigital::B); //flip the flipper
 //ControllerButton Btn_flipperUp(ControllerId::master, ControllerDigital::X); //raise the flipper to the up position
 //ControllerButton Btn_flipperRam(ControllerId::master, ControllerDigital::Y); //set the flipper to ramming speed
 ControllerButton Btn_vision(ControllerId::master, ControllerDigital::right); //get the data on the largest object the vision sensor sees
@@ -232,20 +232,31 @@ void opcontrol()
 			WriteControllerStatus();
 			Flywheel::highSpeed = false;
 		}
+
+		//check for flipper activation
+		if(Btn_flipper.changedToPressed())
+		{
+			//turn on the flipper
+		}
+			else
+			{
+			//turn off the pper
+			Flipper::flipper.set_value(false);
+		}
 		/*
-		//check for a request to flip a cap
+		Flipper::flipperet_value(true);
 		if(Btn_flipper.changedToPressed())
 		{
 			//request a flip
 			Flipper::RequestFlip();
 		}
 		//raise the flipper to the upper position
-		if(Btn_flipperUp.changedToPressed())
 		{
+		//check for a request to flip a cap
 			//raise the flipper
 			Flipper::Raise();
 		}
-		//set the flipper to ramming speed
+		if(Btn_flipperUp.changedToPressed())
 		if(Btn_flipperRam.changedToPressed())
 		{
 			//ram the flipper
@@ -253,6 +264,7 @@ void opcontrol()
 		}
 		*/
 		//toggle direction of intake
+		//set the flipper to ramming speed
 		if(Btn_intakeReverse.changedToPressed())
 		{
 			//toggle the direction of the flipper

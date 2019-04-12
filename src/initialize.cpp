@@ -351,6 +351,8 @@ void SelectorDone_NoComp()
  */
 void initialize()
 {
+	//configure flipper
+	pros::ADIDigitalOut piston('F');
 	//configure vision sensor
 	//Sensors::Vision::sensor.set_zero_point(pros::E_VISION_ZERO_CENTER);
 	//draw initial screen

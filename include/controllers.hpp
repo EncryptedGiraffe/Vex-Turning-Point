@@ -132,6 +132,11 @@ namespace Flywheel
   void Controller();
 }
 
+namespace Flipper
+{
+  extern pros::ADIDigitalOut flipper;
+}
+
 namespace Sensors
 {
   /*
