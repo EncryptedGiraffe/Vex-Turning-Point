@@ -234,9 +234,10 @@ void opcontrol()
 		}
 
 		//check for flipper activation
-		if(Btn_flipper.changedToPressed())
+		if(Btn_flipper.isPressed())
 		{
 			//turn on the flipper
+			Flipper::flipper.set_value(true);
 		}
 			else
 			{
