@@ -19,7 +19,10 @@ void autonomous()
   if(Robot::startingTile == Robot::StartingTile_e_t::Close)
   {
     //close tile autonomous
-    Close2();
+    if(Robot::IsCompetition)
+    {
+        Close2();
+    }
     return;
   }
   else
@@ -49,23 +52,70 @@ void Close2()
     //shutdown the intake
     Motors::intake.move(0);
     //turn counter clockwise
-    Chassis::controller.turnAngle(-15);
+    Chassis::controller.turnAngle(-5);
     pros::delay(100);
     //drive forward 2 tiles which is 48 inches
     Chassis::controller.moveDistance(50_in);
     pros::delay(100);
     //turn counter clockwise
-    Chassis::controller.turnAngle(-10_deg);
+    Chassis::controller.turnAngle(-15_deg);
     pros::delay(100);
-    //drive backward 3 tiles which is 72 inches
-    Chassis::controller.moveDistance(-72_in);
+    //drive backward 2 tiles which is 48 inches
+    Chassis::controller.moveDistance(-48_in);
     pros::delay(100);
-    //rotate clockwise to point toward platforms
-    Chassis::controller.turnAngle(90_deg);
+    //set flywheel to stopping
+    Flywheel::mode = Flywheel::Stopped;
+    //run the flywheel controller until the flywheel is stopped
+    for(int i = 0; i < 200; ++i)
+    {
+      Flywheel::Controller();
+      pros::delay(10);
+    }
+    //make sure it is stopped
+    Flywheel::mode = Flywheel::Variable;
+    Flywheel::speed = 0;
+    Flywheel::Controller();
   }
   else
   {
-
+    //blue side autonomous
+    //set flywheel speed
+    Flywheel::speed = 200;
+    //run its controller to get to that speed
+    Flywheel::Controller();
+    //wait until it gets to that speed
+    //Flywheel::velController.waitUntilSettled();
+    pros::delay(3100);
+    //run the intake to fire the ball
+    Motors::intake.move(127);
+    //wait for the ball to have time to fire
+    pros::delay(1000);
+    //shutdown the intake
+    Motors::intake.move(0);
+    //turn clockwise
+    Chassis::controller.turnAngle(20);
+    pros::delay(100);
+    //drive forward 2 tiles which is 48 inches
+    Chassis::controller.moveDistance(50_in);
+    pros::delay(100);
+    //turn clockwise
+    Chassis::controller.turnAngle(15_deg);
+    pros::delay(100);
+    //drive backward 2 tiles which is 48 inches
+    Chassis::controller.moveDistance(-48_in);
+    pros::delay(100);
+    //set flywheel to stopping
+    Flywheel::mode = Flywheel::Stopped;
+    //run the flywheel controller until the flywheel is stopped
+    for(int i = 0; i < 200; ++i)
+    {
+      Flywheel::Controller();
+      pros::delay(10);
+    }
+    //make sure it is stopped
+    Flywheel::mode = Flywheel::Variable;
+    Flywheel::speed = 0;
+    Flywheel::Controller();
   }
 }
 

@@ -173,6 +173,9 @@ void WriteControllerStatus()
 
 void opcontrol()
 {
+	//autonomous testing
+	//autonomous();
+
 	Robot::WriteMessage("Opcontrol started!");
 	WriteControllerStatus();
 	//start the flipper
